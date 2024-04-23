@@ -260,7 +260,9 @@ class LaserEVM:
             if len(self.open_states) == 0:
                 break
             old_states_count = len(self.open_states)
-
+            # Clear journal at every new user transaction
+            for state in self.open_states:
+                state.transient_storage.clear()
             if self.use_reachability_check:
                 if isinstance(self.strategy, DelayConstraintStrategy):
                     open_states = []

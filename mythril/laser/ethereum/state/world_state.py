@@ -3,12 +3,14 @@ from copy import copy, deepcopy
 from random import randint
 from typing import Dict, List, Iterator, Optional, TYPE_CHECKING
 from eth._utils.address import generate_contract_address
+from mythril.laser.ethereum.state.transient_storage import TransientStorage
 
 from mythril.support.loader import DynLoader
 from mythril.laser.smt import symbol_factory, Array, BitVec
 from mythril.laser.ethereum.state.account import Account
 from mythril.laser.ethereum.state.annotation import StateAnnotation
 from mythril.laser.ethereum.state.constraints import Constraints
+from mythril.laser.ethereum.state.transient_storage import TransientStorage
 
 if TYPE_CHECKING:
     from mythril.laser.ethereum.cfg import Node
@@ -23,6 +25,7 @@ class WorldState:
         transaction_sequence=None,
         annotations: List[StateAnnotation] = None,
         constraints: Constraints = None,
+        transient_storage: TransientStorage = None,
     ) -> None:
         """Constructor for the world state. Initializes the accounts record.
 
@@ -37,6 +40,7 @@ class WorldState:
         self.node: Optional["Node"] = None
         self.transaction_sequence = transaction_sequence or []
         self._annotations = annotations or []
+        self.transient_storage = transient_storage or TransientStorage()
 
     @property
     def accounts(self):
@@ -71,6 +75,8 @@ class WorldState:
             new_world_state.put_account(copy(account))
         new_world_state.node = self.node
         new_world_state.constraints = copy(self.constraints)
+        new_world_state.transient_storage = copy(self.transient_storage)
+
         return new_world_state
 
     def __deepcopy__(self, _) -> "WorldState":
@@ -89,6 +95,7 @@ class WorldState:
             new_world_state.put_account(copy(account))
         new_world_state.node = self.node
         new_world_state.constraints = deepcopy(self.constraints)
+        new_world_state.transient_storage = copy(self.transient_storage)
         return new_world_state
 
     def accounts_exist_or_load(self, addr, dynamic_loader: DynLoader) -> Account:

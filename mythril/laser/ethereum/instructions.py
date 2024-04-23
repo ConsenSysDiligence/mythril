@@ -1534,8 +1534,7 @@ class Instruction:
         state = global_state.mstate
         address = global_state.environment.active_account.address
         index = state.stack.pop()
-        value = global_state.mstate.transient_storage.get(address, index)
-        print(value)
+        value = global_state.world_state.transient_storage.get(address, index)
         state.stack.append(value)
         return [global_state]
 
@@ -1549,10 +1548,8 @@ class Instruction:
         state = global_state.mstate
         address = global_state.environment.active_account.address
         index, value = state.stack.pop(), state.stack.pop()
-        print(index, value)
-        global_state.mstate.transient_storage.set(address, index, value)
+        global_state.world_state.transient_storage.set(address, index, value)
         return [global_state]
-
 
     @StateTransition(increment_pc=False, enable_gas=False)
     def jump_(self, global_state: GlobalState) -> List[GlobalState]:

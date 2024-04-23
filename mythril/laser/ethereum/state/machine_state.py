@@ -14,6 +14,7 @@ from mythril.laser.ethereum.evm_exceptions import (
 )
 from mythril.laser.ethereum.state.memory import Memory
 
+
 class MachineStack(list):
     """Defines EVM stack, overrides the default list to handle overflows."""
 
@@ -103,11 +104,9 @@ class MachineState:
         stack=None,
         subroutine_stack=None,
         memory: Optional[Memory] = None,
-        constraints=None,
         depth=0,
         max_gas_used=0,
         min_gas_used=0,
-        transient_storage=None
     ) -> None:
         """Constructor for machineState.
 
@@ -115,7 +114,6 @@ class MachineState:
         :param pc:
         :param stack:
         :param memory:
-        :param constraints:
         :param depth:
         :param max_gas_used:
         :param min_gas_used:
@@ -228,7 +226,6 @@ class MachineState:
             memory=copy(self.memory),
             depth=self.depth,
             subroutine_stack=copy(self.subroutine_stack),
-            transient_storage=copy(self.transient_storage)
         )
 
     def __str__(self):
@@ -261,5 +258,4 @@ class MachineState:
             gas=self.gas_limit,
             max_gas_used=self.max_gas_used,
             min_gas_used=self.min_gas_used,
-            transient_storage=self.transient_storage
         )
