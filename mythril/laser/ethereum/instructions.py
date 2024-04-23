@@ -1670,42 +1670,6 @@ class Instruction:
         return states
 
     @StateTransition()
-    def beginsub_(self, global_state: GlobalState) -> List[GlobalState]:
-        """
-        This opcode depicts the start of the subroutine
-        """
-        raise OutOfGasException("Encountered BEGINSUB")
-
-    @StateTransition()
-    def jumpsub_(self, global_state: GlobalState) -> List[GlobalState]:
-        """
-        Jump to the subroutine
-        """
-        disassembly = global_state.environment.code
-        try:
-            location = util.get_concrete_int(global_state.mstate.stack.pop())
-        except TypeError:
-            raise VmException("Encountered symbolic JUMPSUB location")
-        index = util.get_instruction_index(disassembly.instruction_list, location)
-        instr = disassembly.instruction_list[index]
-
-        if instr["opcode"] != "BEGINSUB":
-            raise VmException(
-                "Encountered invalid JUMPSUB location :{}".format(instr["address"])
-            )
-        global_state.mstate.subroutine_stack.append(global_state.mstate.pc + 1)
-        global_state.mstate.pc = location
-        return [global_state]
-
-    @StateTransition(increment_pc=False)
-    def returnsub_(self, global_state: GlobalState) -> List[GlobalState]:
-        """
-        Returns control to the caller of the subroutine
-        """
-        global_state.mstate.pc = global_state.mstate.subroutine_stack.pop()
-        return [global_state]
-
-    @StateTransition()
     def pc_(self, global_state: GlobalState) -> List[GlobalState]:
         """
 
