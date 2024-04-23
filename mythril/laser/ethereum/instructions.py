@@ -1523,6 +1523,37 @@ class Instruction:
         global_state.environment.active_account.storage[index] = value
         return [global_state]
 
+    @StateTransition()
+    def tload_(self, global_state: GlobalState) -> List[GlobalState]:
+        """
+
+        :param global_state:
+        :return:
+        """
+
+        state = global_state.mstate
+        address = global_state.environment.active_account.address
+        index = state.stack.pop()
+        value = global_state.mstate.transient_storage.get(address, index)
+        print(value)
+        state.stack.append(value)
+        return [global_state]
+
+    @StateTransition(is_state_mutation_instruction=True)
+    def tstore_(self, global_state: GlobalState) -> List[GlobalState]:
+        """
+
+        :param global_state:
+        :return:
+        """
+        state = global_state.mstate
+        address = global_state.environment.active_account.address
+        index, value = state.stack.pop(), state.stack.pop()
+        print(index, value)
+        global_state.mstate.transient_storage.set(address, index, value)
+        return [global_state]
+
+
     @StateTransition(increment_pc=False, enable_gas=False)
     def jump_(self, global_state: GlobalState) -> List[GlobalState]:
         """

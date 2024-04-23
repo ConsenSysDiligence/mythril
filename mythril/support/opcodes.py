@@ -103,8 +103,8 @@ OPCODES: Dict = {
     "MSIZE": {GAS: (2, 2), STACK: Z_OPERATOR_TUPLE, ADDRESS: 0x59},
     "GAS": {GAS: (2, 2), STACK: Z_OPERATOR_TUPLE, ADDRESS: 0x5A},
     "JUMPDEST": {GAS: (1, 1), STACK: (0, 0), ADDRESS: 0x5B},
-    "BEGINSUB": {GAS: (2, 2), STACK: (0, 0), ADDRESS: 0x5C},
-    "RETURNSUB": {GAS: (5, 5), STACK: (0, 0), ADDRESS: 0x5D},
+    "TLOAD": {GAS: (100, 100), STACK: UN_OPERATOR_TUPLE, ADDRESS: 0x5C},
+    "TSTORE": {GAS: (100, 100), STACK: (2, 0), ADDRESS: 0x5D},
     "JUMPSUB": {GAS: (10, 10), STACK: (1, 0), ADDRESS: 0x5E},
     # apparently Solidity only allows byte32 as input to the log
     # function. Virtually it could be as large as the block gas limit

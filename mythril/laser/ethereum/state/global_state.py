@@ -9,6 +9,7 @@ from mythril.laser.ethereum.cfg import Node
 from mythril.laser.ethereum.state.environment import Environment
 from mythril.laser.ethereum.state.machine_state import MachineState
 from mythril.laser.ethereum.state.annotation import StateAnnotation
+from mythril.laser.ethereum.state.transient_storage import TransientStorage
 
 if TYPE_CHECKING:
     from mythril.laser.ethereum.state.world_state import WorldState
@@ -30,6 +31,7 @@ class GlobalState:
         transaction_stack=None,
         last_return_data=None,
         annotations=None,
+        transient_storage=None,
     ) -> None:
         """Constructor for GlobalState.
 
@@ -51,6 +53,7 @@ class GlobalState:
         self.op_code = ""
         self.last_return_data = last_return_data
         self._annotations = annotations or []
+        self.transient_storage = transient_storage or TransientStorage()
 
     def add_annotations(self, annotations: List[StateAnnotation]):
         """
@@ -79,6 +82,7 @@ class GlobalState:
             transaction_stack=transaction_stack,
             last_return_data=self.last_return_data,
             annotations=[copy(a) for a in self._annotations],
+            transient_storage=self.transient_storage
         )
 
     def __deepcopy__(self, _) -> "GlobalState":
@@ -99,6 +103,7 @@ class GlobalState:
             transaction_stack=transaction_stack,
             last_return_data=self.last_return_data,
             annotations=[copy(a) for a in self._annotations],
+            transient_storage=copy(self.transient_storage)
         )
 
     @property
