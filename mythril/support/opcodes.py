@@ -105,7 +105,6 @@ OPCODES: Dict = {
     "JUMPDEST": {GAS: (1, 1), STACK: (0, 0), ADDRESS: 0x5B},
     "TLOAD": {GAS: (100, 100), STACK: UN_OPERATOR_TUPLE, ADDRESS: 0x5C},
     "TSTORE": {GAS: (100, 100), STACK: (2, 0), ADDRESS: 0x5D},
-    "JUMPSUB": {GAS: (10, 10), STACK: (1, 0), ADDRESS: 0x5E},
     # apparently Solidity only allows byte32 as input to the log
     # function. Virtually it could be as large as the block gas limit
     # allows, but let's stick to the reasonable standard here.

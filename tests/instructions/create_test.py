@@ -11,7 +11,7 @@ from mythril.laser.ethereum.transaction.transaction_models import (
     TransactionStartSignal,
 )
 from mythril.laser.ethereum.state.calldata import ConcreteCalldata
-
+from mythril.laser.ethereum.time_handler import time_handler
 
 last_state = None
 created_contract_account = None
@@ -39,6 +39,7 @@ def test_create():
     instruction = Instruction("create", dynamic_loader=None)
     og_state.mstate.memory.extend(100)
     og_state.mstate.memory[0:6] = [96] * 6
+    time_handler.start_execution(100)
 
     # Act + Assert
     with pytest.raises(TransactionStartSignal) as t:
