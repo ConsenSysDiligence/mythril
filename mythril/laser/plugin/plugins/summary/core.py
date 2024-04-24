@@ -301,13 +301,13 @@ class SymbolicSummaryPlugin(LaserPlugin):
             new_issue = copy(issue_annotation.issue)
             new_issue.transaction_sequence = tx_seq
             issue_annotation.detector.issues += [new_issue]
-            addresss = (
+            address = (
                 issue_annotation.issue.source_location or issue_annotation.issue.address
             )
             self.issue_cache.add(
                 (
                     issue_annotation.detector.swc_id,
-                    addresss,
+                    address,
                     get_code_hash(global_state.environment.code.bytecode),
                 )
             )
