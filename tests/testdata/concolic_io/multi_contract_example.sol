@@ -2,7 +2,7 @@ pragma solidity 0.8.6;
 
 /**
  * @title Storage
- * @dev Store & retreive value in a variable
+ * @dev Store & retrieve value in a variable
  */
 contract D1 {
 
