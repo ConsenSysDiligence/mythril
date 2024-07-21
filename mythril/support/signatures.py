@@ -63,8 +63,6 @@ class Singleton(type):
         return cls._instances[cls]
 
 
-
-
 class SQLiteDB(object):
     """Simple context manager for sqlite3 databases.
 
@@ -198,7 +196,6 @@ class SignatureDB(object, metaclass=Singleton):
 
         return []
 
-
     def import_solidity_file(
         self, file_path: str, solc_binary: str = "solc", solc_settings_json: str = None
     ):
@@ -224,8 +221,5 @@ class SignatureDB(object, metaclass=Singleton):
                     self.solidity_sigs[sig] = [name]
                 self.add(sig, name)
 
-
     def __repr__(self):
-        return "<SignatureDB path='{}'>".format(
-            self.path
-        )
+        return "<SignatureDB path='{}'>".format(self.path)

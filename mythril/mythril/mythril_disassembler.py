@@ -157,11 +157,7 @@ class MythrilDisassembler:
                 "Received an empty response from eth_getCode. Check the contract address and verify that you are on the correct chain."
             )
         else:
-            self.contracts.append(
-                EVMContract(
-                    code, name=address
-                )
-            )
+            self.contracts.append(EVMContract(code, name=address))
         return address, self.contracts[-1]  # return address and contract object
 
     def load_from_foundry(self):

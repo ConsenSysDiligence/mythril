@@ -15,9 +15,7 @@ class EVMContract(persistent.Persistent):
     """This class represents an address with associated code (Smart
     Contract)."""
 
-    def __init__(
-        self, code="", creation_code="", name="Unknown"
-    ):
+    def __init__(self, code="", creation_code="", name="Unknown"):
         """Create a new contract.
 
         Workaround: We currently do not support compile-time linking.
@@ -35,9 +33,7 @@ class EVMContract(persistent.Persistent):
         self.code = code
         self.disassembly = Disassembly(code)
 
-        self.creation_disassembly = Disassembly(
-            creation_code
-        )
+        self.creation_disassembly = Disassembly(creation_code)
 
     @property
     def bytecode_hash(self):

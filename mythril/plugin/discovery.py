@@ -32,8 +32,7 @@ class PluginDiscovery(object, metaclass=Singleton):
             ]
 
             self._installed_plugins = {
-                entry_point.name: entry_point.load()
-                for entry_point in mythril_plugins
+                entry_point.name: entry_point.load() for entry_point in mythril_plugins
             }
 
     @property

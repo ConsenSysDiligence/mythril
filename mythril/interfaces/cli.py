@@ -668,7 +668,6 @@ def validate_args(args: Namespace):
             args.transaction_count = len(args.transaction_sequences)
 
 
-
 def set_config(args: Namespace):
     """
     Set config based on args
