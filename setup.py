@@ -119,6 +119,9 @@ setup(
         "Programming Language :: Python :: 3.8",
         "Programming Language :: Python :: 3.9",
         "Programming Language :: Python :: 3.10",
+        "Programming Language :: Python :: 3.11",
+        "Programming Language :: Python :: 3.12",
+
     ],
     keywords="hacking disassembler security ethereum",
     packages=find_packages(exclude=["contrib", "docs", "tests"]),

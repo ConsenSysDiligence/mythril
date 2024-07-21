@@ -16,11 +16,10 @@ class Disassembly(object):
     - function entry point to function name mapping
     """
 
-    def __init__(self, code: str, enable_online_lookup: bool = False) -> None:
+    def __init__(self, code: str) -> None:
         """
 
         :param code:
-        :param enable_online_lookup:
         """
         self.bytecode = code
         if isinstance(code, str):
@@ -30,14 +29,13 @@ class Disassembly(object):
         self.func_hashes: List[str] = []
         self.function_name_to_address: Dict[str, int] = {}
         self.address_to_function_name: Dict[int, str] = {}
-        self.enable_online_lookup = enable_online_lookup
         self.assign_bytecode(bytecode=code)
 
     def assign_bytecode(self, bytecode):
         self.bytecode = bytecode
         # open from default locations
         # control if you want to have online signature hash lookups
-        signatures = SignatureDB(enable_online_lookup=self.enable_online_lookup)
+        signatures = SignatureDB()
         self.instruction_list = asm.disassemble(bytecode)
         # Need to take from PUSH1 to PUSH4 because solc seems to remove excess 0s at the beginning for optimizing
         jump_table_indices = asm.find_op_code_sequence(

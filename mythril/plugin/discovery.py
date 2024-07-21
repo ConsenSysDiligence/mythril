@@ -1,4 +1,9 @@
-import pkg_resources
+try:
+    # Older python versions
+    import pkg_resources
+except Exception:
+    pkg_resources = None
+    from importlib.metadata import entry_points
 from mythril.support.support_utils import Singleton
 from mythril.plugin.interface import MythrilPlugin
 
@@ -15,10 +20,21 @@ class PluginDiscovery(object, metaclass=Singleton):
     _installed_plugins: Optional[Dict[str, Any]] = None
 
     def init_installed_plugins(self):
-        self._installed_plugins = {
-            entry_point.name: entry_point.load()
-            for entry_point in pkg_resources.iter_entry_points("mythril.plugins")
-        }
+        if pkg_resources:
+            self._installed_plugins = {
+                entry_point.name: entry_point.load()
+                for entry_point in pkg_resources.iter_entry_points("mythril.plugins")
+            }
+        else:
+            all_entry_points = entry_points()
+            mythril_plugins = [
+                ep for ep in all_entry_points if ep.group == "mythril.plugins"
+            ]
+
+            self._installed_plugins = {
+                entry_point.name: entry_point.load()
+                for entry_point in mythril_plugins
+            }
 
     @property
     def installed_plugins(self):

@@ -63,14 +63,6 @@ class Singleton(type):
         return cls._instances[cls]
 
 
-try:
-    # load if available but do not fail
-    import ethereum_input_decoder
-    from ethereum_input_decoder.decoder import FourByteDirectoryOnlineLookupError
-except ImportError:
-    # fake it :)
-    ethereum_input_decoder = None
-    FourByteDirectoryOnlineLookupError = Exception
 
 
 class SQLiteDB(object):
@@ -117,14 +109,10 @@ class SQLiteDB(object):
 class SignatureDB(object, metaclass=Singleton):
     """"""
 
-    def __init__(self, enable_online_lookup: bool = False, path: str = None) -> None:
+    def __init__(self, path: str = None) -> None:
         """
-        :param enable_online_lookup:
         :param path:
         """
-        self.enable_online_lookup = enable_online_lookup
-        self.online_lookup_miss: Set[str] = set()
-        self.online_lookup_timeout = 0
 
         # if we're analysing a Solidity file, store its hashes
         # here to prevent unnecessary lookups
@@ -208,29 +196,8 @@ class SignatureDB(object, metaclass=Singleton):
         if text_sigs:
             return [t[0] for t in text_sigs]
 
-        # abort if we're not allowed to check 4byte or we already missed
-        # the signature, or we're on a timeout
-        if (
-            not self.enable_online_lookup
-            or byte_sig in self.online_lookup_miss
-            or time.time() < self.online_lookup_timeout
-        ):
-            return []
+        return []
 
-        try:
-            text_sigs = self.lookup_online(byte_sig=byte_sig, timeout=online_timeout)
-            if not text_sigs:
-                self.online_lookup_miss.add(byte_sig)
-                return []
-            else:
-                for resolved in text_sigs:
-                    self.add(byte_sig, resolved)
-                return text_sigs
-        except FourByteDirectoryOnlineLookupError as fbdole:
-            # wait at least 2 mins to try again
-            self.online_lookup_timeout = int(time.time()) + 2 * 60
-            log.warning("Online lookup failed, not retrying for 2min: %s", fbdole)
-            return []
 
     def import_solidity_file(
         self, file_path: str, solc_binary: str = "solc", solc_settings_json: str = None
@@ -257,24 +224,8 @@ class SignatureDB(object, metaclass=Singleton):
                     self.solidity_sigs[sig] = [name]
                 self.add(sig, name)
 
-    @staticmethod
-    def lookup_online(byte_sig: str, timeout: int, proxies=None) -> List[str]:
-        """Lookup function signatures from 4byte.directory.
-
-        :param byte_sig: function signature hash as hexstr
-        :param timeout: optional timeout for online lookup
-        :param proxies: optional proxy servers for online lookup
-        :return: a list of matching function signatures for this hash
-        """
-        if not ethereum_input_decoder:
-            return []
-        return list(
-            ethereum_input_decoder.decoder.FourByteDirectory.lookup_signatures(
-                byte_sig, timeout=timeout, proxies=proxies
-            )
-        )
 
     def __repr__(self):
-        return "<SignatureDB path='{}' enable_online_lookup={}>".format(
-            self.path, self.enable_online_lookup
+        return "<SignatureDB path='{}'>".format(
+            self.path
         )

@@ -121,6 +121,7 @@ def test_vmtest(
         return
     world_state = WorldState()
     args.unconstrained_storage = False
+    args.pruning_factor = 1
     for address, details in pre_condition.items():
         account = Account(address, concrete_storage=True)
         account.code = Disassembly(details["code"][2:])

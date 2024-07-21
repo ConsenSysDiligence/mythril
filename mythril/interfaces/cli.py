@@ -667,12 +667,6 @@ def validate_args(args: Namespace):
         if len(args.transaction_sequences) != args.transaction_count:
             args.transaction_count = len(args.transaction_sequences)
 
-    if args.command in ANALYZE_LIST:
-        if args.query_signature and sigs.ethereum_input_decoder is None:
-            exit_with_error(
-                args.outform,
-                "The --query-signature function requires the python package ethereum-input-decoder",
-            )
 
 
 def set_config(args: Namespace):
@@ -960,7 +954,6 @@ def parse_args_and_execute(parser: ArgumentParser, args: Namespace) -> None:
         if args.command == FUNCTION_TO_HASH_COMMAND:
             contract_hash_to_address(args)
         config = set_config(args)
-        query_signature = getattr(args, "query_signature", None)
         solc_json = getattr(args, "solc_json", None)
         solv = getattr(args, "solv", None)
         solc_args = getattr(args, "solc_args", None)
@@ -968,7 +961,6 @@ def parse_args_and_execute(parser: ArgumentParser, args: Namespace) -> None:
             eth=config.eth,
             solc_version=solv,
             solc_settings_json=solc_json,
-            enable_online_lookup=query_signature,
             solc_args=solc_args,
         )
 

@@ -53,7 +53,6 @@ class MythrilDisassembler:
         eth: Optional[EthJsonRpc] = None,
         solc_version: str = None,
         solc_settings_json: str = None,
-        enable_online_lookup: bool = False,
         solc_args=None,
     ) -> None:
         args.solc_args = solc_args
@@ -61,8 +60,7 @@ class MythrilDisassembler:
         self.solc_binary = self._init_solc_binary(solc_version)
         self.solc_settings_json = solc_settings_json
         self.eth = eth
-        self.enable_online_lookup = enable_online_lookup
-        self.sigs = signatures.SignatureDB(enable_online_lookup=enable_online_lookup)
+        self.sigs = signatures.SignatureDB()
         self.contracts: List[EVMContract] = []
 
     @staticmethod
@@ -118,7 +116,6 @@ class MythrilDisassembler:
                 EVMContract(
                     code=code,
                     name="MAIN",
-                    enable_online_lookup=self.enable_online_lookup,
                 )
             )
         else:
@@ -126,7 +123,6 @@ class MythrilDisassembler:
                 EVMContract(
                     creation_code=code,
                     name="MAIN",
-                    enable_online_lookup=self.enable_online_lookup,
                 )
             )
         return address, self.contracts[-1]  # return address and contract object
@@ -163,7 +159,7 @@ class MythrilDisassembler:
         else:
             self.contracts.append(
                 EVMContract(
-                    code, name=address, enable_online_lookup=self.enable_online_lookup
+                    code, name=address
                 )
             )
         return address, self.contracts[-1]  # return address and contract object

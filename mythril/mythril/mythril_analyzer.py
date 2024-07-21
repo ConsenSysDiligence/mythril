@@ -48,7 +48,6 @@ class MythrilAnalyzer:
         """
         self.eth = disassembler.eth
         self.contracts: List[EVMContract] = disassembler.contracts or []
-        self.enable_online_lookup = disassembler.enable_online_lookup
         self.use_onchain_data = not cmd_args.no_onchain_data
         self.strategy = strategy
         self.address = address
