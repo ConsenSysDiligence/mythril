@@ -1,6 +1,6 @@
 import pytest
 
-from mock import patch
+from unittest.mock import patch
 from eth_utils import decode_hex
 from mythril.laser.ethereum.natives import ecrecover, NativeContractException
 from mythril.laser.smt import symbol_factory

@@ -15,7 +15,6 @@ eth-utils>=2.0.0
 hexbytes<0.3.0
 jinja2>=2.9
 MarkupSafe<2.1.0
-mock
 mypy-extensions==1.0.0
 numpy
 persistent>=4.2.0

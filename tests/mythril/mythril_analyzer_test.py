@@ -1,7 +1,7 @@
 from pathlib import Path
 from mythril.mythril import MythrilDisassembler, MythrilAnalyzer
 from mythril.analysis.report import Issue
-from mock import patch, PropertyMock
+from unittest.mock import patch, PropertyMock
 from types import SimpleNamespace
 
 

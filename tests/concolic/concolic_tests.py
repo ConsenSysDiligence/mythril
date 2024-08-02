@@ -6,7 +6,7 @@ import subprocess
 
 from copy import deepcopy
 from datetime import datetime
-from mock import patch
+from unittest.mock import patch
 from subprocess import check_output, CalledProcessError
 from tests import BaseTestCase, PROJECT_DIR, TESTDATA
 

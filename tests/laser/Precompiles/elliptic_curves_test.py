@@ -1,4 +1,4 @@
-from mock import patch
+from unittest.mock import patch
 from mythril.laser.ethereum.natives import ec_pair
 from py_ecc.optimized_bn128 import FQ
 

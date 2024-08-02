@@ -1,4 +1,4 @@
-from mock import patch
+from unittest.mock import patch
 from eth_utils import decode_hex
 from mythril.laser.ethereum.natives import ec_add
 from py_ecc.optimized_bn128 import FQ
