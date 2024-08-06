@@ -380,6 +380,7 @@ class SymbolicSummaryPlugin(LaserPlugin):
         condition = global_state.world_state.constraints.get_all_constraints()
         for constraint in tracking_annotation.entry.world_state.constraints:
             condition.remove(constraint)
+        annotations = list(global_state.get_annotations(IssueAnnotation))
         summary = SymbolicSummary(
             storage_effect=deepcopy(storage_mutations),
             balance_effect=copy(global_state.world_state.balances),
@@ -389,12 +390,12 @@ class SymbolicSummaryPlugin(LaserPlugin):
             exit=global_state.mstate.pc,
             trace=tracking_annotation.trace,
             code=tracking_annotation.code,
-            issues=list(global_state.get_annotations(IssueAnnotation)),
+            issues=annotations,
             revert=revert,
             get_map=get_map,
             set_map=set_map,
         )
-        log.debug(list(global_state.get_annotations(IssueAnnotation)))
+        log.debug(annotations)
         # Calculate issues for the first transaction
         if len(global_state.world_state.transaction_sequence) == 2:
             for state in self.init_save_states:
