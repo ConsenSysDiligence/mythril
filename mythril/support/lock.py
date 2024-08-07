@@ -66,7 +66,7 @@ class LockFile(object):
 
     def __exit__(self, type, value, traceback):
         """
-        Lock get's released at the end of the `with` block
+        Lock gets released at the end of the `with` block
         """
         if self.is_locked:
             self.release()
