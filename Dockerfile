@@ -123,9 +123,6 @@ print("\n".join(str(v) for v in solcx.get_installed_solc_versions()))
 # Show installed packages and versions
 pip list
 
-# Show outdated packages
-pip list -o
-
 # Check myth can run
 myth version
 myth function-to-hash 'function transfer(address _to, uint256 _value) public returns (bool success)'
