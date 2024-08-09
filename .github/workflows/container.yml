@@ -1,0 +1,31 @@
+on:
+  pull_request:
+    paths:
+      - .github/workflows/container.yml
+      - Dockerfile
+      - docker_build_and_deploy.sh
+      - requirements.txt
+      - setup.py
+
+name: container
+
+concurrency:
+  # Concurrency group that uses the workflow name and PR number if available
+  # or commit SHA as a fallback. If a new build is triggered under that
+  # concurrency group while a previous build is running it will be canceled.
+  # Repeated pushes to a PR will cancel all previous builds, while multiple
+  # merges to a branch will not cancel.
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.sha }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+      - name: build and test
+        run: |
+          # when no DOCKERHUB_USERNAME is set, this only builds the
+          # container and runs the myth-smoke-test
+          ./docker_build_and_deploy.sh mythril/myth-dev

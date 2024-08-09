@@ -4,17 +4,15 @@ set -eo pipefail
 
 NAME=$1
 
-if [[ ! $NAME =~ ^mythril/myth(-dev)?$ ]];
-then
-  echo "Error: unknown image name: $NAME" >&2
-  exit 1
+if [[ ! $NAME =~ ^mythril/myth(-dev)?$ ]]; then
+    echo "Error: unknown image name: $NAME" >&2
+    exit 1
 fi
 
-if [ ! -z $CIRCLE_TAG ];
-then
-  GIT_VERSION=${CIRCLE_TAG#?}
+if [ -n "$CIRCLE_TAG" ]; then
+    GIT_VERSION=${CIRCLE_TAG#?}
 else
-  GIT_VERSION=${CIRCLE_SHA1}
+    GIT_VERSION=${CIRCLE_SHA1}
 fi
 
 export DOCKER_BUILDKIT=1
@@ -24,7 +22,12 @@ docker buildx create --use
 # so the next build should be almost instant.)
 docker buildx bake myth-smoke-test
 
-echo "$DOCKERHUB_PASSWORD" | docker login -u $DOCKERHUB_USERNAME --password-stdin
+if [ -z "$DOCKERHUB_USERNAME" ]; then
+    echo "Finishing without pushing to dockerhub"
+    exit 0
+fi
+
+echo "$DOCKERHUB_PASSWORD" | docker login -u "$DOCKERHUB_USERNAME" --password-stdin
 
 # strip mythril/ from NAME, e.g. myth or myth-dev
 BAKE_TARGET="${NAME#mythril/}"

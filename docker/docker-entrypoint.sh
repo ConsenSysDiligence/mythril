@@ -13,7 +13,7 @@ sync-svm-solc-versions-with-solcx
 # By default we run myth with options from arguments we received. But if the
 # first argument is a valid program, we execute that instead so that people can
 # run other commands without overriding the entrypoint (e.g. bash).
-if command -v "${1:-}" > /dev/null; then
+if command -v "${1:-}" >/dev/null; then
     exec -- "$@"
 fi
 exec -- myth "$@"

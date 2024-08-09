@@ -81,3 +81,21 @@ Arbitrary Jump
 
 The `arbitrary jump module <https://github.com/ConsenSys/mythril/blob/develop/mythril/analysis/module/modules/arbitrary_jump.py>`_ detects `SWC-127 (Arbitrary Jump with Function Type Variable) <https://smartcontractsecurity.github.io/SWC-registry/docs/SWC-127>`_.
 
+****************************
+Transaction Order Dependence
+****************************
+
+The `transaction order dependence module <https://github.com/Consensys/mythril/blob/develop/mythril/analysis/module/modules/transaction_order_dependence.py>`_ detects `SWC-114 (Transaction Order Dependence) <https://smartcontractsecurity.github.io/SWC-registry/docs/SWC-114>`_.
+
+****************************
+Requirement Violation
+****************************
+
+The `Requirement Violation module <https://github.com/Consensys/mythril/blob/develop/mythril/analysis/module/modules/requirements_violation.py>`_ detects `SWC-123 (Requirement Violation) <https://smartcontractsecurity.github.io/SWC-registry/docs/SWC-123>`_.
+
+****************************
+Unexpected Ether balance
+****************************
+
+The `Unexpected Ether balance module <https://github.com/Consensys/mythril/blob/develop/mythril/analysis/module/modules/unexpected_ether.py>`_ detects `SWC-132 (Unexpected Ether balance) <https://smartcontractsecurity.github.io/SWC-registry/docs/SWC-132>`_.
+
