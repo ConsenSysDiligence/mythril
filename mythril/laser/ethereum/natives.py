@@ -2,24 +2,21 @@
 
 import hashlib
 import logging
-import blake2b
-import coincurve
-
 from typing import List
 
-from py_ecc.secp256k1 import N as secp256k1n
-from py_ecc.secp256k1 import ecdsa_raw_recover
+import blake2b
+import coincurve
 import py_ecc.optimized_bn128 as bn128
-
-from rlp.utils import ALL_BYTES
-from eth_utils import ValidationError
 from eth._utils.blake2.coders import extract_blake2b_parameters
 from eth._utils.bn128 import validate_point
+from eth_utils import ValidationError, big_endian_to_int, int_to_big_endian
+from py_ecc.secp256k1 import N as secp256k1n
+from py_ecc.secp256k1 import ecdsa_raw_recover
+from rlp.utils import ALL_BYTES
 
-from mythril.support.support_utils import sha3, zpad
 from mythril.laser.ethereum.state.calldata import BaseCalldata, ConcreteCalldata
-from mythril.laser.ethereum.util import extract_copy, extract32
-from eth_utils import int_to_big_endian, big_endian_to_int
+from mythril.laser.ethereum.util import extract32, extract_copy
+from mythril.support.support_utils import sha3, zpad
 
 log = logging.getLogger(__name__)
 

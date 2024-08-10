@@ -1,31 +1,30 @@
 import json
 import logging
 import os
-from pathlib import Path
 import re
 import shutil
-import solc
 import subprocess
 import warnings
+from pathlib import Path
+from typing import List, Optional, Tuple
 
+import solc
 from eth_utils import int_to_big_endian
-from semantic_version import Version, NpmSpec
-from typing import List, Tuple, Optional
+from semantic_version import NpmSpec, Version
 
-from mythril.support.support_utils import sha3, zpad
 from mythril.ethereum import util
-from mythril.ethereum.interface.rpc.client import EthJsonRpc
-from mythril.exceptions import CriticalError, CompilerError, NoContractFoundError
-from mythril.support import signatures
-from mythril.support.support_utils import rzpad
-from mythril.support.support_args import args
 from mythril.ethereum.evmcontract import EVMContract
+from mythril.ethereum.interface.rpc.client import EthJsonRpc
 from mythril.ethereum.interface.rpc.exceptions import ConnectionError
+from mythril.exceptions import CompilerError, CriticalError, NoContractFoundError
 from mythril.solidity.soliditycontract import (
     SolidityContract,
     get_contracts_from_file,
     get_contracts_from_foundry,
 )
+from mythril.support import signatures
+from mythril.support.support_args import args
+from mythril.support.support_utils import rzpad, sha3, zpad
 
 
 def format_warning(message, category, filename, lineno, line=""):

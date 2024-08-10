@@ -2,21 +2,20 @@
 calls."""
 
 import binascii
-
 from typing import List, Union
 
-from mythril.exceptions import IllegalArgumentError
 from mythril.disassembler.disassembly import Disassembly
-from mythril.laser.ethereum.cfg import Node, Edge, JumpType
-from mythril.laser.smt import symbol_factory
+from mythril.exceptions import IllegalArgumentError
+from mythril.laser.ethereum.cfg import Edge, JumpType, Node
 from mythril.laser.ethereum.state.calldata import ConcreteCalldata
 from mythril.laser.ethereum.state.global_state import GlobalState
 from mythril.laser.ethereum.state.world_state import WorldState
 from mythril.laser.ethereum.transaction.transaction_models import (
-    MessageCallTransaction,
     ContractCreationTransaction,
+    MessageCallTransaction,
     tx_id_manager,
 )
+from mythril.laser.smt import symbol_factory
 
 
 def execute_contract_creation(

@@ -1,7 +1,9 @@
 from unittest.mock import patch
+
 from eth_utils import decode_hex
-from mythril.laser.ethereum.natives import ec_mul
 from py_ecc.optimized_bn128 import FQ
+
+from mythril.laser.ethereum.natives import ec_mul
 
 VECTOR_A = decode_hex(
     "0000000000000000000000000000000000000000000000000000000000000001"

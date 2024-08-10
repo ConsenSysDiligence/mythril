@@ -1,9 +1,11 @@
-from mythril.laser.ethereum.svm import LaserEVM
-from mythril.laser.plugin.interface import LaserPlugin
-from mythril.laser.plugin.builder import PluginBuilder
-from time import time
-import matplotlib.pyplot as plt
 import logging
+from time import time
+
+import matplotlib.pyplot as plt
+
+from mythril.laser.ethereum.svm import LaserEVM
+from mythril.laser.plugin.builder import PluginBuilder
+from mythril.laser.plugin.interface import LaserPlugin
 
 log = logging.getLogger(__name__)
 

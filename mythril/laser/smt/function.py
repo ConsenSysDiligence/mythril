@@ -1,4 +1,5 @@
-from typing import cast, List, Any, Set
+from typing import Any, List, Set, cast
+
 import z3
 
 from mythril.laser.smt.bitvec import BitVec

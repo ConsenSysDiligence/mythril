@@ -1,4 +1,4 @@
-from mythril.disassembler.disassembly import get_function_info, SignatureDB
+from mythril.disassembler.disassembly import SignatureDB, get_function_info
 
 instruction_list = [
     {"opcode": "PUSH4", "argument": "0x10203040"},

@@ -1,8 +1,9 @@
-from mythril.mythril import MythrilAnalyzer, MythrilDisassembler
+from types import SimpleNamespace
+
 from mythril.ethereum import util
+from mythril.mythril import MythrilAnalyzer, MythrilDisassembler
 from mythril.solidity.soliditycontract import EVMContract
 from tests import TESTDATA_INPUTS
-from types import SimpleNamespace
 
 
 def test_statespace_dump():

@@ -1,42 +1,43 @@
 """This module contains a wrapper around LASER for extended analysis
 purposes."""
 
+from typing import List, Optional, Type, Union
+
 from mythril.analysis.module import EntryPoint, ModuleLoader, get_detection_module_hooks
-from mythril.laser.execution_info import ExecutionInfo
 from mythril.laser.ethereum import svm
+from mythril.laser.ethereum.natives import PRECOMPILE_COUNT
 from mythril.laser.ethereum.state.account import Account
 from mythril.laser.ethereum.state.world_state import WorldState
 from mythril.laser.ethereum.strategy.basic import (
+    BasicSearchStrategy,
     BreadthFirstSearchStrategy,
     DepthFirstSearchStrategy,
     ReturnRandomNaivelyStrategy,
     ReturnWeightedRandomStrategy,
-    BasicSearchStrategy,
 )
-from mythril.laser.ethereum.strategy.constraint_strategy import DelayConstraintStrategy
 from mythril.laser.ethereum.strategy.beam import BeamSearch
-from mythril.laser.ethereum.natives import PRECOMPILE_COUNT
+from mythril.laser.ethereum.strategy.constraint_strategy import DelayConstraintStrategy
+from mythril.laser.ethereum.strategy.extensions.bounded_loops import (
+    BoundedLoopsStrategy,
+)
 from mythril.laser.ethereum.transaction.symbolic import ACTORS
 from mythril.laser.ethereum.tx_prioritiser import RfTxPrioritiser
-
+from mythril.laser.execution_info import ExecutionInfo
 from mythril.laser.plugin.loader import LaserPluginLoader
 from mythril.laser.plugin.plugins import (
     CallDepthLimitBuilder,
-    CoveragePluginBuilder,
     CoverageMetricsPluginBuilder,
+    CoveragePluginBuilder,
     DependencyPrunerBuilder,
     InstructionProfilerBuilder,
     MutationPrunerBuilder,
     StateMergePluginBuilder,
     SymbolicSummaryPluginBuilder,
 )
-from mythril.laser.ethereum.strategy.extensions.bounded_loops import (
-    BoundedLoopsStrategy,
-)
-from mythril.laser.smt import symbol_factory, BitVec
-from mythril.support.support_args import args
-from typing import Union, List, Type, Optional
+from mythril.laser.smt import BitVec, symbol_factory
 from mythril.solidity.soliditycontract import EVMContract, SolidityContract
+from mythril.support.support_args import args
+
 from .ops import Call, VarType, get_variable
 
 

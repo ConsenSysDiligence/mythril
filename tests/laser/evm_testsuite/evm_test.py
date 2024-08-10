@@ -1,17 +1,18 @@
-from mythril.laser.ethereum.svm import LaserEVM
+import binascii
+import json
+from datetime import datetime
+from pathlib import Path
+
+import pytest
+
+from mythril.disassembler.disassembly import Disassembly
 from mythril.laser.ethereum.state.account import Account
 from mythril.laser.ethereum.state.world_state import WorldState
+from mythril.laser.ethereum.svm import LaserEVM
 from mythril.laser.ethereum.time_handler import time_handler
-from mythril.disassembler.disassembly import Disassembly
 from mythril.laser.ethereum.transaction.concolic import execute_message_call
 from mythril.laser.smt import Expression, symbol_factory
 from mythril.support.support_args import args
-from datetime import datetime
-
-import binascii
-import json
-from pathlib import Path
-import pytest
 
 evm_test_dir = Path(__file__).parent / "VMTests"
 

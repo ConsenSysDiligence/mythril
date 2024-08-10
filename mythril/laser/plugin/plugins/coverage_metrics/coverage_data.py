@@ -1,7 +1,7 @@
 import json
 
-from mythril.support.support_utils import get_code_hash
 from mythril.laser.execution_info import ExecutionInfo
+from mythril.support.support_utils import get_code_hash
 
 
 class InstructionCoverageInfo(ExecutionInfo):

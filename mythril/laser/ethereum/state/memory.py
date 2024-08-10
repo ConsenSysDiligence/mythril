@@ -1,18 +1,21 @@
 """This module contains a representation of a smart contract's memory."""
 
 from copy import copy
-from typing import cast, Dict, List, Union, overload
+from typing import Dict, List, Union, cast, overload
+
 from z3 import Z3Exception
 
 from mythril.laser.ethereum import util
 from mythril.laser.smt import (
     BitVec,
-    SMTBool as Bool,
     Concat,
     Extract,
     If,
     simplify,
     symbol_factory,
+)
+from mythril.laser.smt import (
+    SMTBool as Bool,
 )
 
 

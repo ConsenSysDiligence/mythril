@@ -1,12 +1,12 @@
 """This module contains the detection code for arbitrary storage write."""
 
 import logging
+
 from mythril.analysis.module.base import DetectionModule, EntryPoint
 from mythril.analysis.potential_issues import (
-    get_potential_issues_annotation,
     PotentialIssue,
+    get_potential_issues_annotation,
 )
-
 from mythril.analysis.swc_data import WRITE_TO_ARBITRARY_STORAGE
 from mythril.laser.ethereum.state.global_state import GlobalState
 from mythril.laser.smt import symbol_factory

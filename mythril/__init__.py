@@ -3,8 +3,9 @@
 __docformat__ = "restructuredtext"
 import logging
 
+from mythril.plugin.loader import MythrilPluginLoader
+
 # Accept mythril.VERSION to get mythril's current version number
 from .__version__ import __version__ as VERSION
-from mythril.plugin.loader import MythrilPluginLoader
 
 log = logging.getLogger(__name__)

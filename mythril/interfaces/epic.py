@@ -10,6 +10,7 @@
 
 # https://github.com/tehmaze/lolcat
 
+import argparse
 import atexit
 import math
 import os
@@ -17,7 +18,6 @@ import random
 import re
 import sys
 import time
-import argparse
 
 PY3 = sys.version_info >= (3,)
 

@@ -1,4 +1,5 @@
 from abc import ABC
+
 from mythril.laser.plugin.builder import PluginBuilder as LaserPluginBuilder
 
 

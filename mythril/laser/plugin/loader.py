@@ -2,8 +2,8 @@ import logging
 from typing import Dict, List, Optional
 
 from mythril.laser.ethereum.svm import LaserEVM
-from mythril.laser.plugin.interface import LaserPlugin
 from mythril.laser.plugin.builder import PluginBuilder
+from mythril.laser.plugin.interface import LaserPlugin
 from mythril.support.support_utils import Singleton
 
 log = logging.getLogger(__name__)

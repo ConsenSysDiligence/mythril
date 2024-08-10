@@ -1,7 +1,7 @@
-from mythril.plugin import MythrilPluginLoader, MythrilPlugin
-from mythril.plugin.loader import UnsupportedPluginType
-
 import pytest
+
+from mythril.plugin import MythrilPlugin, MythrilPluginLoader
+from mythril.plugin.loader import UnsupportedPluginType
 
 
 def test_typecheck_load():

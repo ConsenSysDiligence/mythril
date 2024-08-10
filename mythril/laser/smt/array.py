@@ -6,6 +6,7 @@ default values over a certain range.
 """
 
 from typing import cast
+
 import z3
 
 from mythril.laser.smt.bitvec import BitVec

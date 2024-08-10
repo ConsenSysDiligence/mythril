@@ -1,20 +1,20 @@
+import logging
+from typing import Dict, List, Optional, Tuple
+
 from mythril.laser.smt import (
+    ULE,
+    ULT,
+    And,
     BitVec,
     Function,
+    Or,
     URem,
     symbol_factory,
-    ULE,
-    And,
-    ULT,
-    SMTBool as Bool,
-    Or,
 )
-
+from mythril.laser.smt import (
+    SMTBool as Bool,
+)
 from mythril.support.support_utils import sha3
-from typing import Dict, Tuple, List, Optional
-
-import logging
-
 
 TOTAL_PARTS = 10**40
 PART = (2**256 - 1) // TOTAL_PARTS

@@ -1,17 +1,19 @@
-from eth._utils.numeric import ceil32
 from typing import Tuple
-from mythril.support.opcodes import OPCODES, STACK, GAS
+
+from eth._utils.numeric import ceil32
 from eth.constants import (
     GAS_ECRECOVER,
-    GAS_SHA256WORD,
-    GAS_SHA256,
-    GAS_RIPEMD160,
-    GAS_RIPEMD160WORD,
     GAS_IDENTITY,
     GAS_IDENTITYWORD,
-    GAS_SHA3WORD,
+    GAS_RIPEMD160,
+    GAS_RIPEMD160WORD,
     GAS_SHA3,
+    GAS_SHA3WORD,
+    GAS_SHA256,
+    GAS_SHA256WORD,
 )
+
+from mythril.support.opcodes import GAS, OPCODES, STACK
 
 
 def calculate_sha3_gas(length: int):

@@ -1,15 +1,15 @@
-from mythril.laser.plugin.signals import PluginSkipWorldState
-from mythril.laser.plugin.interface import LaserPlugin
-from mythril.laser.plugin.builder import PluginBuilder
-from mythril.laser.plugin.plugins.plugin_annotations import MutationAnnotation
+from mythril.analysis import solver
+from mythril.exceptions import UnsatError
 from mythril.laser.ethereum.state.global_state import GlobalState
 from mythril.laser.ethereum.svm import LaserEVM
-from mythril.laser.smt import UGT, symbol_factory
 from mythril.laser.ethereum.transaction.transaction_models import (
     ContractCreationTransaction,
 )
-from mythril.analysis import solver
-from mythril.exceptions import UnsatError
+from mythril.laser.plugin.builder import PluginBuilder
+from mythril.laser.plugin.interface import LaserPlugin
+from mythril.laser.plugin.plugins.plugin_annotations import MutationAnnotation
+from mythril.laser.plugin.signals import PluginSkipWorldState
+from mythril.laser.smt import UGT, symbol_factory
 
 
 class MutationPrunerBuilder(PluginBuilder):

@@ -1,11 +1,12 @@
+import logging
 from collections import namedtuple
 from datetime import datetime
 from typing import Dict, List, Tuple
+
+from mythril.laser.ethereum.state.global_state import GlobalState
+from mythril.laser.ethereum.svm import LaserEVM
 from mythril.laser.plugin.builder import PluginBuilder
 from mythril.laser.plugin.interface import LaserPlugin
-from mythril.laser.ethereum.svm import LaserEVM
-from mythril.laser.ethereum.state.global_state import GlobalState
-import logging
 
 # Type annotations:
 #   start_time: datetime

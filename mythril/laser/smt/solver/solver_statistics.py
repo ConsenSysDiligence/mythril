@@ -1,8 +1,7 @@
 from time import time
+from typing import Callable
 
 from mythril.support.support_utils import Singleton
-
-from typing import Callable
 
 
 def stat_smt_query(func: Callable):

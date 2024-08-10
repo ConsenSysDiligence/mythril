@@ -1,6 +1,6 @@
+import errno
 import os
 import time
-import errno
 
 """
 credits: https://github.com/dmfrey/FileLock

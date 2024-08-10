@@ -3,19 +3,19 @@
 import logging
 from typing import List
 
+from mythril.analysis.module.base import DetectionModule, EntryPoint
 from mythril.analysis.potential_issues import (
-    get_potential_issues_annotation,
     PotentialIssue,
+    get_potential_issues_annotation,
 )
 from mythril.analysis.swc_data import DELEGATECALL_TO_UNTRUSTED_CONTRACT
+from mythril.exceptions import UnsatError
+from mythril.laser.ethereum.state.global_state import GlobalState
 from mythril.laser.ethereum.transaction.symbolic import ACTORS
 from mythril.laser.ethereum.transaction.transaction_models import (
     ContractCreationTransaction,
 )
-from mythril.analysis.module.base import DetectionModule, EntryPoint
-from mythril.exceptions import UnsatError
-from mythril.laser.ethereum.state.global_state import GlobalState
-from mythril.laser.smt import symbol_factory, UGT
+from mythril.laser.smt import UGT, symbol_factory
 
 log = logging.getLogger(__name__)
 

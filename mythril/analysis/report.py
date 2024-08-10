@@ -1,27 +1,28 @@
 """This module provides classes that make up an issue report."""
 
-import logging
-import re
 import json
+import logging
 import operator
+import re
 
 try:
     from eth_abi import decode
 except ImportError:
     from eth_abi import decode_abi as decode
 
-from jinja2 import PackageLoader, Environment
-from typing import Dict, Iterable, List, Any, Optional
 import hashlib
+from time import time
+from typing import Any, Dict, Iterable, List, Optional
 
+from jinja2 import Environment, PackageLoader
+
+from mythril.analysis.swc_data import SWC_TO_TITLE
 from mythril.laser.execution_info import ExecutionInfo
 from mythril.solidity.soliditycontract import SolidityContract
-from mythril.analysis.swc_data import SWC_TO_TITLE
+from mythril.support.signatures import SignatureDB
 from mythril.support.source_support import Source
 from mythril.support.start_time import StartTime
 from mythril.support.support_utils import get_code_hash
-from mythril.support.signatures import SignatureDB
-from time import time
 
 log = logging.getLogger(__name__)
 

@@ -1,10 +1,11 @@
+import pytest
+
 from mythril.disassembler.asm import (
     disassemble,
     find_op_code_sequence,
-    is_sequence_match,
     get_opcode_from_name,
+    is_sequence_match,
 )
-import pytest
 
 valid_names = [("PUSH1", 0x60), ("STOP", 0x0), ("RETURN", 0xF3)]
 

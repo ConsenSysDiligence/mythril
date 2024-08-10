@@ -7,13 +7,12 @@ publish to pypi w/o having to convert Readme.md to RST:
     1) #> python setup.py sdist bdist_wheel
     2) #> twine upload dist/*   #<specify bdist_wheel version to upload>; #optional --repository <testpypi> or  --repository-url <testpypi-url>
 """
-from setuptools import setup, find_packages
-from setuptools.command.install import install as _install
-
-import sys
-import os
 import io
+import os
+import sys
 
+from setuptools import find_packages, setup
+from setuptools.command.install import install as _install
 
 # Package meta-data.
 NAME = "mythril"

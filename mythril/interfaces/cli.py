@@ -10,26 +10,23 @@ import json
 import logging
 import os
 import sys
-
-import coloredlogs
 import traceback
+from argparse import ArgumentParser, Namespace, RawTextHelpFormatter
 from ast import literal_eval
 
-from argparse import ArgumentParser, Namespace, RawTextHelpFormatter
-from mythril.concolic import concolic_execution
-from mythril.exceptions import (
-    DetectorNotFoundError,
-    CriticalError,
-)
-from mythril.laser.ethereum.transaction.symbolic import ACTORS
-from mythril.plugin.loader import MythrilPluginLoader
-
-from mythril.mythril import MythrilAnalyzer, MythrilDisassembler, MythrilConfig
-
-from mythril.analysis.module import ModuleLoader
-from mythril.analysis.report import Report
+import coloredlogs
 
 from mythril.__version__ import __version__ as VERSION
+from mythril.analysis.module import ModuleLoader
+from mythril.analysis.report import Report
+from mythril.concolic import concolic_execution
+from mythril.exceptions import (
+    CriticalError,
+    DetectorNotFoundError,
+)
+from mythril.laser.ethereum.transaction.symbolic import ACTORS
+from mythril.mythril import MythrilAnalyzer, MythrilConfig, MythrilDisassembler
+from mythril.plugin.loader import MythrilPluginLoader
 
 # Initialise core Mythril Component
 _ = MythrilPluginLoader()

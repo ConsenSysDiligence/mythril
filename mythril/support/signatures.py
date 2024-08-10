@@ -6,7 +6,7 @@ import multiprocessing
 import os
 import sqlite3
 from collections import defaultdict
-from typing import List, DefaultDict, Dict
+from typing import DefaultDict, Dict, List
 
 from mythril.ethereum.util import get_solc_json
 

@@ -1,17 +1,15 @@
 """This module contains analysis module helpers to solve path constraints."""
 
-from typing import Dict, List, Tuple, Union, Any
+import logging
+from typing import Any, Dict, List, Tuple, Union
 
 import z3
-import logging
-
 from z3 import FuncInterp
 
 from mythril.exceptions import UnsatError
 from mythril.laser.ethereum.function_managers import (
     keccak_function_manager,
 )
-
 from mythril.laser.ethereum.state.constraints import Constraints
 from mythril.laser.ethereum.state.global_state import GlobalState
 from mythril.laser.ethereum.transaction import BaseTransaction

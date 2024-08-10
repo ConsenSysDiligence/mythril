@@ -1,6 +1,6 @@
 import pytest
 
-from mythril.laser.ethereum.natives import sha256, NativeContractException
+from mythril.laser.ethereum.natives import NativeContractException, sha256
 from mythril.laser.smt import symbol_factory
 
 
