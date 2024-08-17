@@ -20,7 +20,7 @@ py-solc-x<2.0.0
 py-solc
 pyparsing<3,>=2.0.2
 requests
-rlp<4,>=3
+rlp>=3,<5
 semantic_version
 z3-solver<=4.13.0.0,>=4.8.8.0
 matplotlib
