@@ -20,7 +20,7 @@ from mythril.support.source_support import Source
 from mythril.support.start_time import StartTime
 from mythril.support.support_args import args
 
-from . import MythrilDisassembler
+from .mythril_disassembler import MythrilDisassembler
 
 log = logging.getLogger(__name__)
 
