@@ -6,7 +6,7 @@ asn1crypto>=0.22.0
 configparser>=3.5.0
 py_ecc>=5.0.0
 eth-abi>=5.1.0
-eth-hash<0.4.0,>=0.3.1
+eth-hash>=0.3.1,<0.8.0
 eth-utils>=2.0.0
 hexbytes<0.3.0
 jinja2>=2.9
