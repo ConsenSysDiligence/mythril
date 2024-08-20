@@ -6,11 +6,11 @@ asn1crypto>=0.22.0
 configparser>=3.5.0
 py_ecc>=5.0.0
 eth-abi>=5.1.0
-eth-hash<0.4.0,>=0.3.1
+eth-hash>=0.3.1,<0.8.0
 eth-utils>=2.0.0
-hexbytes<0.3.0
+hexbytes<1.3.0
 jinja2>=2.9
-MarkupSafe<2.1.0
+MarkupSafe<2.2.0
 mypy-extensions==1.0.0
 numpy
 persistent>=4.2.0
@@ -18,9 +18,9 @@ py-flags
 py-evm==0.10.1b1
 py-solc-x<2.0.0
 py-solc
-pyparsing<3,>=2.0.2
+pyparsing>=2.0.2,<4
 requests
-rlp<4,>=3
+rlp>=3,<5
 semantic_version
 z3-solver<=4.13.0.0,>=4.8.8.0
 matplotlib
