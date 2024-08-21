@@ -3,11 +3,9 @@ ARG PYTHON_VERSION=3.10
 ARG INSTALLED_SOLC_VERSIONS
 
 
-FROM python:${PYTHON_VERSION} AS python-wheel
+FROM python:${PYTHON_VERSION} AS mythril-wheels
 WORKDIR /wheels
 
-
-FROM python-wheel AS python-wheel-with-cargo
 # Enable cargo sparse-registry to prevent it using large amounts of memory in
 # docker builds, and speed up builds by downloading less.
 # https://github.com/rust-lang/cargo/issues/10781#issuecomment-1163819998
@@ -17,8 +15,6 @@ SHELL ["/bin/bash", "-euo", "pipefail", "-c"]
 RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
 ENV PATH=/root/.cargo/bin:$PATH
 
-
-FROM python-wheel-with-cargo AS mythril-wheels
 RUN --mount=source=requirements.txt,target=/run/requirements.txt \
   pip wheel -r /run/requirements.txt
 
@@ -27,11 +23,10 @@ RUN pip wheel --no-deps /mythril
 
 
 # Solidity Compiler Version Manager. This provides cross-platform solc builds.
-# It's used by foundry to provide solc. https://github.com/roynalnaruto/svm-rs
-FROM python-wheel-with-cargo AS solidity-compiler-version-manager
-RUN cargo install svm-rs
-# put the binaries somewhere obvious for later stages to use
-RUN mkdir -p /svm-rs/bin && cp ~/.cargo/bin/svm ~/.cargo/bin/solc /svm-rs/bin/
+# It's used by foundry to provide solc. https://github.com/alloy-rs/svm-rs
+FROM rust:slim-bookworm AS solidity-compiler-version-manager
+RUN mkdir -p /svm-rs/bin && \
+  cargo install svm-rs --root /svm-rs
 
 
 FROM python:${PYTHON_VERSION}-slim AS myth
