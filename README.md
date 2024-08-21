@@ -40,6 +40,8 @@ Use it via pre-commit hook (replace `$GIT_TAG` with real tag):
     - id: mythril
 ```
 
+Additionally set `args: [disassemble]` or  and `args: [read-storage]` to use a different command than `analyse`.
+
 See the [docs](https://mythril-classic.readthedocs.io/en/master/installation.html) for more detailed instructions. 
 
 ## Usage
