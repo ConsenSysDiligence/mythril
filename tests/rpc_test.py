@@ -1,6 +1,5 @@
-from tests import BaseTestCase
-
 from mythril.ethereum.interface.rpc.client import EthJsonRpc
+from tests import BaseTestCase
 
 
 class RpcTest(BaseTestCase):

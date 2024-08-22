@@ -1,13 +1,14 @@
-from mythril.mythril import MythrilDisassembler
-from mythril.laser.ethereum.transaction import execute_contract_creation
-from mythril.ethereum import util
-import mythril.laser.ethereum.svm as svm
-from mythril.disassembler.disassembly import Disassembly
 from datetime import datetime
-from mythril.solidity.soliditycontract import SolidityContract
+
+import mythril.laser.ethereum.svm as svm
 import tests
 from mythril.analysis.security import fire_lasers
 from mythril.analysis.symbolic import SymExecWrapper
+from mythril.disassembler.disassembly import Disassembly
+from mythril.ethereum import util
+from mythril.laser.ethereum.transaction import execute_contract_creation
+from mythril.mythril import MythrilDisassembler
+from mythril.solidity.soliditycontract import SolidityContract
 
 solc_binary = MythrilDisassembler._init_solc_binary("v0.5.0")
 

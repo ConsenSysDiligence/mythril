@@ -1,7 +1,7 @@
-import pickle
-import numpy as np
-
 import logging
+import pickle
+
+import numpy as np
 
 log = logging.getLogger(__name__)
 

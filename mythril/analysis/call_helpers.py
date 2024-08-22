@@ -3,9 +3,9 @@ call functionality."""
 
 from typing import Union
 
-from mythril.analysis.ops import VarType, Call, get_variable
-from mythril.laser.ethereum.state.global_state import GlobalState
+from mythril.analysis.ops import Call, VarType, get_variable
 from mythril.laser.ethereum.natives import PRECOMPILE_COUNT
+from mythril.laser.ethereum.state.global_state import GlobalState
 
 
 def get_call_from_state(state: GlobalState) -> Union[Call, None]:

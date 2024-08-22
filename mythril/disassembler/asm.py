@@ -11,7 +11,7 @@ except ImportError:
 from functools import lru_cache
 
 from mythril.ethereum import util
-from mythril.support.opcodes import OPCODES, ADDRESS, ADDRESS_OPCODE_MAPPING
+from mythril.support.opcodes import ADDRESS, ADDRESS_OPCODE_MAPPING, OPCODES
 
 regex_PUSH = re.compile(r"^PUSH(\d*)$")
 

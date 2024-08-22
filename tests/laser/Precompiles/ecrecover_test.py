@@ -1,6 +1,6 @@
 import pytest
 
-from mythril.laser.ethereum.natives import ecrecover, NativeContractException
+from mythril.laser.ethereum.natives import NativeContractException, ecrecover
 from mythril.laser.smt import symbol_factory
 
 msg = b"\x6b\x8d\x2c\x81\xb1\x1b\x2d\x69\x95\x28\xdd\xe4\x88\xdb\xdf\x2f\x94\x29\x3d\x0d\x33\xc3\x2e\x34\x7f\x25\x5f\xa4\xa6\xc1\xf0\xa9"

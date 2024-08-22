@@ -1,20 +1,20 @@
+import logging
+from typing import Dict, List, Set, cast
+
+from mythril.analysis import solver
+from mythril.exceptions import UnsatError
+from mythril.laser.ethereum.state.global_state import GlobalState
 from mythril.laser.ethereum.svm import LaserEVM
-from mythril.laser.plugin.interface import LaserPlugin
+from mythril.laser.ethereum.transaction.transaction_models import (
+    ContractCreationTransaction,
+)
 from mythril.laser.plugin.builder import PluginBuilder
-from mythril.laser.plugin.signals import PluginSkipState
+from mythril.laser.plugin.interface import LaserPlugin
 from mythril.laser.plugin.plugins.plugin_annotations import (
     DependencyAnnotation,
     WSDependencyAnnotation,
 )
-from mythril.laser.ethereum.state.global_state import GlobalState
-from mythril.laser.ethereum.transaction.transaction_models import (
-    ContractCreationTransaction,
-)
-from mythril.exceptions import UnsatError
-from mythril.analysis import solver
-from typing import cast, List, Dict, Set
-import logging
-
+from mythril.laser.plugin.signals import PluginSkipState
 
 log = logging.getLogger(__name__)
 

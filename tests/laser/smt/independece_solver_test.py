@@ -1,12 +1,12 @@
+import z3
+
+from mythril.laser.smt import symbol_factory
 from mythril.laser.smt.solver.independence_solver import (
-    _get_expr_variables,
     DependenceBucket,
     DependenceMap,
     IndependenceSolver,
+    _get_expr_variables,
 )
-from mythril.laser.smt import symbol_factory
-
-import z3
 
 
 def test_get_expr_variables():

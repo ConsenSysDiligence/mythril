@@ -1,5 +1,6 @@
 # compile test contracts
 from pathlib import Path
+
 from mythril.solidity.soliditycontract import SolidityContract
 
 # Recompiles all the to be tested contracts

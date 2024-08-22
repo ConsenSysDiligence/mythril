@@ -1,4 +1,5 @@
 from time import time
+
 from mythril.support.support_utils import Singleton
 
 

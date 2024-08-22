@@ -2,7 +2,6 @@ import pytest
 
 from mythril.ethereum.util import extract_version
 
-
 test_data = (
     ("pragma solidity 0.5.0\n", ["0.5.0"]),
     ("pragma solidity =0.5.0\n", ["0.5.0"]),

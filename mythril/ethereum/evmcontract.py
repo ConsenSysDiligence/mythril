@@ -1,13 +1,13 @@
 """This module contains the class representing EVM contracts, aka Smart
 Contracts."""
 
-import re
 import logging
+import re
+
 import persistent
 
-from mythril.support.support_utils import sha3
 from mythril.disassembler.disassembly import Disassembly
-from mythril.support.support_utils import get_code_hash
+from mythril.support.support_utils import get_code_hash, sha3
 
 log = logging.getLogger(__name__)
 

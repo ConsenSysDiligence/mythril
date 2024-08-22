@@ -1,17 +1,19 @@
 """This module contains the detection code for transaction order dependence."""
 
+import logging
+
 from mythril.analysis import solver
+from mythril.analysis.module.base import DetectionModule
 from mythril.analysis.potential_issues import (
     PotentialIssue,
     get_potential_issues_annotation,
 )
 from mythril.analysis.swc_data import TX_ORDER_DEPENDENCE
-from mythril.laser.ethereum.transaction.symbolic import ACTORS
-from mythril.analysis.module.base import DetectionModule
-from mythril.laser.smt import Or, SMTBool as Bool
-from mythril.laser.ethereum.state.global_state import GlobalState
 from mythril.exceptions import UnsatError
-import logging
+from mythril.laser.ethereum.state.global_state import GlobalState
+from mythril.laser.ethereum.transaction.symbolic import ACTORS
+from mythril.laser.smt import Or
+from mythril.laser.smt import SMTBool as Bool
 
 log = logging.getLogger(__name__)
 

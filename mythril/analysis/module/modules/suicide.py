@@ -1,17 +1,17 @@
+import logging
+
 from mythril.analysis import solver
+from mythril.analysis.issue_annotation import IssueAnnotation
+from mythril.analysis.module.base import DetectionModule, EntryPoint
 from mythril.analysis.report import Issue
 from mythril.analysis.swc_data import UNPROTECTED_SELFDESTRUCT
 from mythril.exceptions import UnsatError
-from mythril.analysis.issue_annotation import IssueAnnotation
-from mythril.analysis.module.base import DetectionModule, EntryPoint
 from mythril.laser.ethereum.state.global_state import GlobalState
 from mythril.laser.ethereum.transaction.symbolic import ACTORS
-from mythril.laser.smt.bool import And
 from mythril.laser.ethereum.transaction.transaction_models import (
     ContractCreationTransaction,
 )
-import logging
-
+from mythril.laser.smt.bool import And
 
 log = logging.getLogger(__name__)
 

@@ -1,10 +1,10 @@
 """This module implements basic symbolic execution search strategies."""
 
-from random import randrange
+from random import choices, randrange
 
 from mythril.laser.ethereum.state.global_state import GlobalState
+
 from . import BasicSearchStrategy
-from random import choices
 
 
 class DepthFirstSearchStrategy(BasicSearchStrategy):

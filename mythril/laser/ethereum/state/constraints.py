@@ -1,13 +1,15 @@
 """This module contains the class used to represent state-change constraints in
 the call graph."""
 
-from mythril.exceptions import UnsatError, SolverTimeOutException
-from mythril.laser.smt import symbol_factory, simplify, SMTBool as Bool
-from mythril.support.model import get_model
-from mythril.laser.ethereum.function_managers import keccak_function_manager
-from mythril.laser.smt.model import Model
 from copy import copy
 from typing import Iterable, List, Optional, Union
+
+from mythril.exceptions import SolverTimeOutException, UnsatError
+from mythril.laser.ethereum.function_managers import keccak_function_manager
+from mythril.laser.smt import SMTBool as Bool
+from mythril.laser.smt import simplify, symbol_factory
+from mythril.laser.smt.model import Model
+from mythril.support.model import get_model
 
 
 class Constraints(list):

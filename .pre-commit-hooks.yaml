@@ -1,0 +1,8 @@
+- id: mythril
+  name: Mythril
+  description: Analyze EVM bytecode with Mythril
+  entry: myth
+  args:
+    - analyze
+  language: python
+  types: ["solidity"]

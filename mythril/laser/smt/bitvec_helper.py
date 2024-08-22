@@ -1,9 +1,10 @@
-from typing import Union, overload, List, Set, cast, Any, Callable
+from typing import Any, Callable, List, Set, Union, cast, overload
+
 import z3
 
-from mythril.laser.smt.bool import Bool, Or
+from mythril.laser.smt.array import Array, BaseArray
 from mythril.laser.smt.bitvec import BitVec
-from mythril.laser.smt.array import BaseArray, Array
+from mythril.laser.smt.bool import Bool, Or
 
 Annotations = Set[Any]
 

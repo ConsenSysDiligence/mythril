@@ -1,12 +1,14 @@
+import logging
 from copy import copy
-from typing import Set, List
+from typing import List, Set
+
+from mythril.laser.ethereum.state.annotation import StateAnnotation
+from mythril.laser.ethereum.state.world_state import WorldState
 from mythril.laser.ethereum.svm import LaserEVM
 from mythril.laser.plugin.interface import LaserPlugin
-from .merge_states import merge_states
+
 from .check_mergeability import check_ws_merge_condition
-from mythril.laser.ethereum.state.world_state import WorldState
-from mythril.laser.ethereum.state.annotation import StateAnnotation
-import logging
+from .merge_states import merge_states
 
 log = logging.getLogger(__name__)
 

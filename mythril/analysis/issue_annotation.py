@@ -1,9 +1,9 @@
+from copy import deepcopy
 from typing import List
 
 from mythril.analysis.report import Issue
 from mythril.laser.ethereum.state.annotation import StateAnnotation
 from mythril.laser.smt import SMTBool as Bool
-from copy import deepcopy
 
 
 class IssueAnnotation(StateAnnotation):

@@ -1,4 +1,5 @@
 import pytest
+
 from mythril.laser.ethereum.natives import blake2b_fcompress
 
 

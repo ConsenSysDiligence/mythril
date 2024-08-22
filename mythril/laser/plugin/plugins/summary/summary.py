@@ -1,11 +1,12 @@
-from mythril.laser.smt import Array, Solver, symbol_factory
-from mythril.support.support_args import args
-from mythril.laser.ethereum.state.global_state import GlobalState
-from mythril.laser.plugin.plugins.plugin_annotations import MutationAnnotation
+import logging
 from copy import deepcopy
 
-import logging
 import z3
+
+from mythril.laser.ethereum.state.global_state import GlobalState
+from mythril.laser.plugin.plugins.plugin_annotations import MutationAnnotation
+from mythril.laser.smt import Array, Solver, symbol_factory
+from mythril.support.support_args import args
 
 log = logging.getLogger(__name__)
 

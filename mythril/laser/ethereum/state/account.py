@@ -5,12 +5,11 @@ This includes classes representing accounts and their storage.
 
 import logging
 from copy import copy, deepcopy
-from typing import Any, Dict, Union, Set
+from typing import Any, Dict, Set, Union
 
-
-from mythril.laser.smt import Array, K, BitVec, simplify, BaseArray, If, SMTBool as Bool
 from mythril.disassembler.disassembly import Disassembly
-from mythril.laser.smt import symbol_factory
+from mythril.laser.smt import Array, BaseArray, BitVec, If, K, simplify, symbol_factory
+from mythril.laser.smt import SMTBool as Bool
 from mythril.support.support_args import args
 
 log = logging.getLogger(__name__)

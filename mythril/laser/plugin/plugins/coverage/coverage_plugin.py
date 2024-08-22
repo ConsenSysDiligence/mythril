@@ -1,11 +1,10 @@
-from mythril.laser.ethereum.svm import LaserEVM
-from mythril.laser.plugin.interface import LaserPlugin
-from mythril.laser.plugin.builder import PluginBuilder
-from mythril.laser.ethereum.state.global_state import GlobalState
-
-from typing import Dict, Tuple, List
-
 import logging
+from typing import Dict, List, Tuple
+
+from mythril.laser.ethereum.state.global_state import GlobalState
+from mythril.laser.ethereum.svm import LaserEVM
+from mythril.laser.plugin.builder import PluginBuilder
+from mythril.laser.plugin.interface import LaserPlugin
 
 log = logging.getLogger(__name__)
 

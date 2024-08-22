@@ -1,10 +1,10 @@
-from collections import defaultdict
-from typing import List, Optional, Callable, Mapping, Dict
 import logging
+from collections import defaultdict
+from typing import Callable, Dict, List, Mapping, Optional
 
-from mythril.support.opcodes import OPCODES
 from mythril.analysis.module.base import DetectionModule, EntryPoint
 from mythril.analysis.module.loader import ModuleLoader
+from mythril.support.opcodes import OPCODES
 
 log = logging.getLogger(__name__)
 OP_CODE_LIST = OPCODES.keys()

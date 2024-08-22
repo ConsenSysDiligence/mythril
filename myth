@@ -4,8 +4,8 @@
    http://www.github.com/ConsenSys/mythril
    """
 from sys import exit
-import mythril.interfaces.cli
 
+import mythril.interfaces.cli
 
 if __name__ == "__main__":
     mythril.interfaces.cli.main()

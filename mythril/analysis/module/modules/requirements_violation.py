@@ -1,17 +1,16 @@
 """This module contains the detection code for requirement violations in a call"""
 
 import logging
+from typing import List
 
 from mythril.analysis import solver
+from mythril.analysis.issue_annotation import IssueAnnotation
 from mythril.analysis.module.base import DetectionModule
 from mythril.analysis.report import Issue
-from mythril.analysis.issue_annotation import IssueAnnotation
-from mythril.laser.smt import And
 from mythril.analysis.swc_data import REQUIREMENT_VIOLATION
 from mythril.exceptions import UnsatError
 from mythril.laser.ethereum.state.global_state import GlobalState
-
-from typing import List
+from mythril.laser.smt import And
 
 log = logging.getLogger(__name__)
 

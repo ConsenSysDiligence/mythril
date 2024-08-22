@@ -1,20 +1,18 @@
 """This module contains the detection code for reachable exceptions."""
 
 import logging
+from typing import List, Optional, cast
 
-from typing import cast, List, Optional
 from mythril.analysis import solver
 from mythril.analysis.issue_annotation import IssueAnnotation
 from mythril.analysis.module.base import DetectionModule, EntryPoint
 from mythril.analysis.report import Issue
 from mythril.analysis.swc_data import ASSERT_VIOLATION
 from mythril.exceptions import UnsatError
-
-from mythril.laser.ethereum.state.global_state import GlobalState
-from mythril.laser.ethereum.state.annotation import StateAnnotation
 from mythril.laser.ethereum import util
+from mythril.laser.ethereum.state.annotation import StateAnnotation
+from mythril.laser.ethereum.state.global_state import GlobalState
 from mythril.laser.smt import And
-
 from mythril.support.support_utils import get_code_hash
 
 log = logging.getLogger(__name__)

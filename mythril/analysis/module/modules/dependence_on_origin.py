@@ -3,15 +3,16 @@ dependence."""
 
 import logging
 from copy import copy
+from typing import List
+
+from mythril.analysis import solver
 from mythril.analysis.issue_annotation import IssueAnnotation
 from mythril.analysis.module.base import DetectionModule, EntryPoint
 from mythril.analysis.report import Issue
-from mythril.exceptions import UnsatError
-from mythril.analysis import solver
 from mythril.analysis.swc_data import TX_ORIGIN_USAGE
+from mythril.exceptions import UnsatError
 from mythril.laser.ethereum.state.global_state import GlobalState
 from mythril.laser.smt import And
-from typing import List
 
 log = logging.getLogger(__name__)
 

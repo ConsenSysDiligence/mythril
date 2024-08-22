@@ -1,13 +1,14 @@
 import pytest
+
+from mythril.analysis.potential_issues import PotentialIssuesAnnotation
+from mythril.disassembler.disassembly import Disassembly
+from mythril.laser.ethereum.state.environment import Environment
+from mythril.laser.ethereum.state.global_state import GlobalState
+from mythril.laser.ethereum.state.machine_state import MachineState
+from mythril.laser.ethereum.state.world_state import WorldState
 from mythril.laser.ethereum.strategy.beam import (
     BeamSearch,
 )
-from mythril.disassembler.disassembly import Disassembly
-from mythril.laser.ethereum.state.environment import Environment
-from mythril.laser.ethereum.state.machine_state import MachineState
-from mythril.laser.ethereum.state.global_state import GlobalState
-from mythril.laser.ethereum.state.world_state import WorldState
-from mythril.analysis.potential_issues import PotentialIssuesAnnotation
 
 world_state = WorldState()
 account = world_state.create_account(balance=10, address=101)

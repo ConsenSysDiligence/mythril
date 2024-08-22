@@ -1,16 +1,17 @@
-from mythril.laser.ethereum.state.global_state import GlobalState
-from mythril.laser.ethereum.state.constraints import Constraints
-from mythril.laser.ethereum.state.annotation import StateAnnotation
-from mythril.analysis.solver import get_transaction_sequence
-from mythril.laser.smt import Not
-from mythril.exceptions import UnsatError
-
-from functools import reduce
-from typing import Dict, cast, List, Any, Tuple
-from copy import copy
-from . import CriterionSearchStrategy
 import logging
 import operator
+from copy import copy
+from functools import reduce
+from typing import Any, Dict, List, Tuple, cast
+
+from mythril.analysis.solver import get_transaction_sequence
+from mythril.exceptions import UnsatError
+from mythril.laser.ethereum.state.annotation import StateAnnotation
+from mythril.laser.ethereum.state.constraints import Constraints
+from mythril.laser.ethereum.state.global_state import GlobalState
+from mythril.laser.smt import Not
+
+from . import CriterionSearchStrategy
 
 log = logging.getLogger(__name__)
 

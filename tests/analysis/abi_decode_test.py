@@ -2,7 +2,6 @@ import pytest
 
 from mythril.analysis.report import Issue
 
-
 test_data = (
     (
         "0xa9059cbb000000000000000000000000010801010101010120020101020401010408040402",

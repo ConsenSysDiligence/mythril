@@ -1,6 +1,6 @@
 import pytest
 
-from mythril.laser.ethereum.natives import ripemd160, NativeContractException
+from mythril.laser.ethereum.natives import NativeContractException, ripemd160
 from mythril.laser.smt import symbol_factory
 
 
