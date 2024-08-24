@@ -203,11 +203,12 @@ def extract_version(file: typing.Optional[str]):
     version_constraint = semver.SimpleSpec(version_spec)
 
     for version in all_versions:
-        if version in version_constraint:
-            if "0.5.17" in str(version):
+        semver_version = semver.Version(str(version))
+        if semver_version in version_constraint:
+            if "0.5.17" in str(semver_version):
                 # Solidity 0.5.17 Does not compile in a lot of cases.
                 continue
-            return str(version)
+            return str(semver_version)
 
 
 def extract_binary(file: str) -> Tuple[str, str]:
