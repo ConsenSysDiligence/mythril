@@ -1,11 +1,12 @@
 import logging
+from typing import Tuple, cast
 
 from mythril.laser.ethereum.cfg import Node
-from typing import Tuple, cast
-from mythril.laser.ethereum.state.world_state import WorldState
 from mythril.laser.ethereum.state.account import Account, Storage
 from mythril.laser.ethereum.state.constraints import Constraints
-from mythril.laser.smt import symbol_factory, Array, If, Or, And, Not, SMTBool as Bool
+from mythril.laser.ethereum.state.world_state import WorldState
+from mythril.laser.smt import And, Array, If, Not, Or, symbol_factory
+from mythril.laser.smt import SMTBool as Bool
 
 log = logging.getLogger(__name__)
 

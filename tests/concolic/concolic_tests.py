@@ -1,23 +1,22 @@
 import binascii
 import json
-import pytest
 import subprocess
-
 from copy import deepcopy
 from datetime import datetime
-from subprocess import check_output, CalledProcessError
-from tests import PROJECT_DIR, TESTDATA
+from subprocess import CalledProcessError, check_output
+
+import pytest
 
 from mythril.concolic import concrete_execution
 from mythril.concolic.find_trace import setup_concrete_initial_state
 from mythril.laser.ethereum import util
-
 from mythril.laser.ethereum.svm import LaserEVM
 from mythril.laser.ethereum.time_handler import time_handler
 from mythril.laser.ethereum.transaction.concolic import execute_transaction
 from mythril.laser.plugin.loader import LaserPluginLoader
-from mythril.laser.smt import symbol_factory
 from mythril.laser.plugin.plugins import TraceFinderBuilder
+from mythril.laser.smt import symbol_factory
+from tests import PROJECT_DIR, TESTDATA
 
 MYTH = str(PROJECT_DIR / "myth")
 

@@ -1,8 +1,9 @@
-from mythril.interfaces.cli import main
-import pytest
 import json
-
 import sys
+
+import pytest
+
+from mythril.interfaces.cli import main
 
 
 def test_version_opt(capsys):

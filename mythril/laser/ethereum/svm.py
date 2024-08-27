@@ -1,27 +1,23 @@
 """This module implements the main symbolic execution engine."""
 
 import logging
+import random
+from abc import ABCMeta
 from collections import defaultdict
 from copy import copy
 from datetime import datetime, timedelta
-import random
-from typing import Callable, Dict, DefaultDict, List, Tuple, Optional
+from typing import Callable, DefaultDict, Dict, List, Optional, Tuple
 
-from mythril.support.opcodes import OPCODES
 from mythril.analysis.potential_issues import check_potential_issues
-from mythril.laser.execution_info import ExecutionInfo
-from mythril.laser.ethereum.cfg import NodeFlags, Node, Edge, JumpType
+from mythril.laser.ethereum.cfg import Edge, JumpType, Node, NodeFlags
 from mythril.laser.ethereum.evm_exceptions import StackUnderflowException, VmException
-from mythril.laser.ethereum.instructions import Instruction
 from mythril.laser.ethereum.instruction_data import get_required_stack_elements
-from mythril.laser.plugin.signals import PluginSkipWorldState, PluginSkipState
+from mythril.laser.ethereum.instructions import Instruction
 from mythril.laser.ethereum.state.global_state import GlobalState
 from mythril.laser.ethereum.state.world_state import WorldState
 from mythril.laser.ethereum.strategy.basic import DepthFirstSearchStrategy
 from mythril.laser.ethereum.strategy.constraint_strategy import DelayConstraintStrategy
-from abc import ABCMeta
 from mythril.laser.ethereum.time_handler import time_handler
-
 from mythril.laser.ethereum.transaction import (
     ContractCreationTransaction,
     TransactionEndSignal,
@@ -29,7 +25,10 @@ from mythril.laser.ethereum.transaction import (
     execute_contract_creation,
     execute_message_call,
 )
-from mythril.laser.smt import And, symbol_factory, simplify
+from mythril.laser.execution_info import ExecutionInfo
+from mythril.laser.plugin.signals import PluginSkipState, PluginSkipWorldState
+from mythril.laser.smt import And, simplify, symbol_factory
+from mythril.support.opcodes import OPCODES
 from mythril.support.support_args import args
 
 log = logging.getLogger(__name__)

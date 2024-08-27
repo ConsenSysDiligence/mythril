@@ -1,11 +1,11 @@
-from mythril.laser.ethereum.state.annotation import (
-    StateAnnotation,
-    MergeableStateAnnotation,
-)
-
+import logging
 from copy import copy
 from typing import Dict, List, Set
-import logging
+
+from mythril.laser.ethereum.state.annotation import (
+    MergeableStateAnnotation,
+    StateAnnotation,
+)
 
 log = logging.getLogger(__name__)
 

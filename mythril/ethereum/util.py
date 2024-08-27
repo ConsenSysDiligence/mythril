@@ -3,23 +3,21 @@ solc integration."""
 
 import binascii
 import json
+import logging
 import os
 import platform
-import logging
 import typing
-
-from requests.exceptions import ConnectionError
+from json.decoder import JSONDecodeError
 from subprocess import PIPE, Popen
 from typing import Tuple
 
-from json.decoder import JSONDecodeError
 import semantic_version as semver
-from pyparsing import Word, Optional, Regex, Combine
+import solcx
+from pyparsing import Combine, Optional, Regex, Word
+from requests.exceptions import ConnectionError
 
 from mythril.exceptions import CompilerError
 from mythril.support.support_args import args
-
-import solcx
 
 log = logging.getLogger(__name__)
 
@@ -205,11 +203,12 @@ def extract_version(file: typing.Optional[str]):
     version_constraint = semver.SimpleSpec(version_spec)
 
     for version in all_versions:
-        if version in version_constraint:
-            if "0.5.17" in str(version):
+        semver_version = semver.Version(str(version))
+        if semver_version in version_constraint:
+            if "0.5.17" in str(semver_version):
                 # Solidity 0.5.17 Does not compile in a lot of cases.
                 continue
-            return str(version)
+            return str(semver_version)
 
 
 def extract_binary(file: str) -> Tuple[str, str]:

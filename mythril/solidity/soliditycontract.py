@@ -1,8 +1,8 @@
 """This module contains representation classes for Solidity files, contracts
 and source mappings."""
 
-from typing import Dict, Set
 import logging
+from typing import Dict, Set
 
 import mythril.laser.ethereum.util as helper
 from mythril.ethereum.evmcontract import EVMContract

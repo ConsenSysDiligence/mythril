@@ -1,8 +1,8 @@
+import logging
+
 from mythril.laser.ethereum.state.global_state import GlobalState
 from mythril.laser.ethereum.strategy.basic import BasicSearchStrategy
 from mythril.support.support_utils import ModelCache
-
-import logging
 
 log = logging.getLogger(__name__)
 

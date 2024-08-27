@@ -1,19 +1,19 @@
+import logging
+from copy import copy
+from typing import List, Optional, cast
+
+from mythril.analysis import solver
+from mythril.analysis.module.base import DetectionModule, EntryPoint
 from mythril.analysis.potential_issues import (
     PotentialIssue,
     get_potential_issues_annotation,
 )
 from mythril.analysis.swc_data import REENTRANCY
-from mythril.analysis.module.base import DetectionModule, EntryPoint
-from mythril.laser.ethereum.state.constraints import Constraints
-from mythril.laser.smt import symbol_factory, UGT, BitVec, Or
-from mythril.laser.ethereum.state.global_state import GlobalState
-from mythril.laser.ethereum.state.annotation import StateAnnotation
-from mythril.analysis import solver
 from mythril.exceptions import UnsatError
-from typing import List, cast, Optional
-from copy import copy
-
-import logging
+from mythril.laser.ethereum.state.annotation import StateAnnotation
+from mythril.laser.ethereum.state.constraints import Constraints
+from mythril.laser.ethereum.state.global_state import GlobalState
+from mythril.laser.smt import UGT, BitVec, Or, symbol_factory
 
 log = logging.getLogger(__name__)
 

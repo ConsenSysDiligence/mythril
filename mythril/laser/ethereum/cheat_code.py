@@ -1,12 +1,11 @@
 from typing import Union
 
-from mythril.laser.ethereum.util import insert_ret_val
 from mythril.laser.ethereum.state.calldata import (
     BaseCalldata,
 )
 from mythril.laser.ethereum.state.global_state import GlobalState
-from mythril.laser.smt import BitVec
-from mythril.laser.smt import Expression
+from mythril.laser.ethereum.util import insert_ret_val
+from mythril.laser.smt import BitVec, Expression
 
 
 class hevm_cheat_code:

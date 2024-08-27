@@ -4,7 +4,7 @@ target-version = "py37"
 [tool.ruff.lint]
 fixable = ["ALL"]
 # List of rules https://docs.astral.sh/ruff/rules/
-select = ["F"]
+select = ["F", "I"]
 
 [tool.ruff.lint.per-file-ignores]
 # Fine for __init__.py files:

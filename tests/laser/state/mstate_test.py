@@ -1,10 +1,10 @@
 import pytest
 from eth._utils.numeric import ceil32
-from mythril.laser.smt import simplify, symbol_factory, Concat, Extract
 
-from mythril.laser.ethereum.state.machine_state import MachineState
 from mythril.laser.ethereum.evm_exceptions import StackUnderflowException
+from mythril.laser.ethereum.state.machine_state import MachineState
 from mythril.laser.ethereum.state.memory import Memory
+from mythril.laser.smt import Concat, Extract, simplify, symbol_factory
 
 memory_extension_test_data = [(0, 0, 10), (0, 30, 10), (100, 22, 8)]
 

@@ -1,5 +1,6 @@
-from mythril.laser.smt import Solver, symbol_factory
 import z3
+
+from mythril.laser.smt import Solver, symbol_factory
 
 
 def test_decls():

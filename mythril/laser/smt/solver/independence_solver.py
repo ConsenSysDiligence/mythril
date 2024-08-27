@@ -1,10 +1,10 @@
+from typing import Dict, List, Set, Tuple, cast
+
 import z3
 
-from mythril.laser.smt.model import Model
 from mythril.laser.smt.bool import Bool
+from mythril.laser.smt.model import Model
 from mythril.laser.smt.solver.solver_statistics import stat_smt_query
-
-from typing import Set, Tuple, Dict, List, cast
 
 
 def _get_expr_variables(expression: z3.ExprRef) -> List[z3.ExprRef]:

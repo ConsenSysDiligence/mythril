@@ -1,12 +1,13 @@
 """This module contains utility functions for the Mythril support package."""
 
+import logging
 from collections import OrderedDict
 from copy import deepcopy
-from eth_hash.auto import keccak
 from functools import lru_cache
 from typing import Dict
+
+from eth_hash.auto import keccak
 from z3 import is_true
-import logging
 
 log = logging.getLogger(__name__)
 

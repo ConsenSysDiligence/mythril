@@ -1,6 +1,5 @@
 from typing import Dict
 
-
 Z_OPERATOR_TUPLE = (0, 1)
 UN_OPERATOR_TUPLE = (1, 1)
 BIN_OPERATOR_TUPLE = (2, 1)

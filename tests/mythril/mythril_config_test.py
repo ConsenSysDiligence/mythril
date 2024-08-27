@@ -1,10 +1,10 @@
-import pytest
-
 from configparser import ConfigParser
 from pathlib import Path
 
-from mythril.mythril import MythrilConfig
+import pytest
+
 from mythril.exceptions import CriticalError
+from mythril.mythril import MythrilConfig
 
 
 def test_config_path_dynloading():

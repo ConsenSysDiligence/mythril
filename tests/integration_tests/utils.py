@@ -1,4 +1,4 @@
-from subprocess import check_output, CalledProcessError
+from subprocess import CalledProcessError, check_output
 
 
 def output_of(command, stderr=None):

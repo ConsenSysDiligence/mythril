@@ -1,14 +1,13 @@
-from mythril.analysis.module.base import DetectionModule, EntryPoint
-from mythril.support.support_utils import Singleton
-from mythril.support.support_args import args
+from typing import List, Optional
 
+from mythril.analysis.module.base import DetectionModule, EntryPoint
 from mythril.analysis.module.modules.arbitrary_jump import ArbitraryJump
 from mythril.analysis.module.modules.arbitrary_write import ArbitraryStorage
 from mythril.analysis.module.modules.delegatecall import ArbitraryDelegateCall
+from mythril.analysis.module.modules.dependence_on_origin import TxOrigin
 from mythril.analysis.module.modules.dependence_on_predictable_vars import (
     PredictableVariables,
 )
-from mythril.analysis.module.modules.dependence_on_origin import TxOrigin
 from mythril.analysis.module.modules.ether_thief import EtherThief
 from mythril.analysis.module.modules.exceptions import Exceptions
 from mythril.analysis.module.modules.external_calls import ExternalCalls
@@ -23,13 +22,11 @@ from mythril.analysis.module.modules.transaction_order_dependence import (
     TransactionOrderDependence,
 )
 from mythril.analysis.module.modules.unchecked_retval import UncheckedRetval
-from mythril.analysis.module.modules.user_assertions import UserAssertions
 from mythril.analysis.module.modules.unexpected_ether import UnexpectedEther
-
-
+from mythril.analysis.module.modules.user_assertions import UserAssertions
 from mythril.exceptions import DetectorNotFoundError
-
-from typing import Optional, List
+from mythril.support.support_args import args
+from mythril.support.support_utils import Singleton
 
 
 class ModuleLoader(object, metaclass=Singleton):

@@ -1,21 +1,21 @@
 """This module contains a representation of the global execution state."""
 
-from typing import Dict, Union, List, Iterable, TYPE_CHECKING
-
 from copy import copy, deepcopy
+from typing import TYPE_CHECKING, Dict, Iterable, List, Union
+
 from z3 import BitVec
 
-from mythril.laser.smt import symbol_factory
 from mythril.laser.ethereum.cfg import Node
+from mythril.laser.ethereum.state.annotation import StateAnnotation
 from mythril.laser.ethereum.state.environment import Environment
 from mythril.laser.ethereum.state.machine_state import MachineState
-from mythril.laser.ethereum.state.annotation import StateAnnotation
+from mythril.laser.smt import symbol_factory
 
 if TYPE_CHECKING:
     from mythril.laser.ethereum.state.world_state import WorldState
     from mythril.laser.ethereum.transaction.transaction_models import (
-        MessageCallTransaction,
         ContractCreationTransaction,
+        MessageCallTransaction,
     )
 
 

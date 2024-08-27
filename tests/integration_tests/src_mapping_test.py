@@ -1,6 +1,8 @@
 from subprocess import STDOUT
-from tests import PROJECT_DIR, TESTDATA
+
 from utils import output_of
+
+from tests import PROJECT_DIR, TESTDATA
 
 MYTH = str(PROJECT_DIR / "myth")
 

@@ -10,15 +10,15 @@ repos:
     hooks:
     -   id: check-toml
     -   id: check-yaml
--   repo: https://github.com/psf/black
-    rev: 24.8.0
-    hooks:
-    -   id: black
 -   repo: https://github.com/astral-sh/ruff-pre-commit
     rev: v0.6.1
     hooks:
     -   id: ruff
         args: [--fix, --show-fixes]
+-   repo: https://github.com/psf/black
+    rev: 24.8.0
+    hooks:
+    -   id: black
 -   repo: https://github.com/scop/pre-commit-shfmt
     rev: v3.8.0-1
     hooks:

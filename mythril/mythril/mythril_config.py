@@ -1,14 +1,13 @@
 import codecs
 import logging
 import os
-
+from configparser import ConfigParser
 from pathlib import Path
 from shutil import copyfile
-from configparser import ConfigParser
 from typing import Optional
 
-from mythril.exceptions import CriticalError
 from mythril.ethereum.interface.rpc.client import EthJsonRpc
+from mythril.exceptions import CriticalError
 from mythril.support.lock import LockFile
 
 log = logging.getLogger(__name__)

@@ -1,41 +1,43 @@
-from .summary import SymbolicSummary, substitute_exprs
-from .annotations import SummaryTrackingAnnotation
+import logging
+from copy import copy, deepcopy
+from typing import List, Optional, Set, Tuple
+
+import z3
+
 from mythril.analysis.issue_annotation import IssueAnnotation
 from mythril.analysis.potential_issues import check_potential_issues
 from mythril.analysis.solver import get_transaction_sequence
 from mythril.exceptions import UnsatError
-
-from mythril.laser.ethereum.svm import LaserEVM
-from mythril.laser.plugin.builder import PluginBuilder
-from mythril.laser.plugin.interface import LaserPlugin
-from mythril.laser.plugin.signals import PluginSkipState
-from mythril.laser.plugin.plugins.plugin_annotations import MutationAnnotation
-from mythril.laser.ethereum.transaction.transaction_models import (
-    ContractCreationTransaction,
-    BaseTransaction,
-)
-from mythril.support.support_utils import get_code_hash
 from mythril.laser.ethereum.function_managers import (
     keccak_function_manager,
 )
-
-from mythril.laser.ethereum.state.global_state import GlobalState
+from mythril.laser.ethereum.state.calldata import SymbolicCalldata
 from mythril.laser.ethereum.state.constraints import Constraints
 from mythril.laser.ethereum.state.environment import Environment
-from mythril.laser.ethereum.state.calldata import SymbolicCalldata
+from mythril.laser.ethereum.state.global_state import GlobalState
+from mythril.laser.ethereum.svm import LaserEVM
+from mythril.laser.ethereum.transaction.transaction_models import (
+    BaseTransaction,
+    ContractCreationTransaction,
+)
+from mythril.laser.plugin.builder import PluginBuilder
+from mythril.laser.plugin.interface import LaserPlugin
+from mythril.laser.plugin.plugins.plugin_annotations import MutationAnnotation
+from mythril.laser.plugin.signals import PluginSkipState
 from mythril.laser.smt import (
     Array,
-    SMTBool as Bool,
+    Expression,
     Solver,
     symbol_factory,
-    Expression,
+)
+from mythril.laser.smt import (
+    SMTBool as Bool,
 )
 from mythril.support.support_args import args
-import z3
-from typing import Tuple, List, Optional, Set
-from copy import copy, deepcopy
+from mythril.support.support_utils import get_code_hash
 
-import logging
+from .annotations import SummaryTrackingAnnotation
+from .summary import SymbolicSummary, substitute_exprs
 
 log = logging.getLogger(__name__)
 

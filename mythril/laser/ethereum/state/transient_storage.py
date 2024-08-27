@@ -1,5 +1,6 @@
-from mythril.laser.smt import K, Concat, simplify
 from copy import copy, deepcopy
+
+from mythril.laser.smt import Concat, K, simplify
 
 
 class TransientStorage:

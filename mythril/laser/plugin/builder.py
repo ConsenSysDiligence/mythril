@@ -1,6 +1,6 @@
-from mythril.laser.plugin.interface import LaserPlugin
-
 from abc import ABC, abstractmethod
+
+from mythril.laser.plugin.interface import LaserPlugin
 
 
 class PluginBuilder(ABC):

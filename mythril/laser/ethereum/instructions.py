@@ -2,70 +2,65 @@
 transitions between them."""
 
 import logging
-
 from copy import copy, deepcopy
-from typing import cast, Callable, List, Union, Tuple
-
-from mythril.exceptions import UnsatError
-from mythril.laser.smt import (
-    Extract,
-    Expression,
-    UDiv,
-    simplify,
-    Concat,
-    ULT,
-    UGT,
-    BitVec,
-    is_false,
-    URem,
-    SRem,
-    If,
-    SMTBool as Bool,
-    Not,
-    LShR,
-    UGE,
-)
-from mythril.laser.smt import symbol_factory
-
-from mythril.disassembler.disassembly import Disassembly
-
-from mythril.laser.ethereum.state.calldata import ConcreteCalldata, SymbolicCalldata
+from typing import Callable, List, Tuple, Union, cast
 
 import mythril.laser.ethereum.util as helper
+from mythril.disassembler.disassembly import Disassembly
+from mythril.exceptions import UnsatError
 from mythril.laser.ethereum import util
-from mythril.laser.ethereum.function_managers import (
-    keccak_function_manager,
-    exponent_function_manager,
-)
-
 from mythril.laser.ethereum.call import (
+    SYMBOLIC_CALLDATA_SIZE,
+    get_call_data,
     get_call_parameters,
     native_call,
-    get_call_data,
-    SYMBOLIC_CALLDATA_SIZE,
 )
 from mythril.laser.ethereum.evm_exceptions import (
-    VmException,
-    StackUnderflowException,
-    InvalidJumpDestination,
     InvalidInstruction,
+    InvalidJumpDestination,
     OutOfGasException,
+    StackUnderflowException,
+    VmException,
     WriteProtection,
 )
-from mythril.laser.ethereum.instruction_data import get_opcode_gas, calculate_sha3_gas
+from mythril.laser.ethereum.function_managers import (
+    exponent_function_manager,
+    keccak_function_manager,
+)
+from mythril.laser.ethereum.instruction_data import calculate_sha3_gas, get_opcode_gas
+from mythril.laser.ethereum.state.calldata import ConcreteCalldata, SymbolicCalldata
 from mythril.laser.ethereum.state.global_state import GlobalState
 from mythril.laser.ethereum.state.return_data import ReturnData
-
 from mythril.laser.ethereum.transaction import (
+    ContractCreationTransaction,
     MessageCallTransaction,
     TransactionStartSignal,
-    ContractCreationTransaction,
     tx_id_manager,
 )
+from mythril.laser.smt import (
+    UGE,
+    UGT,
+    ULT,
+    BitVec,
+    Concat,
+    Expression,
+    Extract,
+    If,
+    LShR,
+    Not,
+    SRem,
+    UDiv,
+    URem,
+    is_false,
+    simplify,
+    symbol_factory,
+)
+from mythril.laser.smt import (
+    SMTBool as Bool,
+)
+from mythril.support.loader import DynLoader
 from mythril.support.model import get_model
 from mythril.support.support_utils import get_code_hash
-
-from mythril.support.loader import DynLoader
 
 log = logging.getLogger(__name__)
 

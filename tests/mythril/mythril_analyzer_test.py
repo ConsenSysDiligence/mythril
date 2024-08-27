@@ -1,8 +1,9 @@
 from pathlib import Path
-from mythril.mythril import MythrilDisassembler, MythrilAnalyzer
-from mythril.analysis.report import Issue
-from unittest.mock import patch, PropertyMock
 from types import SimpleNamespace
+from unittest.mock import PropertyMock, patch
+
+from mythril.analysis.report import Issue
+from mythril.mythril import MythrilAnalyzer, MythrilDisassembler
 
 
 @patch("mythril.analysis.report.Issue.add_code_info", return_value=None)

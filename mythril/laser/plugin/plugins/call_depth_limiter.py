@@ -1,8 +1,8 @@
-from mythril.laser.plugin.signals import PluginSkipState
-from mythril.laser.plugin.interface import LaserPlugin
-from mythril.laser.plugin.builder import PluginBuilder
 from mythril.laser.ethereum.state.global_state import GlobalState
 from mythril.laser.ethereum.svm import LaserEVM
+from mythril.laser.plugin.builder import PluginBuilder
+from mythril.laser.plugin.interface import LaserPlugin
+from mythril.laser.plugin.signals import PluginSkipState
 
 
 class CallDepthLimitBuilder(PluginBuilder):

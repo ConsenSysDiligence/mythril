@@ -1,5 +1,7 @@
-import pytest
 from pathlib import Path
+
+import pytest
+
 from mythril.mythril import MythrilDisassembler
 from mythril.solidity.features import SolidityFeatureExtractor
 from mythril.solidity.soliditycontract import SolidityContract

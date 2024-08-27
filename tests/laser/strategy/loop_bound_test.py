@@ -1,4 +1,5 @@
 import pytest
+
 from mythril.laser.ethereum.strategy.extensions.bounded_loops import (
     BoundedLoopsStrategy,
 )

@@ -1,4 +1,5 @@
 from typing import List
+
 from mythril.support.support_utils import Singleton
 
 

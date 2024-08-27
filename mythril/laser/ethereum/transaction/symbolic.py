@@ -2,22 +2,21 @@
 symbolic values."""
 
 import logging
-from typing import Optional, List
-
+from typing import List, Optional
 
 from mythril.disassembler.disassembly import Disassembly
-from mythril.laser.ethereum.cfg import Node, Edge, JumpType
+from mythril.laser.ethereum.cfg import Edge, JumpType, Node
 from mythril.laser.ethereum.state.account import Account
 from mythril.laser.ethereum.state.calldata import SymbolicCalldata
 from mythril.laser.ethereum.state.world_state import WorldState
 from mythril.laser.ethereum.transaction.transaction_models import (
-    MessageCallTransaction,
-    ContractCreationTransaction,
-    tx_id_manager,
     BaseTransaction,
+    ContractCreationTransaction,
+    MessageCallTransaction,
+    tx_id_manager,
 )
-from mythril.laser.smt import symbol_factory, Or, SMTBool as Bool, BitVec
-
+from mythril.laser.smt import BitVec, Or, symbol_factory
+from mythril.laser.smt import SMTBool as Bool
 
 FUNCTION_HASH_BYTE_LENGTH = 4
 

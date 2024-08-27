@@ -1,10 +1,11 @@
 """This module."""
 
 from enum import Enum
-from typing import Dict, List, TYPE_CHECKING
+from typing import TYPE_CHECKING, Dict, List
+
+from flags import Flags
 
 from mythril.laser.ethereum.state.constraints import Constraints
-from flags import Flags
 
 if TYPE_CHECKING:
     from mythril.laser.ethereum.state.global_state import GlobalState

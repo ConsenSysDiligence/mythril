@@ -1,6 +1,6 @@
-import z3
+from typing import List, Union
 
-from typing import Union, List
+import z3
 
 
 class Model:

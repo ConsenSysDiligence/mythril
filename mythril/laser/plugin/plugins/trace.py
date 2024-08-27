@@ -1,8 +1,9 @@
-from mythril.laser.plugin.interface import LaserPlugin
-from mythril.laser.plugin.builder import PluginBuilder
+from typing import List, Tuple
+
 from mythril.laser.ethereum.state.global_state import GlobalState
 from mythril.laser.ethereum.svm import LaserEVM
-from typing import List, Tuple
+from mythril.laser.plugin.builder import PluginBuilder
+from mythril.laser.plugin.interface import LaserPlugin
 
 
 class TraceFinderBuilder(PluginBuilder):

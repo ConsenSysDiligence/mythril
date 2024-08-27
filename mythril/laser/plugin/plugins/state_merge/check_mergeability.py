@@ -1,8 +1,9 @@
 import logging
+
 from mythril.laser.ethereum.cfg import Node
-from mythril.laser.ethereum.state.world_state import WorldState
 from mythril.laser.ethereum.state.account import Account
 from mythril.laser.ethereum.state.constraints import Constraints
+from mythril.laser.ethereum.state.world_state import WorldState
 from mythril.laser.smt import Not
 
 CONSTRAINT_DIFFERENCE_LIMIT = 15

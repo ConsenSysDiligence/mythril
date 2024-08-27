@@ -1,7 +1,7 @@
 """This module provides classes for an SMT abstraction of bit vectors."""
 
-from operator import lshift, rshift, ne, eq
-from typing import Union, Set, cast, Any, Optional, Callable
+from operator import eq, lshift, ne, rshift
+from typing import Any, Callable, Optional, Set, Union, cast
 
 import z3
 

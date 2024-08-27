@@ -1,7 +1,7 @@
 """This module provides classes for an SMT abstraction of boolean
 expressions."""
 
-from typing import Union, cast, Set
+from typing import Set, Union, cast
 
 import z3
 

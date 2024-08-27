@@ -1,12 +1,13 @@
 """This module contains the dynamic loader logic to get on-chain storage data
 and dependencies."""
 
-from mythril.disassembler.disassembly import Disassembly
+import functools
 import logging
 import re
-import functools
-from mythril.ethereum.interface.rpc.client import EthJsonRpc
 from typing import Optional
+
+from mythril.disassembler.disassembly import Disassembly
+from mythril.ethereum.interface.rpc.client import EthJsonRpc
 
 LRU_CACHE_SIZE = 4096
 

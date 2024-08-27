@@ -4,16 +4,16 @@ withdrawal."""
 import logging
 from copy import copy
 
+from mythril.analysis import solver
 from mythril.analysis.module.base import DetectionModule, EntryPoint
 from mythril.analysis.potential_issues import (
-    get_potential_issues_annotation,
     PotentialIssue,
+    get_potential_issues_annotation,
 )
-from mythril.laser.ethereum.transaction.symbolic import ACTORS
 from mythril.analysis.swc_data import UNPROTECTED_ETHER_WITHDRAWAL
-from mythril.laser.ethereum.state.global_state import GlobalState
-from mythril.analysis import solver
 from mythril.exceptions import UnsatError
+from mythril.laser.ethereum.state.global_state import GlobalState
+from mythril.laser.ethereum.transaction.symbolic import ACTORS
 from mythril.laser.smt import UGT
 
 log = logging.getLogger(__name__)

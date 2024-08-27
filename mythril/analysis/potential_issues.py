@@ -1,5 +1,5 @@
-from mythril.analysis.report import Issue
 from mythril.analysis.issue_annotation import IssueAnnotation
+from mythril.analysis.report import Issue
 from mythril.analysis.solver import get_transaction_sequence
 from mythril.exceptions import UnsatError
 from mythril.laser.ethereum.state.annotation import StateAnnotation

@@ -1,14 +1,15 @@
 import logging
 from typing import Tuple
 
-
 from mythril.laser.smt import (
     And,
     BitVec,
-    SMTBool as Bool,
     Function,
     URem,
     symbol_factory,
+)
+from mythril.laser.smt import (
+    SMTBool as Bool,
 )
 
 log = logging.getLogger(__name__)

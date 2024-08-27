@@ -1,10 +1,10 @@
 """This module contains the class used to represent disassembly code."""
 
-from mythril.ethereum import util
-from mythril.disassembler import asm
-from mythril.support.signatures import SignatureDB
-
 from typing import Dict, List, Tuple
+
+from mythril.disassembler import asm
+from mythril.ethereum import util
+from mythril.support.signatures import SignatureDB
 
 
 class Disassembly(object):
