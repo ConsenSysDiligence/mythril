@@ -2,9 +2,9 @@
 graphs."""
 
 import re
+from typing import Dict, List
 
 from jinja2 import Environment, PackageLoader, select_autoescape
-from typing import Dict, List
 from z3 import Z3Exception
 
 from mythril.laser.ethereum.svm import NodeFlags
