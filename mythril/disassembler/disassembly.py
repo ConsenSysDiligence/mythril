@@ -6,6 +6,7 @@ from mythril.disassembler import asm
 from mythril.ethereum import util
 from mythril.support.signatures import SignatureDB
 from mythril.support.support_args import args
+from ast import literal_eval
 
 
 class Disassembly(object):
@@ -43,19 +44,20 @@ class Disassembly(object):
         jump_table_indices = asm.find_op_code_sequence(
             [("PUSH1", "PUSH2", "PUSH3", "PUSH4"), ("EQ",)], self.instruction_list
         )
+        ignore_false_funcs = args.ignore_false_funcs
+        if ignore_false_funcs is None:
+            ignore_false_funcs = [1, 2, 3, 4]
 
         for index in jump_table_indices:
-            ignore_false_funcs = args.ignore_false_funcs
             # ignore the default func hashes if ignore_false_funcs is None
-            if ignore_false_funcs is None \
-                and self.instruction_list[index]["argument"] in ['0x01', '0x02', '0x03', '0x04']:
+            argument = self.instruction_list[index]["argument"]
+            function_hash = literal_eval(argument)
+            
+            if function_hash in ignore_false_funcs:
                 continue
             function_hash, jump_target, function_name = get_function_info(
                 index, self.instruction_list, signatures
             )
-            # ignore the function if it is in the ignore_false_funcs list
-            if ignore_false_funcs and function_hash in ignore_false_funcs:
-                continue
             
             self.func_hashes.append(function_hash)
             if jump_target is not None and function_name is not None:

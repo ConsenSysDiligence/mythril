@@ -27,6 +27,7 @@ from mythril.exceptions import (
 from mythril.laser.ethereum.transaction.symbolic import ACTORS
 from mythril.mythril import MythrilAnalyzer, MythrilConfig, MythrilDisassembler
 from mythril.plugin.loader import MythrilPluginLoader
+from mythril.support.support_args import args as support_args
 
 # Initialise core Mythril Component
 _ = MythrilPluginLoader()
@@ -473,7 +474,6 @@ def add_analysis_args(options):
     options.add_argument(
         "--ignore-false-funcs",
         type=str,
-        nargs='+',
         default=None,
         help="List of function signatures that should be ignored as false positives."
         "usage: --ignore-false-funcs [func1, func2, ...]",
@@ -974,6 +974,7 @@ def parse_args_and_execute(parser: ArgumentParser, args: Namespace) -> None:
         solc_json = getattr(args, "solc_json", None)
         solv = getattr(args, "solv", None)
         solc_args = getattr(args, "solc_args", None)
+        support_args.ignore_false_funcs = getattr(args, "ignore_false_funcs", None)
         disassembler = MythrilDisassembler(
             eth=config.eth,
             solc_version=solv,
