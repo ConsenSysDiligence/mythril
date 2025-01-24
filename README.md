@@ -4,7 +4,7 @@
 	<img src="/static/mythril_new.png" height="320px"/>
 </p>
 
-[![Discord](https://img.shields.io/discord/697535391594446898)](https://discord.com/channels/697535391594446898/712829485350649886)
+[![Discord](https://img.shields.io/discord/697535391594446898)](https://discord.com/invite/consensys)
 [![PyPI](https://badge.fury.io/py/mythril.svg)](https://pypi.python.org/pypi/mythril)
 [![Read the Docs](https://readthedocs.org/projects/mythril-classic/badge/?version=master)](https://mythril-classic.readthedocs.io/en/develop/)
 [![CircleCI](https://dl.circleci.com/status-badge/img/gh/Consensys/mythril/tree/develop.svg?style=shield&circle-token=fd6738fd235f6c2d8e10234259090e3b05190d0e)](https://dl.circleci.com/status-badge/redirect/gh/Consensys/mythril/tree/develop)
