@@ -5,6 +5,7 @@ from typing import Dict, List, Tuple
 from mythril.disassembler import asm
 from mythril.ethereum import util
 from mythril.support.signatures import SignatureDB
+from mythril.support.support_args import args
 
 
 class Disassembly(object):
@@ -44,9 +45,18 @@ class Disassembly(object):
         )
 
         for index in jump_table_indices:
+            ignore_false_funcs = args.ignore_false_funcs
+            # ignore the default func hashes if ignore_false_funcs is None
+            if ignore_false_funcs is None \
+                and self.instruction_list[index]["argument"] in ['0x01', '0x02', '0x03', '0x04']:
+                continue
             function_hash, jump_target, function_name = get_function_info(
                 index, self.instruction_list, signatures
             )
+            # ignore the function if it is in the ignore_false_funcs list
+            if ignore_false_funcs and function_hash in ignore_false_funcs:
+                continue
+            
             self.func_hashes.append(function_hash)
             if jump_target is not None and function_name is not None:
                 self.function_name_to_address[function_name] = jump_target
