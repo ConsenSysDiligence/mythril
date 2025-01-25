@@ -669,7 +669,7 @@ def validate_args(args: Namespace):
             )
         if len(args.transaction_sequences) != args.transaction_count:
             args.transaction_count = len(args.transaction_sequences)
-            
+
     if getattr(args, "ignore_false_funcs", None):
         try:
             args.ignore_false_funcs = literal_eval(str(args.ignore_false_funcs))
@@ -680,7 +680,6 @@ def validate_args(args: Namespace):
                 "[func1, func2, ...]. The default ignore false functions are "
                 "[0x00000001, 0x00000002, 0x00000003, 0x00000004]",
             )
-            
 
 
 def set_config(args: Namespace):

@@ -1,12 +1,12 @@
 """This module contains the class used to represent disassembly code."""
 
+from ast import literal_eval
 from typing import Dict, List, Tuple
 
 from mythril.disassembler import asm
 from mythril.ethereum import util
 from mythril.support.signatures import SignatureDB
 from mythril.support.support_args import args
-from ast import literal_eval
 
 
 class Disassembly(object):
@@ -52,13 +52,13 @@ class Disassembly(object):
             # ignore the default func hashes if ignore_false_funcs is None
             argument = self.instruction_list[index]["argument"]
             function_hash = literal_eval(argument)
-            
+
             if function_hash in ignore_false_funcs:
                 continue
             function_hash, jump_target, function_name = get_function_info(
                 index, self.instruction_list, signatures
             )
-            
+
             self.func_hashes.append(function_hash)
             if jump_target is not None and function_name is not None:
                 self.function_name_to_address[function_name] = jump_target
