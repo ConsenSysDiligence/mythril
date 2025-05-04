@@ -51,10 +51,15 @@ class Disassembly(object):
         for index in jump_table_indices:
             # ignore the default func hashes if ignore_false_funcs is None
             argument = self.instruction_list[index]["argument"]
-            function_hash = literal_eval(argument)
+            if isinstance(argument, str):
+                function_hash = literal_eval(argument)
+                if function_hash in ignore_false_funcs:
+                    continue
+            elif isinstance(argument, tuple):
+                function_hash = int.from_bytes(bytes(argument), 'big')
+                if function_hash in ignore_false_funcs:
+                    continue
 
-            if function_hash in ignore_false_funcs:
-                continue
             function_hash, jump_target, function_name = get_function_info(
                 index, self.instruction_list, signatures
             )
