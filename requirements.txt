@@ -15,7 +15,7 @@ mypy-extensions==1.0.0
 numpy
 persistent>=4.2.0
 py-flags
-py-evm==0.10.1b2
+py-evm==0.12.1b1
 py-solc-x<3.0.0
 py-solc
 pyparsing>=2.0.2,<4
