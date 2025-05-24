@@ -18,6 +18,7 @@ class Args(object, metaclass=Singleton):
         self.disable_iprof = False
         self.solver_log = None
         self.transaction_sequences: List[List[str]] = None
+        self.ignore_false_funcs: List[str] = None
         self.use_integer_module = True
         self.use_issue_annotations = False
         self.solc_args = None

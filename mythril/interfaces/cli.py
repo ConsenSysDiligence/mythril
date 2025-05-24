@@ -27,6 +27,7 @@ from mythril.exceptions import (
 from mythril.laser.ethereum.transaction.symbolic import ACTORS
 from mythril.mythril import MythrilAnalyzer, MythrilConfig, MythrilDisassembler
 from mythril.plugin.loader import MythrilPluginLoader
+from mythril.support.support_args import args as support_args
 
 # Initialise core Mythril Component
 _ = MythrilPluginLoader()
@@ -471,6 +472,13 @@ def add_analysis_args(options):
         "with func_hash1 and func_hash2, and the second tx is constrained with func_hash2 and func_hash3. Use -1 as a proxy for fallback() function and -2 for receive() function.",
     )
     options.add_argument(
+        "--ignore-false-funcs",
+        type=str,
+        default=None,
+        help="List of function signatures that should be ignored as false positives."
+        "usage: --ignore-false-funcs [func1, func2, ...]",
+    )
+    options.add_argument(
         "--beam-search",
         type=int,
         default=None,
@@ -661,6 +669,17 @@ def validate_args(args: Namespace):
             )
         if len(args.transaction_sequences) != args.transaction_count:
             args.transaction_count = len(args.transaction_sequences)
+
+    if getattr(args, "ignore_false_funcs", None):
+        try:
+            args.ignore_false_funcs = literal_eval(str(args.ignore_false_funcs))
+        except ValueError:
+            exit_with_error(
+                args.outform,
+                "The ignore false functions are in incorrect format, It should be "
+                "[func1, func2, ...]. The default ignore false functions are "
+                "[0x00000001, 0x00000002, 0x00000003, 0x00000004]",
+            )
 
 
 def set_config(args: Namespace):
@@ -954,6 +973,7 @@ def parse_args_and_execute(parser: ArgumentParser, args: Namespace) -> None:
         solc_json = getattr(args, "solc_json", None)
         solv = getattr(args, "solv", None)
         solc_args = getattr(args, "solc_args", None)
+        support_args.ignore_false_funcs = getattr(args, "ignore_false_funcs", None)
         disassembler = MythrilDisassembler(
             eth=config.eth,
             solc_version=solv,
