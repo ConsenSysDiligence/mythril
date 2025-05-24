@@ -56,7 +56,7 @@ class Disassembly(object):
                 if function_hash in ignore_false_funcs:
                     continue
             elif isinstance(argument, tuple):
-                function_hash = int.from_bytes(bytes(argument), 'big')
+                function_hash = int.from_bytes(bytes(argument), "big")
                 if function_hash in ignore_false_funcs:
                     continue
 
