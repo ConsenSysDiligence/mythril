@@ -22,6 +22,6 @@ pyparsing>=2.0.2,<4
 requests
 rlp>=3,<5
 semantic_version
-z3-solver>=4.8.8.0,<=4.13.4.0
+z3-solver>=4.8.8.0,<=4.15.1.0
 matplotlib
 certifi>=2020.06.20
