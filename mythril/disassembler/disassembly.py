@@ -1,3 +1,4 @@
+#mythril/disassembler/disassembly.py
 """This module contains the class used to represent disassembly code."""
 
 from typing import Dict, List, Tuple
@@ -106,7 +107,10 @@ def get_function_info(
         offset = instruction_list[index + 2]["argument"]
         if isinstance(offset, tuple):
             offset = bytes(offset).hex()
-        entry_point = int(offset, 16)
+        if offset and len(offset) > 2:
+            entry_point = int(offset, 16)
+        else:
+            entry_point = 0
     except (KeyError, IndexError):
         return function_hash, None, None
 
