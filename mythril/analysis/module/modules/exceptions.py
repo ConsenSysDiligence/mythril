@@ -83,6 +83,14 @@ class Exceptions(DetectionModule):
         if opcode == "REVERT" and not is_assertion_failure(state):
             return []
 
+        # Skip INVALID at address 0: no legitimate compiled contract starts
+        # with an assertion.  This is typically an artifact of analyzing
+        # runtime bytecode as creation bytecode, which causes the symbolic
+        # executor to deploy garbage memory content whose first byte maps to
+        # an INVALID opcode.  Reporting it as SWC-110 is a false positive.
+        if opcode == "INVALID" and address == 0:
+            return []
+
         cache_address = annotations[0].last_jump
         if (
             cache_address,

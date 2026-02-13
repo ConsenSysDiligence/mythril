@@ -82,6 +82,22 @@ def test_analysis_pending(file_name, tx_data, calldata):
         assert test_case["steps"][tx_data["TX_OUTPUT"]]["input"] == calldata
 
 
+def test_no_assert_false_positive_at_pc0():
+    """Regression test for issue #1911: a Solidity contract compiled with
+    --bin-runtime and heavy Yul optimizations should NOT produce a spurious
+    SWC-110 assertion violation at PC 0 when no assert() statements exist."""
+    bytecode_file = str(TESTDATA / "inputs" / "no_assert_false_positive.sol.o")
+    command = (
+        f"python3 {MYTH} analyze -f {bytecode_file} -t 2 -o jsonv2"
+        f" -m Exceptions --solver-timeout 60000 --no-onchain-data"
+    )
+    output = json.loads(output_of(command))
+    assert len(output[0]["issues"]) == 0, (
+        "Expected zero assertion-violation issues for a contract without assert(), "
+        f"but got {len(output[0]['issues'])}"
+    )
+
+
 test_data_code = [
     ("114", f"{TESTDATA}/input_contracts/tx.sol", True),
     ("123", f"{TESTDATA}/input_contracts/requirements_violation_pos.sol", True),
