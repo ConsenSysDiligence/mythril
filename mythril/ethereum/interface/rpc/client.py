@@ -72,7 +72,7 @@ class EthJsonRpc(BaseClient):
             r = self.session.post(url, headers=headers, data=json.dumps(data))
         except RequestsConnectionError:
             raise ConnectionError
-        if r.status_code / 100 != 2:
+        if r.status_code // 100 != 2:
             raise BadStatusCodeError(r.status_code)
         try:
             response = r.json()
