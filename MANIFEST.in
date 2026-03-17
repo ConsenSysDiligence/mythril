@@ -1,3 +1,0 @@
-include mythril/support/assets/*
-include mythril/analysis/templates/*
-include requirements.txt

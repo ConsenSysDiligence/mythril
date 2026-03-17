@@ -1,0 +1,92 @@
+[build-system]
+requires = ["setuptools>=64"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "mythril"
+dynamic = ["version"]
+description = "Security analysis tool for Ethereum smart contracts"
+readme = "README.md"
+license = "MIT"
+requires-python = ">=3.10"
+authors = [{ name = "ConsenSys Dilligence" }]
+keywords = ["hacking", "disassembler", "security", "ethereum"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Science/Research",
+    "Topic :: Software Development :: Disassemblers",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+]
+dependencies = [
+    "blake2b-py",
+    "coloredlogs>=10.0",
+    "coincurve>=13.0.0",
+    "cytoolz>=0.12.0",
+    "asn1crypto>=0.22.0",
+    "configparser>=3.5.0",
+    "py_ecc<5.0.0,>=1.4.7",
+    "eth-abi>=4.0.0,<5.0.0",
+    "eth-account>=0.8.0",
+    "ethereum-input-decoder>=0.2.2",
+    "eth-hash<0.4.0,>=0.3.1",
+    "eth-keyfile>=0.6.0",
+    "eth-rlp>=0.3.0,<0.4.0",
+    "eth-utils>=2",
+    "hexbytes<0.3.0",
+    "jinja2>=2.9",
+    "MarkupSafe<2.1.0",
+    "mock",
+    "numpy",
+    "persistent>=4.2.0",
+    "py-flags",
+    "py-evm==0.7.0a1",
+    "py-solc-x<2.0.0",
+    "py-solc",
+    "pyparsing<3,>=2.0.2",
+    "requests",
+    "rlp<4,>=3",
+    "semantic_version",
+    "scikit-learn",
+    "transaction>=2.2.1",
+    "z3-solver<=4.12.5.0,>=4.8.8.0",
+    "matplotlib",
+    "certifi>=2020.06.20",
+    "setuptools<78",
+]
+
+[project.scripts]
+myth = "mythril.interfaces.cli:main"
+
+[project.urls]
+Homepage = "https://github.com/ConsenSys/mythril"
+Repository = "https://github.com/ConsenSys/mythril"
+Documentation = "https://mythril-classic.readthedocs.io/en/develop/"
+
+[dependency-groups]
+dev = ["ruff", "ty", "pre-commit"]
+test = ["pytest>=3.6.0", "pytest-mock", "pytest-cov", "pytest-timeout", "coverage>=6.0,<7.0", "tomli>=2.0; python_version < '3.11'"]
+audit = ["pip-audit"]
+
+[tool.setuptools.dynamic]
+version = { attr = "mythril.__version__.__version__" }
+
+[tool.setuptools.packages.find]
+exclude = ["tests*", "docs*"]
+
+[tool.setuptools.package-data]
+"mythril.analysis.templates" = ["*"]
+"mythril.support.assets" = ["*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-v --disable-pytest-warnings"
+
+[tool.coverage.run]
+source = ["mythril"]
+omit = ["*__init__.py", "*_test.py"]
+
+[tool.coverage.report]
+omit = ["*__init__.py", "/usr/*", "*_test.py", "setup.py"]
