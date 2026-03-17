@@ -143,6 +143,15 @@ venv.bak/
 # mypy
 .mypy_cache/
 
+# ruff
+.ruff_cache/
+
+# ty
+.ty/
+
+# uv
+uv.lock
+
 ### Windows ###
 # Windows thumbnail cache files
 Thumbs.db
@@ -171,11 +180,25 @@ $RECYCLE.BIN/
 *.lock
 *.svg
 lol*
-.idea*
 coverage_html_report/
 tests/testdata/outputs_current/
 tests/testdata/outputs_current_laser_result/
 tests/testdata/mythril_config_inputs/config.ini
 
-# VSCode
-.vscode
+# Editors / IDEs
+.vscode/
+.idea/
+
+# Local developer files
+/signatures.db
+
+# AI assistant configs (developer-local, not project conventions)
+CLAUDE.md
+AGENTS.md
+.cursorrules
+.cursorignore
+.aider*
+.codeium/
+.continue/
+.tabby/
+.windsurfrules
