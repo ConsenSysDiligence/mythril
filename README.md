@@ -7,7 +7,7 @@
 [![Discord](https://img.shields.io/discord/697535391594446898)](https://discord.com/channels/697535391594446898/712829485350649886)
 [![PyPI](https://badge.fury.io/py/mythril.svg)](https://pypi.python.org/pypi/mythril)
 [![Read the Docs](https://readthedocs.org/projects/mythril-classic/badge/?version=master)](https://mythril-classic.readthedocs.io/en/develop/)
-[![CircleCI](https://dl.circleci.com/status-badge/img/gh/Consensys/mythril/tree/develop.svg?style=shield&circle-token=fd6738fd235f6c2d8e10234259090e3b05190d0e)](https://dl.circleci.com/status-badge/redirect/gh/Consensys/mythril/tree/develop)
+[![CI](https://github.com/ConsenSys/mythril/actions/workflows/ci.yml/badge.svg?branch=develop)](https://github.com/ConsenSys/mythril/actions/workflows/ci.yml)
 [![Sonarcloud - Maintainability](https://sonarcloud.io/api/project_badges/measure?project=mythril&metric=sqale_rating)](https://sonarcloud.io/dashboard?id=mythril)
 [![Pypi Installs](https://static.pepy.tech/badge/mythril)](https://pepy.tech/project/mythril)
 [![DockerHub Pulls](https://img.shields.io/docker/pulls/mythril/myth.svg)](https://cloud.docker.com/u/mythril/repository/docker/mythril/myth)
@@ -26,7 +26,7 @@ Get it with [Docker](https://www.docker.com):
 $ docker pull mythril/myth
 ```
 
-Install from Pypi (Python 3.7-3.10):
+Install from Pypi (Python 3.10-3.13):
 
 ```bash
 $ pip3 install mythril
