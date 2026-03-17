@@ -43,8 +43,9 @@ jobs:
         run: docker buildx bake myth-smoke-test
 
       - name: Build and push
-        run: docker buildx bake --push ${{ steps.meta.outputs.target }}
+        run: docker buildx bake --push "$BAKE_TARGET"
         env:
+          BAKE_TARGET: ${{ steps.meta.outputs.target }}
           VERSION: ${{ github.ref_type == 'tag' && format('{0},latest', github.ref_name) || github.sha }}
 
       - name: Trivy scan
