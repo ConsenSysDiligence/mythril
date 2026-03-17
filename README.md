@@ -92,11 +92,11 @@ For support or general discussions please checkout [diligence-mythx channel](htt
 Mythril's documentation is contained in the `docs` folder and is published to [Read the Docs](https://mythril-classic.readthedocs.io/en/develop/). It is based on Sphinx and can be built using the Makefile contained in the subdirectory:
 
 ```
-cd docs
-make html
+uv sync --group docs
+cd docs && uv run make html
 ```
 
-This will create a `build` output directory containing the HTML output. Alternatively, PDF documentation can be built with `make latexpdf`. The available output format options can be seen with `make help`.
+This will create a `build` output directory containing the HTML output. Alternatively, PDF documentation can be built with `uv run make latexpdf`. The available output format options can be seen with `uv run make help`.
 
 ## Vulnerability Remediation
 

@@ -69,6 +69,7 @@ Documentation = "https://mythril-classic.readthedocs.io/en/develop/"
 dev = ["ruff", "ty", "pre-commit"]
 test = ["pytest>=3.6.0", "pytest-mock", "pytest-cov", "pytest-timeout", "coverage>=6.0,<7.0", "tomli>=2.0; python_version < '3.11'"]
 audit = ["pip-audit"]
+docs = ["sphinx", "sphinx-rtd-theme"]
 
 [tool.setuptools.dynamic]
 version = { attr = "mythril.__version__.__version__" }
