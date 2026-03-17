@@ -3,7 +3,7 @@ import logging
 
 from mythril.exceptions import UnsatError
 
-from mythril.analysis.solver import get_transaction_sequence, UnsatError
+from mythril.analysis.solver import get_transaction_sequence
 from mythril.analysis.issue_annotation import IssueAnnotation
 from mythril.analysis.module.base import DetectionModule, Issue, EntryPoint
 from mythril.analysis.swc_data import ARBITRARY_JUMP

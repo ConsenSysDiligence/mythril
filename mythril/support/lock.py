@@ -42,7 +42,7 @@ class LockFile(object):
                 if e.errno != errno.EEXIST:
                     raise
                 if (time.time() - start_time) >= self.timeout:
-                    raise FileLockException(
+                    raise LockFileException(
                         f"Stuck for more than {self.timeout} seconds waiting to unlock the file {self.filename}."
                     )
                 time.sleep(self.delay)
