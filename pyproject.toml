@@ -80,6 +80,106 @@ exclude = ["tests*", "docs*"]
 "mythril.analysis.templates" = ["*"]
 "mythril.support.assets" = ["*"]
 
+[tool.ruff]
+target-version = "py310"
+line-length = 88
+
+[tool.ruff.lint]
+select = ["ALL"]
+ignore = [
+    "D",       # pydocstyle — no docstring enforcement for legacy codebase
+    "ANN",     # flake8-annotations — no type annotation enforcement
+    "ERA",     # eradicate — don't flag commented-out code
+    "FIX",     # flake8-fixme — allow TODO/FIXME comments
+    "TD",      # flake8-todos — allow TODO comments
+    "T20",     # flake8-print — allow print statements
+    "S",       # flake8-bandit — security linting too noisy for legacy code
+    "PLR",     # pylint refactor — too many suggestions for legacy code
+    "PLW",     # pylint warning — loop variable overwrites common in legacy
+    "C90",     # mccabe complexity — legacy code has complex functions
+    "FBT",     # flake8-boolean-trap — boolean args common in legacy code
+    "ARG",     # flake8-unused-arguments — many callback signatures
+    "TRY",     # tryceratops — exception handling patterns
+    "EM",      # flake8-errmsg — string literal exceptions common
+    "SLF",     # flake8-self — private member access common
+    "RET",     # flake8-return — return style preferences
+    "PTH",     # flake8-use-pathlib — os.path usage throughout
+    "N",       # pep8-naming — naming conventions differ
+    "UP",      # pyupgrade — gradual upgrade preferred
+    "B",       # flake8-bugbear — too many false positives in legacy
+    "SIM",     # flake8-simplify — simplification suggestions too noisy
+    "PERF",    # perflint — performance suggestions too noisy
+    "COM812",  # missing trailing comma — conflicts with formatter
+    "ISC001",  # implicit string concatenation — conflicts with formatter
+    "E501",    # line too long — ruff format handles code; comments/docstrings left as-is
+    "E721",    # type comparison — uses == instead of isinstance in legacy
+    "E722",    # bare except — common in legacy error handling
+    "E741",    # ambiguous variable name — legacy naming
+    "G",       # flake8-logging-format — legacy logging uses % and + formatting
+    "A",       # flake8-builtins — legacy code shadows builtins (id, type, etc.)
+    "BLE001",  # blind exception — common in legacy error handling
+    "RUF001",  # ambiguous unicode — intentional en-dash in comments
+    "RUF005",  # collection-literal-concatenation — breaks Constraints custom __add__
+    "RUF012",  # mutable class default — common pattern in legacy
+    "RUF013",  # implicit Optional — legacy type hints
+    "PGH003",  # blanket type: ignore — legacy type suppression
+    "PT015",   # assertion always fails — used intentionally for unreachable code
+    "DTZ005",  # datetime without tz — legacy datetime usage
+    "LOG015",  # root logger — legacy logging pattern
+    "EXE001",  # shebang — not all files need it
+    "EXE005",  # shebang position — legacy files
+    "PYI024",  # typing — legacy patterns
+    "PYI048",  # typing — legacy patterns
+    "PYI001",  # private TypeVar naming — stubs
+    "FURB116", # f-string for hex/bin/oct — legacy hex formatting patterns
+    "INP001",  # implicit namespace package — docs/conf.py
+    "PLE0302", # special method params — legacy override patterns
+    "F403",    # wildcard imports — used in transaction __init__
+]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/**" = ["ALL"]
+"**/__init__.py" = ["F401"]  # re-exports in package init files
+"mythril/laser/smt/__init__.py" = ["F811"]  # Bool method overrides in SymbolFactory subclasses
+"mythril/mythril/__init__.py" = ["I001"]  # import order matters — circular import otherwise
+"docs/source/conf.py" = ["E402"]  # sphinx conf requires imports after path setup
+
+[tool.ty.environment]
+python-version = "3.10"
+
+[tool.ty.rules]
+possibly-unresolved-reference = "ignore"
+unresolved-reference = "ignore"
+unresolved-import = "ignore"
+invalid-assignment = "ignore"
+not-iterable = "ignore"
+invalid-type-form = "ignore"
+missing-argument = "ignore"
+unknown-argument = "ignore"
+too-many-positional-arguments = "ignore"
+invalid-return-type = "ignore"
+invalid-argument-type = "ignore"
+possibly-missing-attribute = "ignore"
+unresolved-attribute = "ignore"
+call-non-callable = "ignore"
+index-out-of-bounds = "ignore"
+not-subscriptable = "ignore"
+invalid-context-manager = "ignore"
+unsupported-operator = "ignore"
+invalid-raise = "ignore"
+possibly-missing-implicit-call = "ignore"
+redundant-cast = "ignore"
+undefined-reveal = "ignore"
+invalid-overload = "ignore"
+invalid-type-variable-constraints = "ignore"
+invalid-legacy-type-variable = "ignore"
+invalid-method-override = "ignore"       # legacy detection modules override _execute with incompatible signatures
+invalid-parameter-default = "ignore"     # legacy code uses None defaults without Optional annotation
+no-matching-overload = "ignore"          # z3 type inference issues
+unused-type-ignore-comment = "ignore"    # legacy type: ignore comments
+deprecated = "ignore"                    # legacy stdlib usage (codecs.open, etc.)
+useless-overload-body = "ignore"         # z3 stubs
+
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 addopts = "-v --disable-pytest-warnings"
