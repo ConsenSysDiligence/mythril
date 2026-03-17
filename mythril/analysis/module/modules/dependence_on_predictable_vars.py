@@ -1,18 +1,19 @@
 """This module contains the detection code for predictable variable
 dependence."""
-import logging
 
+import logging
+from typing import List, cast
+
+from mythril.analysis import solver
 from mythril.analysis.issue_annotation import IssueAnnotation
 from mythril.analysis.module.base import DetectionModule, EntryPoint
-from mythril.analysis.report import Issue
-from mythril.exceptions import UnsatError
-from mythril.analysis import solver
-from mythril.laser.smt import And, ULT, symbol_factory
-from mythril.analysis.swc_data import TIMESTAMP_DEPENDENCE, WEAK_RANDOMNESS
 from mythril.analysis.module.module_helpers import is_prehook
-from mythril.laser.ethereum.state.global_state import GlobalState
+from mythril.analysis.report import Issue
+from mythril.analysis.swc_data import TIMESTAMP_DEPENDENCE, WEAK_RANDOMNESS
+from mythril.exceptions import UnsatError
 from mythril.laser.ethereum.state.annotation import StateAnnotation
-from typing import cast, List
+from mythril.laser.ethereum.state.global_state import GlobalState
+from mythril.laser.smt import ULT, And, symbol_factory
 
 log = logging.getLogger(__name__)
 
@@ -65,17 +66,13 @@ class PredictableVariables(DetectionModule):
         issues = []
 
         if is_prehook():
-
             opcode = state.get_current_instruction()["opcode"]
 
             if opcode == "JUMPI":
-
                 # Look for predictable state variables in jump condition
 
                 for annotation in state.mstate.stack[-2].annotations:
-
                     if isinstance(annotation, PredictableValueAnnotation):
-
                         constraints = state.world_state.constraints
                         try:
                             transaction_sequence = solver.get_transaction_sequence(
@@ -97,7 +94,7 @@ class PredictableVariables(DetectionModule):
 
                         """
                         Usually report low severity except in cases where the hash of a previous block is used to
-                        determine control flow. 
+                        determine control flow.
                         """
 
                         severity = "Low"
@@ -136,7 +133,6 @@ class PredictableVariables(DetectionModule):
                         issues.append(issue)
 
             elif opcode == "BLOCKHASH":
-
                 param = state.mstate.stack[-1]
 
                 constraint = [
@@ -150,7 +146,6 @@ class PredictableVariables(DetectionModule):
                 # Why the second constraint? Because without it Z3 returns a solution where param overflows.
 
                 try:
-
                     solver.get_model(
                         state.world_state.constraints + constraint  # type: ignore
                     )
@@ -171,7 +166,7 @@ class PredictableVariables(DetectionModule):
                 # if we're in the post hook of a BLOCKHASH op, check if an old block number was used to create it.
 
                 annotations = cast(
-                    List[OldBlockNumberUsedAnnotation],
+                    "List[OldBlockNumberUsedAnnotation]",
                     list(state.get_annotations(OldBlockNumberUsedAnnotation)),
                 )
 

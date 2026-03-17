@@ -1,19 +1,24 @@
 """This module contains the transaction models used throughout LASER's symbolic
 execution."""
 
+import logging
 from copy import deepcopy
+from typing import Optional, Union
+
 from z3 import ExprRef
-from typing import Union, Optional
-from mythril.support.support_utils import Singleton
-from mythril.laser.ethereum.state.calldata import ConcreteCalldata
+
 from mythril.laser.ethereum.state.account import Account
-from mythril.laser.ethereum.state.calldata import BaseCalldata, SymbolicCalldata
-from mythril.laser.ethereum.state.return_data import ReturnData
+from mythril.laser.ethereum.state.calldata import (
+    BaseCalldata,
+    ConcreteCalldata,
+    SymbolicCalldata,
+)
 from mythril.laser.ethereum.state.environment import Environment
 from mythril.laser.ethereum.state.global_state import GlobalState
+from mythril.laser.ethereum.state.return_data import ReturnData
 from mythril.laser.ethereum.state.world_state import WorldState
-from mythril.laser.smt import symbol_factory, UGE, BitVec
-import logging
+from mythril.laser.smt import UGE, BitVec, symbol_factory
+from mythril.support.support_utils import Singleton
 
 log = logging.getLogger(__name__)
 

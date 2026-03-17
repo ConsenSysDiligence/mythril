@@ -1,16 +1,18 @@
 """This module contains the detection code for potentially insecure low-level
 calls."""
 
+import logging
+
+import eth_abi
+
 from mythril.analysis import solver
 from mythril.analysis.issue_annotation import IssueAnnotation
+from mythril.analysis.module.base import DetectionModule, EntryPoint
 from mythril.analysis.potential_issues import Issue
 from mythril.analysis.swc_data import ASSERT_VIOLATION
-from mythril.analysis.module.base import DetectionModule, EntryPoint
-from mythril.laser.ethereum.state.global_state import GlobalState
-from mythril.laser.smt import Extract, And
 from mythril.exceptions import UnsatError
-import logging
-import eth_abi
+from mythril.laser.ethereum.state.global_state import GlobalState
+from mythril.laser.smt import And, Extract
 
 log = logging.getLogger(__name__)
 

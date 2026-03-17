@@ -1,4 +1,4 @@
-""" Laser plugins
+"""Laser plugins
 
 This module contains everything to do with laser plugins
 

@@ -1,7 +1,7 @@
 """This module provides classes for an SMT abstraction of boolean
 expressions."""
 
-from typing import Union, cast, Set
+from typing import Set, Union, cast
 
 import z3
 
@@ -45,7 +45,7 @@ class Bool(Expression[z3.BoolRef]):
         else:
             return None
 
-    # MYPY: complains about overloading __eq__ # noqa
+    # MYPY: complains about overloading __eq__
     def __eq__(self, other: object) -> "Bool":  # type: ignore
         """
 
@@ -53,11 +53,11 @@ class Bool(Expression[z3.BoolRef]):
         :return:
         """
         if isinstance(other, Expression):
-            return Bool(cast(z3.BoolRef, self.raw == other.raw),
+            return Bool(cast("z3.BoolRef", self.raw == other.raw),
                         self.annotations.union(other.annotations))
-        return Bool(cast(z3.BoolRef, self.raw == other), self.annotations)
+        return Bool(cast("z3.BoolRef", self.raw == other), self.annotations)
 
-    # MYPY: complains about overloading __ne__ # noqa
+    # MYPY: complains about overloading __ne__
     def __ne__(self, other: object) -> "Bool":  # type: ignore
         """
 
@@ -65,9 +65,9 @@ class Bool(Expression[z3.BoolRef]):
         :return:
         """
         if isinstance(other, Expression):
-            return Bool(cast(z3.BoolRef, self.raw != other.raw),
+            return Bool(cast("z3.BoolRef", self.raw != other.raw),
                         self.annotations.union(other.annotations))
-        return Bool(cast(z3.BoolRef, self.raw != other), self.annotations)
+        return Bool(cast("z3.BoolRef", self.raw != other), self.annotations)
 
     def __bool__(self) -> bool:
         """

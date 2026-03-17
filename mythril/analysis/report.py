@@ -1,27 +1,28 @@
 """This module provides classes that make up an issue report."""
-import base64
-import logging
-import re
+
 import json
+import logging
 import operator
+import re
 
 try:
     from eth_abi import decode
 except ImportError:
     from eth_abi import decode_abi as decode
 
-from jinja2 import PackageLoader, Environment
-from typing import Dict, Iterable, List, Any, Optional
 import hashlib
+from time import time
+from typing import Any, Dict, Iterable, List, Optional
 
+from jinja2 import Environment, PackageLoader
+
+from mythril.analysis.swc_data import SWC_TO_TITLE
 from mythril.laser.execution_info import ExecutionInfo
 from mythril.solidity.soliditycontract import SolidityContract
-from mythril.analysis.swc_data import SWC_TO_TITLE
+from mythril.support.signatures import SignatureDB
 from mythril.support.source_support import Source
 from mythril.support.start_time import StartTime
 from mythril.support.support_utils import get_code_hash
-from mythril.support.signatures import SignatureDB
-from time import time
 
 log = logging.getLogger(__name__)
 
@@ -242,7 +243,7 @@ class Issue:
                 for item in decoded_output
             )
             return decoded_output
-        except Exception as e:
+        except Exception:
             return None
 
 
@@ -343,7 +344,6 @@ class Report:
         _issues = []
 
         for _, issue in self.issues.items():
-
             idx = self.source.get_source_index(issue.bytecode_hash)
             try:
                 title = SWC_TO_TITLE[issue.swc_id]
@@ -373,9 +373,7 @@ class Report:
         meta_data.update(self._get_exception_data())
 
         # Add execution info to meta
-        analysis_duration = int(
-            round((time() - StartTime().global_start_time) * (10**9))
-        )
+        analysis_duration = round((time() - StartTime().global_start_time) * (10**9))
         meta_data["mythril_execution_info"] = {"analysis_duration": analysis_duration}
         for execution_info in self.execution_info:
             meta_data["mythril_execution_info"].update(execution_info.as_dict())
@@ -407,4 +405,4 @@ class Report:
         :return:
         """
         if len(self.issues.values()) > 0:
-            return list(self.issues.values())[0].filename
+            return next(iter(self.issues.values())).filename

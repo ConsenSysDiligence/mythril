@@ -2,14 +2,22 @@
 
 This includes classes representing accounts and their storage.
 """
+
 import logging
 from copy import copy, deepcopy
-from typing import Any, Dict, Union, Set
+from typing import Any, Dict, Set, Union
 
-
-from mythril.laser.smt import Array, K, BitVec, simplify, BaseArray, If, Bool
 from mythril.disassembler.disassembly import Disassembly
-from mythril.laser.smt import symbol_factory
+from mythril.laser.smt import (
+    Array,
+    BaseArray,
+    BitVec,
+    Bool,
+    If,
+    K,
+    simplify,
+    symbol_factory,
+)
 from mythril.support.support_args import args
 
 log = logging.getLogger(__name__)
@@ -86,7 +94,7 @@ class Storage:
         if key.symbolic is False:
             self.storage_keys_loaded.add(int(key.value))
 
-    def __deepcopy__(self, memodict=dict()):
+    def __deepcopy__(self, memodict={}):
         concrete = isinstance(self._standard_storage, K)
         storage = Storage(
             concrete=concrete, address=self.address, dynamic_loader=self.dynld
@@ -174,9 +182,9 @@ class Account:
         """
         for key, value in storage.items():
             concrete_key, concrete_value = int(key, 16), int(value, 16)
-            self.storage[
-                symbol_factory.BitVecVal(concrete_key, 256)
-            ] = symbol_factory.BitVecVal(concrete_value, 256)
+            self.storage[symbol_factory.BitVecVal(concrete_key, 256)] = (
+                symbol_factory.BitVecVal(concrete_value, 256)
+            )
 
     def add_balance(self, balance: Union[int, BitVec]) -> None:
         """

@@ -1,5 +1,5 @@
-from mythril.solidity.soliditycontract import SolidityContract
 from mythril.ethereum.evmcontract import EVMContract
+from mythril.solidity.soliditycontract import SolidityContract
 
 
 class Source:

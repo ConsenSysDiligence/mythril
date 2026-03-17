@@ -1,11 +1,11 @@
+import logging
+from copy import copy
+from typing import Dict, List, cast
+
+from mythril.laser.ethereum.state.annotation import StateAnnotation
 from mythril.laser.ethereum.state.global_state import GlobalState
 from mythril.laser.ethereum.strategy.basic import BasicSearchStrategy
-from mythril.laser.ethereum.state.annotation import StateAnnotation
 from mythril.laser.ethereum.transaction import ContractCreationTransaction
-from typing import Dict, cast, List
-from copy import copy
-import logging
-
 
 log = logging.getLogger(__name__)
 
@@ -108,11 +108,10 @@ class BoundedLoopsStrategy(BasicSearchStrategy):
         """
 
         while True:
-
             state = self.super_strategy.get_strategic_global_state()
 
             annotations = cast(
-                List[JumpdestCountAnnotation],
+                "List[JumpdestCountAnnotation]",
                 list(state.get_annotations(JumpdestCountAnnotation)),
             )
 

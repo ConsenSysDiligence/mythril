@@ -1,15 +1,16 @@
 from typing import (
-    overload,
-    Tuple,
     Any,
-    List,
     Iterable,
     Iterator,
+    List,
     Optional,
+    Sequence,
+    Tuple,
     TypeVar,
     Union,
-    Sequence,
+    overload,
 )
+
 from .z3types import Ast, ContextObj
 
 class Context: ...

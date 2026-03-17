@@ -1,12 +1,12 @@
+import logging
 from collections import namedtuple
 from datetime import datetime
 from typing import Dict, List, Tuple
+
+from mythril.laser.ethereum.state.global_state import GlobalState
+from mythril.laser.ethereum.svm import LaserEVM
 from mythril.laser.plugin.builder import PluginBuilder
 from mythril.laser.plugin.interface import LaserPlugin
-from mythril.laser.ethereum.svm import LaserEVM
-from mythril.laser.ethereum.state.global_state import GlobalState
-from datetime import datetime
-import logging
 
 # Type annotations:
 #   start_time: datetime
@@ -45,7 +45,7 @@ class InstructionProfiler(LaserPlugin):
         self._reset()
 
     def _reset(self):
-        self.records = dict()
+        self.records = {}
         self.start_time = None
 
     def initialize(self, symbolic_vm: LaserEVM) -> None:
@@ -93,13 +93,11 @@ class InstructionProfiler(LaserPlugin):
 
     def _make_stats(self) -> Tuple[float, _InstrExecStatistics]:
         periods = {
-            op: list(
-                map(lambda r: r.end_time.timestamp() - r.start_time.timestamp(), rs)
-            )
+            op: [r.end_time.timestamp() - r.start_time.timestamp() for r in rs]
             for op, rs in self.records.items()
         }
 
-        stats = dict()
+        stats = {}
         total_time = 0
 
         for _, (op, times) in enumerate(periods.items()):

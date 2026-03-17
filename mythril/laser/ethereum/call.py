@@ -4,24 +4,23 @@ parameters for the new global state."""
 
 import logging
 import re
-from typing import Union, List, cast, Optional
+from typing import List, Optional, Union, cast
+
 from eth.constants import GAS_CALLSTIPEND
 
 import mythril.laser.ethereum.util as util
-from mythril.laser.ethereum.util import insert_ret_val
 from mythril.laser.ethereum import natives
-from mythril.laser.ethereum.cheat_code import handle_cheat_codes, hevm_cheat_code
 from mythril.laser.ethereum.instruction_data import calculate_native_gas
-from mythril.laser.ethereum.state.account import Account
 from mythril.laser.ethereum.natives import PRECOMPILE_COUNT, PRECOMPILE_FUNCTIONS
+from mythril.laser.ethereum.state.account import Account
 from mythril.laser.ethereum.state.calldata import (
     BaseCalldata,
-    SymbolicCalldata,
     ConcreteCalldata,
+    SymbolicCalldata,
 )
 from mythril.laser.ethereum.state.global_state import GlobalState
-from mythril.laser.smt import BitVec, If
-from mythril.laser.smt import simplify, Expression, symbol_factory
+from mythril.laser.ethereum.util import insert_ret_val
+from mythril.laser.smt import BitVec, Expression, If, simplify, symbol_factory
 from mythril.support.loader import DynLoader
 
 """
@@ -166,7 +165,7 @@ def get_call_data(
     transaction_id = "{}_internalcall".format(global_state.current_transaction.id)
 
     memory_start = cast(
-        BitVec,
+        "BitVec",
         (
             symbol_factory.BitVecVal(memory_start, 256)
             if isinstance(memory_start, int)
@@ -174,7 +173,7 @@ def get_call_data(
         ),
     )
     memory_size = cast(
-        BitVec,
+        "BitVec",
         (
             symbol_factory.BitVecVal(memory_size, 256)
             if isinstance(memory_size, int)

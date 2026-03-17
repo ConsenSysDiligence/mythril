@@ -1,23 +1,19 @@
-import json
 import binascii
-
 from copy import deepcopy
 from datetime import datetime
-from typing import Dict, List, Tuple
+from typing import List, Tuple
 
 from mythril.concolic.concrete_data import ConcreteData
-
 from mythril.disassembler.disassembly import Disassembly
-from mythril.laser.ethereum.svm import LaserEVM
-from mythril.laser.ethereum.state.world_state import WorldState
 from mythril.laser.ethereum.state.account import Account
+from mythril.laser.ethereum.state.world_state import WorldState
+from mythril.laser.ethereum.svm import LaserEVM
 from mythril.laser.ethereum.time_handler import time_handler
-from mythril.laser.plugin.plugins import TraceFinderBuilder
 from mythril.laser.ethereum.transaction.concolic import execute_transaction
-from mythril.laser.plugin.loader import LaserPluginLoader
-from mythril.laser.smt import Expression, BitVec, symbol_factory
 from mythril.laser.ethereum.transaction.transaction_models import tx_id_manager
-from mythril.plugin.discovery import PluginDiscovery
+from mythril.laser.plugin.loader import LaserPluginLoader
+from mythril.laser.plugin.plugins import TraceFinderBuilder
+from mythril.laser.smt import symbol_factory
 from mythril.support.support_args import args
 
 

@@ -1,32 +1,31 @@
 """This module contains the detection code for integer overflows and
 underflows."""
 
-from math import log2, ceil
-from typing import cast, List, Set
+import logging
+from copy import copy
+from math import ceil, log2
+from typing import List, Set, cast
+
 from mythril.analysis import solver
 from mythril.analysis.issue_annotation import IssueAnnotation
+from mythril.analysis.module.base import DetectionModule, EntryPoint
 from mythril.analysis.report import Issue
 from mythril.analysis.swc_data import INTEGER_OVERFLOW_AND_UNDERFLOW
 from mythril.exceptions import UnsatError
-from mythril.laser.ethereum.state.global_state import GlobalState
 from mythril.laser.ethereum.state.annotation import StateAnnotation
-from mythril.analysis.module.base import DetectionModule, EntryPoint
-from copy import copy
-
+from mythril.laser.ethereum.state.global_state import GlobalState
 from mythril.laser.smt import (
-    BVAddNoOverflow,
-    BVSubNoUnderflow,
-    BVMulNoOverflow,
-    BitVec,
-    If,
-    symbol_factory,
-    Not,
-    Expression,
-    Bool,
     And,
+    BitVec,
+    Bool,
+    BVAddNoOverflow,
+    BVMulNoOverflow,
+    BVSubNoUnderflow,
+    Expression,
+    If,
+    Not,
+    symbol_factory,
 )
-
-import logging
 
 log = logging.getLogger(__name__)
 
@@ -249,7 +248,6 @@ class IntegerArithmetics(DetectionModule):
         state_annotation = _get_overflowunderflow_state_annotation(state)
 
         for element in state.mstate.memory[offset : offset + length]:
-
             if not isinstance(element, Expression):
                 continue
 
@@ -262,7 +260,6 @@ class IntegerArithmetics(DetectionModule):
         state_annotation = _get_overflowunderflow_state_annotation(state)
         issues = []
         for annotation in state_annotation.overflowing_state_annotations:
-
             ostate = annotation.overflowing_state
 
             if ostate in self._ostates_unsatisfiable:
@@ -288,7 +285,6 @@ class IntegerArithmetics(DetectionModule):
             )
 
             try:
-
                 constraints = state.world_state.constraints + [annotation.constraint]
                 transaction_sequence = solver.get_transaction_sequence(
                     state, constraints
@@ -337,7 +333,7 @@ def _get_overflowunderflow_state_annotation(
     state: GlobalState,
 ) -> OverUnderflowStateAnnotation:
     state_annotations = cast(
-        List[OverUnderflowStateAnnotation],
+        "List[OverUnderflowStateAnnotation]",
         list(state.get_annotations(OverUnderflowStateAnnotation)),
     )
 

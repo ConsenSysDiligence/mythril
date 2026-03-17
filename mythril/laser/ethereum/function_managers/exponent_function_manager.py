@@ -1,7 +1,6 @@
 import logging
 from typing import Tuple
 
-
 from mythril.laser.smt import And, BitVec, Bool, Function, URem, symbol_factory
 
 log = logging.getLogger(__name__)
@@ -25,7 +24,7 @@ class ExponentFunctionManager:
             *[
                 power(NUMBER_256, symbol_factory.BitVecVal(i, 256))
                 == symbol_factory.BitVecVal(256**i, 256)
-                for i in range(0, 32)
+                for i in range(32)
             ]
         )
 

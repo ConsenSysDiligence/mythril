@@ -1,11 +1,12 @@
-from mythril.laser.smt import BaseArray, Array, Solver, symbol_factory
-from mythril.support.support_args import args
-from mythril.laser.ethereum.state.global_state import GlobalState
-from mythril.laser.plugin.plugins.plugin_annotations import MutationAnnotation
+import logging
 from copy import deepcopy
 
-import logging
 import z3
+
+from mythril.laser.ethereum.state.global_state import GlobalState
+from mythril.laser.plugin.plugins.plugin_annotations import MutationAnnotation
+from mythril.laser.smt import Array, Solver, symbol_factory
+from mythril.support.support_args import args
 
 log = logging.getLogger(__name__)
 
@@ -72,18 +73,18 @@ class SymbolicSummary:
 
     @property
     def as_dict(self):
-        return dict(
-            entry=self.entry,
-            condition=list(map(str, self.condition)),
-            exit=self.exit,
-            storage_effect=list(map(str, self.storage_effect)),
-            balance_effect=str(self.balance_effect),
-            return_value=self.return_value,
-            trace=self.trace[:],
-            code=self.code,
-            issues=len(self.issues),
-            revert=self.revert,
-        )
+        return {
+            "entry": self.entry,
+            "condition": list(map(str, self.condition)),
+            "exit": self.exit,
+            "storage_effect": list(map(str, self.storage_effect)),
+            "balance_effect": str(self.balance_effect),
+            "return_value": self.return_value,
+            "trace": self.trace[:],
+            "code": self.code,
+            "issues": len(self.issues),
+            "revert": self.revert,
+        }
 
     def apply_summary(self, global_state: GlobalState):
 
@@ -107,7 +108,7 @@ class SymbolicSummary:
         global_state.world_state.balances = new_balances
 
         # Set constraints
-        global_state.world_state.constraints += [c for c in conditions]
+        global_state.world_state.constraints += list(conditions)
 
         # Check Condition
         solver = Solver()

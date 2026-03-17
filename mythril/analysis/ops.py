@@ -1,5 +1,6 @@
 """This module contains various helper methods for dealing with EVM
 operations."""
+
 from enum import Enum
 
 from mythril.laser.ethereum import util

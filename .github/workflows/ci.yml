@@ -18,11 +18,8 @@ jobs:
       - uses: astral-sh/setup-uv@37802adc94f370d6bfd71619e3f0bf239e1f3b78 # v7.6.0
       - run: uv sync --group dev
       - run: uv run ruff format --check .
-        continue-on-error: true  # codebase not yet formatted
       - run: uv run ruff check .
-        continue-on-error: true  # lint rules not yet configured
       - run: uv run ty check
-        continue-on-error: true  # ty config not yet fixed
 
   test:
     runs-on: ubuntu-latest

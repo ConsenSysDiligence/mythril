@@ -1,14 +1,16 @@
 """This module contains a representation of the EVM's world state."""
+
 from copy import copy, deepcopy
 from random import randint
-from typing import Dict, List, Iterator, Optional, TYPE_CHECKING
+from typing import TYPE_CHECKING, Dict, Iterator, List, Optional
+
 from eth._utils.address import generate_contract_address
 
-from mythril.support.loader import DynLoader
-from mythril.laser.smt import symbol_factory, Array, BitVec
 from mythril.laser.ethereum.state.account import Account
 from mythril.laser.ethereum.state.annotation import StateAnnotation
 from mythril.laser.ethereum.state.constraints import Constraints
+from mythril.laser.smt import Array, BitVec, symbol_factory
+from mythril.support.loader import DynLoader
 
 if TYPE_CHECKING:
     from mythril.laser.ethereum.cfg import Node

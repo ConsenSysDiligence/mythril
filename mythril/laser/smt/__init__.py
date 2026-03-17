@@ -1,33 +1,32 @@
-from mythril.laser.smt.bitvec import BitVec
+from typing import Any, Generic, Optional, Set, TypeVar, Union
 
+import z3
+
+from mythril.laser.smt.array import Array, BaseArray, K
+from mythril.laser.smt.bitvec import BitVec
 from mythril.laser.smt.bitvec_helper import (
-    If,
-    UGT,
-    ULT,
-    ULE,
-    Concat,
-    Extract,
-    URem,
-    SRem,
-    UDiv,
     UGE,
-    Sum,
+    UGT,
+    ULE,
+    ULT,
     BVAddNoOverflow,
     BVMulNoOverflow,
     BVSubNoUnderflow,
+    Concat,
+    Extract,
+    If,
     LShR,
+    SRem,
+    Sum,
+    UDiv,
+    URem,
 )
-
-from mythril.laser.smt.expression import Expression, simplify
-from mythril.laser.smt.bool import Bool, is_true, is_false, Or, Not, And
-from mythril.laser.smt.array import K, Array, BaseArray
-from mythril.laser.smt.function import Function
-from mythril.laser.smt.solver import Solver, Optimize, SolverStatistics
-from mythril.laser.smt.model import Model
+from mythril.laser.smt.bool import And, Bool, Not, Or, is_false, is_true
 from mythril.laser.smt.bool import Bool as SMTBool
-from typing import Union, Any, Optional, Set, TypeVar, Generic
-import z3
-
+from mythril.laser.smt.expression import Expression, simplify
+from mythril.laser.smt.function import Function
+from mythril.laser.smt.model import Model
+from mythril.laser.smt.solver import Optimize, Solver, SolverStatistics
 
 Annotations = Optional[Set[Any]]
 T = TypeVar("T", bound=Union[SMTBool, z3.BoolRef])
@@ -66,7 +65,7 @@ class SymbolFactory(Generic[T, U]):
         :param annotations: The annotations to initialize the bit vector with
         :return: The freshly created bit vector
         """
-        raise NotImplementedError()
+        raise NotImplementedError
 
     @staticmethod
     def BitVecSym(name: str, size: int, annotations: Annotations = None) -> U:
@@ -77,7 +76,7 @@ class SymbolFactory(Generic[T, U]):
         :param annotations: The annotations to initialize the bit vector with
         :return: The freshly created bit vector
         """
-        raise NotImplementedError()
+        raise NotImplementedError
 
 
 class _SmtSymbolFactory(SymbolFactory[SMTBool, BitVec]):

@@ -1,7 +1,8 @@
 """This module contains representation classes for Solidity files, contracts
 and source mappings."""
-from typing import Dict, Set
+
 import logging
+from typing import Dict, Set
 
 import mythril.laser.ethereum.util as helper
 from mythril.ethereum.evmcontract import EVMContract
@@ -156,7 +157,6 @@ def get_contracts_from_foundry(input_file, foundry_json):
                 "deployedBytecode"
             ]["object"]
         ):
-
             yield SolidityContract(
                 input_file=input_file,
                 name=contract_name,

@@ -1,6 +1,8 @@
 """This module contains a representation of a smart contract's memory."""
+
 from copy import copy
-from typing import cast, Dict, List, Union, overload
+from typing import Dict, List, Union, cast, overload
+
 from z3 import Z3Exception
 
 from mythril.laser.ethereum import util
@@ -73,7 +75,7 @@ class Memory:
                     [
                         b if isinstance(b, BitVec) else symbol_factory.BitVecVal(b, 8)
                         for b in cast(
-                            List[Union[int, BitVec]], self[index : index + 32]
+                            "List[Union[int, BitVec]]", self[index : index + 32]
                         )
                     ]
                 )
@@ -91,16 +93,16 @@ class Memory:
             # Attempt to concretize value
             if isinstance(value, bool):
                 _bytes = (
-                    int(1).to_bytes(32, byteorder="big")
+                    (1).to_bytes(32, byteorder="big")
                     if value
-                    else int(0).to_bytes(32, byteorder="big")
+                    else (0).to_bytes(32, byteorder="big")
                 )
             else:
                 _bytes = util.concrete_int_to_bytes(value)
             assert len(_bytes) == 32
             self[index : index + 32] = list(bytearray(_bytes))
         except (Z3Exception, AttributeError):  # BitVector or BoolRef
-            value = cast(Union[BitVec, Bool], value)
+            value = cast("Union[BitVec, Bool]", value)
             if isinstance(value, Bool):
                 value_to_write = If(
                     value,
@@ -115,12 +117,10 @@ class Memory:
                 self[index + 31 - (i // 8)] = Extract(i + 7, i, value_to_write)
 
     @overload
-    def __getitem__(self, item: BitVec) -> Union[int, BitVec]:
-        ...
+    def __getitem__(self, item: BitVec) -> Union[int, BitVec]: ...
 
     @overload
-    def __getitem__(self, item: slice) -> List[Union[int, BitVec]]:
-        ...
+    def __getitem__(self, item: slice) -> List[Union[int, BitVec]]: ...
 
     def __getitem__(
         self, item: Union[BitVec, slice]
@@ -192,7 +192,7 @@ class Memory:
             while simplify(bvstep * itr != simplify(bvstop - bvstart)) and (
                 not symbolic_len or itr <= APPROX_ITR
             ):
-                self[bvstart + itr * bvstep] = cast(List[Union[int, BitVec]], value)[
+                self[bvstart + itr * bvstep] = cast("List[Union[int, BitVec]]", value)[
                     itr.value
                 ]
                 itr += 1
@@ -205,4 +205,4 @@ class Memory:
                 assert 0 <= value <= 0xFF
             if isinstance(value, BitVec):
                 assert value.size() == 8
-            self._memory[bv_key] = cast(Union[int, BitVec], value)
+            self._memory[bv_key] = cast("Union[int, BitVec]", value)

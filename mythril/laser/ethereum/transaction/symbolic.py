@@ -1,25 +1,21 @@
 """This module contains functions setting up and executing transactions with
 symbolic values."""
-import logging
-from typing import Optional, List, Union
-from copy import deepcopy
 
+import logging
+from typing import List, Optional
 
 from mythril.disassembler.disassembly import Disassembly
-from mythril.laser.ethereum.cfg import Node, Edge, JumpType
+from mythril.laser.ethereum.cfg import Edge, JumpType, Node
 from mythril.laser.ethereum.state.account import Account
 from mythril.laser.ethereum.state.calldata import SymbolicCalldata
-from mythril.laser.ethereum.state.constraints import Constraints
 from mythril.laser.ethereum.state.world_state import WorldState
 from mythril.laser.ethereum.transaction.transaction_models import (
-    MessageCallTransaction,
-    ContractCreationTransaction,
-    tx_id_manager,
     BaseTransaction,
+    ContractCreationTransaction,
+    MessageCallTransaction,
+    tx_id_manager,
 )
-from mythril.laser.smt import symbol_factory, Or, Bool, BitVec
-from mythril.support.support_args import args as cmd_args
-
+from mythril.laser.smt import BitVec, Bool, Or, symbol_factory
 
 FUNCTION_HASH_BYTE_LENGTH = 4
 
@@ -54,7 +50,7 @@ class Actors:
             if address[0:2] != "0x":
                 raise ValueError("Actor address not in valid format")
 
-            self.addresses[actor] = symbol_factory.BitVecVal(int(address[2:], 16), 256)
+            self.addresses[actor] = symbol_factory.BitVecVal(int(address, 0), 256)
 
     def __getitem__(self, actor: str):
         return self.addresses[actor]

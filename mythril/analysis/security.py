@@ -1,12 +1,12 @@
 """This module contains functionality for hooking in detection modules and
 executing them."""
 
+import logging
+from typing import List, Optional
+
 from mythril.analysis.module import ModuleLoader, reset_callback_modules
 from mythril.analysis.module.base import EntryPoint
 from mythril.analysis.report import Issue
-
-from typing import Optional, List
-import logging
 
 log = logging.getLogger(__name__)
 

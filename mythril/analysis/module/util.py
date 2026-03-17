@@ -1,10 +1,10 @@
-from collections import defaultdict
-from typing import List, Optional, Callable, Mapping, Dict
 import logging
+from collections import defaultdict
+from typing import Callable, Dict, List, Mapping, Optional
 
-from mythril.support.opcodes import OPCODES
 from mythril.analysis.module.base import DetectionModule, EntryPoint
 from mythril.analysis.module.loader import ModuleLoader
+from mythril.support.opcodes import OPCODES
 
 log = logging.getLogger(__name__)
 OP_CODE_LIST = OPCODES.keys()
@@ -21,10 +21,9 @@ def get_detection_module_hooks(
     """
     hook_dict: Mapping[str, List[Callable]] = defaultdict(list)
     for module in modules:
-
         hooks = module.pre_hooks if hook_type == "pre" else module.post_hooks
 
-        for op_code in map(lambda x: x.upper(), hooks):
+        for op_code in (x.upper() for x in hooks):
             # A hook can be either OP_CODE or START*
             # When an entry like the second is encountered we hook all opcodes that start with START
             if op_code in OP_CODE_LIST:

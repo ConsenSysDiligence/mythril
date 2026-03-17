@@ -180,10 +180,10 @@ class SolidityFeatureExtractor:
 
                 traverse(condition)
 
-            if "falseBody" in node and node["falseBody"]:
+            if node.get("falseBody"):
                 traverse(node["falseBody"])
 
-            if "trueBody" in node and node["trueBody"]:
+            if node.get("trueBody"):
                 if (
                     "nodeType" in node["trueBody"]
                     and node["trueBody"]["nodeType"] == "Block"
@@ -194,7 +194,7 @@ class SolidityFeatureExtractor:
                 else:
                     traverse(node["trueBody"])
 
-            if "body" in node and node["body"]:
+            if node.get("body"):
                 if "nodeType" in node["body"] and node["body"]["nodeType"] == "Block":
                     statements = node["body"].get("statements", [])
                     for statement in statements:
@@ -208,8 +208,8 @@ class SolidityFeatureExtractor:
 
     def extract_address_variable(self, node):
         if node is None or isinstance(node, (int, str)):
-            return set([])
-        transfer_vars = set([])
+            return set()
+        transfer_vars = set()
         if (
             node.get("nodeType", "") == "ExpressionStatement"
             and node.get("expression", {}).get("nodeType") == "FunctionCall"
@@ -221,7 +221,7 @@ class SolidityFeatureExtractor:
             ):
                 address_variable = expression["expression"].get("name")
                 if address_variable:
-                    transfer_vars.update(set([address_variable]))
+                    transfer_vars.update({address_variable})
 
         for key, value in node.items():
             if isinstance(value, dict):

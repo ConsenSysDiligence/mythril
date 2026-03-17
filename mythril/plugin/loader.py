@@ -1,21 +1,18 @@
+import logging
+from typing import Dict
+
 from mythril.analysis.module import DetectionModule
-
-from mythril.plugin.interface import MythrilPlugin, MythrilLaserPlugin
-from mythril.plugin.discovery import PluginDiscovery
-from mythril.support.support_utils import Singleton
-
 from mythril.analysis.module.loader import ModuleLoader
 from mythril.laser.plugin.loader import LaserPluginLoader
-from typing import Dict
-import logging
+from mythril.plugin.discovery import PluginDiscovery
+from mythril.plugin.interface import MythrilLaserPlugin, MythrilPlugin
+from mythril.support.support_utils import Singleton
 
 log = logging.getLogger(__name__)
 
 
 class UnsupportedPluginType(Exception):
     """Raised when a plugin with an unsupported type is loaded"""
-
-    pass
 
 
 class MythrilPluginLoader(object, metaclass=Singleton):
@@ -27,7 +24,7 @@ class MythrilPluginLoader(object, metaclass=Singleton):
     def __init__(self):
         log.info("Initializing mythril plugin loader")
         self.loaded_plugins = []
-        self.plugin_args: Dict[str, Dict] = dict()
+        self.plugin_args: Dict[str, Dict] = {}
         self._load_default_enabled()
 
     def set_args(self, plugin_name: str, **kwargs):
@@ -45,7 +42,7 @@ class MythrilPluginLoader(object, metaclass=Singleton):
             raise ValueError("Passed plugin is not of type MythrilPlugin")
         logging.info(f"Loading plugin: {plugin.name}")
 
-        log.info(f"Loading plugin: {str(plugin)}")
+        log.info(f"Loading plugin: {plugin!s}")
         if isinstance(plugin, DetectionModule):
             self._load_detection_module(plugin)
         elif isinstance(plugin, MythrilLaserPlugin):

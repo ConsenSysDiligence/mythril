@@ -1,9 +1,12 @@
 """This module provides a function to convert a state space into a set of state
 nodes and transition edges."""
-from z3 import Z3Exception
-from mythril.laser.smt import simplify
-from mythril.laser.ethereum.svm import NodeFlags
+
 import re
+
+from z3 import Z3Exception
+
+from mythril.laser.ethereum.svm import NodeFlags
+from mythril.laser.smt import simplify
 
 colors = [
     {
@@ -65,7 +68,6 @@ def get_serializable_statespace(statespace):
         i += 1
 
     for node_key in statespace.nodes:
-
         node = statespace.nodes[node_key]
 
         code = node.get_cfg_dict()["code"]
@@ -136,18 +138,16 @@ def get_serializable_statespace(statespace):
         nodes.append(s_node)
 
     for edge in statespace.edges:
-
         if edge.condition is None:
             label = ""
         else:
-
             try:
                 label = str(simplify(edge.condition)).replace("\n", "")
             except Z3Exception:
                 label = str(edge.condition).replace("\n", "")
 
         label = re.sub(
-            "([^_])([\d]{2}\d+)", lambda m: m.group(1) + hex(int(m.group(2))), label
+            r"([^_])([\d]{2}\d+)", lambda m: m.group(1) + hex(int(m.group(2))), label
         )
 
         s_edge = {

@@ -1,70 +1,64 @@
 """This module contains a representation class for EVM instructions and
 transitions between them."""
+
 import logging
-
 from copy import copy, deepcopy
-from typing import cast, Callable, List, Union, Tuple
-
-from mythril.exceptions import UnsatError
-from mythril.laser.smt import (
-    Extract,
-    Expression,
-    UDiv,
-    simplify,
-    Concat,
-    ULT,
-    UGT,
-    BitVec,
-    is_false,
-    URem,
-    SRem,
-    If,
-    Bool,
-    Not,
-    LShR,
-    UGE,
-)
-from mythril.laser.smt import symbol_factory
-
-from mythril.disassembler.disassembly import Disassembly
-
-from mythril.laser.ethereum.state.calldata import ConcreteCalldata, SymbolicCalldata
+from typing import Callable, List, Tuple, Union, cast
 
 import mythril.laser.ethereum.util as helper
+from mythril.disassembler.disassembly import Disassembly
+from mythril.exceptions import UnsatError
 from mythril.laser.ethereum import util
-from mythril.laser.ethereum.function_managers import (
-    keccak_function_manager,
-    exponent_function_manager,
-)
-
 from mythril.laser.ethereum.call import (
+    SYMBOLIC_CALLDATA_SIZE,
+    get_call_data,
     get_call_parameters,
     native_call,
-    get_call_data,
-    SYMBOLIC_CALLDATA_SIZE,
 )
 from mythril.laser.ethereum.evm_exceptions import (
-    VmException,
-    StackUnderflowException,
-    InvalidJumpDestination,
     InvalidInstruction,
+    InvalidJumpDestination,
     OutOfGasException,
+    StackUnderflowException,
+    VmException,
     WriteProtection,
 )
-from mythril.laser.ethereum.instruction_data import get_opcode_gas, calculate_sha3_gas
+from mythril.laser.ethereum.function_managers import (
+    exponent_function_manager,
+    keccak_function_manager,
+)
+from mythril.laser.ethereum.instruction_data import calculate_sha3_gas, get_opcode_gas
+from mythril.laser.ethereum.state.calldata import ConcreteCalldata, SymbolicCalldata
 from mythril.laser.ethereum.state.global_state import GlobalState
 from mythril.laser.ethereum.state.return_data import ReturnData
-
 from mythril.laser.ethereum.transaction import (
+    ContractCreationTransaction,
     MessageCallTransaction,
     TransactionStartSignal,
-    ContractCreationTransaction,
     tx_id_manager,
 )
+from mythril.laser.smt import (
+    UGE,
+    UGT,
+    ULT,
+    BitVec,
+    Bool,
+    Concat,
+    Expression,
+    Extract,
+    If,
+    LShR,
+    Not,
+    SRem,
+    UDiv,
+    URem,
+    is_false,
+    simplify,
+    symbol_factory,
+)
+from mythril.support.loader import DynLoader
 from mythril.support.model import get_model
 from mythril.support.support_utils import get_code_hash
-
-from mythril.support.loader import DynLoader
 
 log = logging.getLogger(__name__)
 
@@ -158,7 +152,7 @@ class StateTransition(object):
             global_state.mstate.min_gas_used
             >= global_state.current_transaction.gas_limit
         ):
-            raise OutOfGasException()
+            raise OutOfGasException
 
     def accumulate_gas(self, global_state: GlobalState):
         """
@@ -222,8 +216,8 @@ class Instruction:
         """
         self.dynamic_loader = dynamic_loader
         self.op_code = op_code.upper()
-        self.pre_hook = pre_hooks if pre_hooks else []
-        self.post_hook = post_hooks if post_hooks else []
+        self.pre_hook = pre_hooks or []
+        self.post_hook = post_hooks or []
 
     def _execute_pre_hooks(self, global_state: GlobalState):
         for hook in self.pre_hook:
@@ -829,7 +823,7 @@ class Instruction:
             log.debug("Unsupported symbolic size in CALLDATACOPY")
             size = SYMBOLIC_CALLDATA_SIZE  # The excess size will get overwritten
 
-        size = cast(int, size)
+        size = cast("int", size)
         if size > 0:
             try:
                 mstate.mem_extend(mstart, size)
@@ -858,7 +852,7 @@ class Instruction:
                     i_data = (
                         i_data + 1
                         if isinstance(i_data, int)
-                        else simplify(cast(BitVec, i_data) + 1)
+                        else simplify(cast("BitVec", i_data) + 1)
                     )
                 for i in range(len(new_memory)):
                     mstate.memory[i + mstart] = new_memory[i]
@@ -1091,8 +1085,7 @@ class Instruction:
             log.debug("unsupported symbolic code for CODECOPY")
             return [global_state]
 
-        if code.startswith("0x"):
-            code = code[2:]
+        code = code.removeprefix("0x")
         code_size = len(code) // 2
         if isinstance(global_state.current_transaction, ContractCreationTransaction):
             # Treat creation code after the expected disassembly as calldata.
@@ -1118,17 +1111,11 @@ class Instruction:
                     if concrete_code_offset + concrete_size <= code_size
                     else code_size - concrete_code_offset
                 )
-                code_copy_size = code_copy_size if code_copy_size >= 0 else 0
+                code_copy_size = max(code_copy_size, 0)
 
-                calldata_copy_offset = (
-                    concrete_code_offset - code_size
-                    if concrete_code_offset - code_size > 0
-                    else 0
-                )
+                calldata_copy_offset = max(0, concrete_code_offset - code_size)
                 calldata_copy_size = concrete_code_offset + concrete_size - code_size
-                calldata_copy_size = (
-                    calldata_copy_size if calldata_copy_size >= 0 else 0
-                )
+                calldata_copy_size = max(calldata_copy_size, 0)
 
                 [global_state] = self._code_copy_helper(
                     code=global_state.environment.code.bytecode,
@@ -1205,13 +1192,13 @@ class Instruction:
         except TypeError:
             # except both attribute error and Exception
             global_state.mstate.mem_extend(concrete_memory_offset, 1)
-            global_state.mstate.memory[
-                concrete_memory_offset
-            ] = global_state.new_bitvec(
-                "code({})".format(
-                    global_state.environment.active_account.contract_name
-                ),
-                8,
+            global_state.mstate.memory[concrete_memory_offset] = (
+                global_state.new_bitvec(
+                    "code({})".format(
+                        global_state.environment.active_account.contract_name
+                    ),
+                    8,
+                )
             )
             return [global_state]
 
@@ -1221,13 +1208,13 @@ class Instruction:
             log.debug("Unsupported symbolic code offset in {}".format(op))
             global_state.mstate.mem_extend(concrete_memory_offset, concrete_size)
             for i in range(concrete_size):
-                global_state.mstate.memory[
-                    concrete_memory_offset + i
-                ] = global_state.new_bitvec(
-                    "code({})".format(
-                        global_state.environment.active_account.contract_name
-                    ),
-                    8,
+                global_state.mstate.memory[concrete_memory_offset + i] = (
+                    global_state.new_bitvec(
+                        "code({})".format(
+                            global_state.environment.active_account.contract_name
+                        ),
+                        8,
+                    )
                 )
             return [global_state]
 
@@ -1241,8 +1228,7 @@ class Instruction:
 
                 global_state.mstate.memory[concrete_memory_offset + i] = int(
                     code[
-                        2
-                        * (concrete_code_offset + i) : 2
+                        2 * (concrete_code_offset + i) : 2
                         * (concrete_code_offset + i + 1)
                     ],
                     16,
@@ -1537,7 +1523,7 @@ class Instruction:
         except TypeError:
             raise InvalidJumpDestination("Invalid jump argument (symbolic address)")
         except IndexError:
-            raise StackUnderflowException()
+            raise StackUnderflowException
 
         index = util.get_instruction_index(disassembly.instruction_list, jump_addr)
         if index is None:
@@ -1905,9 +1891,9 @@ class Instruction:
         global_state.environment.active_account = deepcopy(
             global_state.environment.active_account
         )
-        global_state.accounts[
-            global_state.environment.active_account.address.value
-        ] = global_state.environment.active_account
+        global_state.accounts[global_state.environment.active_account.address.value] = (
+            global_state.environment.active_account
+        )
 
         global_state.environment.active_account.set_balance(0)
         global_state.environment.active_account.deleted = True
@@ -2247,9 +2233,9 @@ class Instruction:
         else:
             ret_size = global_state.last_return_data.size.value
         for i in range(min(memory_out_size, ret_size)):
-            global_state.mstate.memory[
-                i + memory_out_offset
-            ] = global_state.last_return_data[i]
+            global_state.mstate.memory[i + memory_out_offset] = (
+                global_state.last_return_data[i]
+            )
 
         # Put return value on stack
         return_value = global_state.new_bitvec("retval_" + str(instr["address"]), 256)
@@ -2395,9 +2381,9 @@ class Instruction:
         else:
             ret_size = global_state.last_return_data.size.value
         for i in range(min(memory_out_size, ret_size)):
-            global_state.mstate.memory[
-                i + memory_out_offset
-            ] = global_state.last_return_data[i]
+            global_state.mstate.memory[i + memory_out_offset] = (
+                global_state.last_return_data[i]
+            )
 
         # Put return value on stack
         return_value = global_state.new_bitvec("retval_" + str(instr["address"]), 256)
@@ -2546,9 +2532,9 @@ class Instruction:
             ret_size = global_state.last_return_data.size.value
 
         for i in range(min(memory_out_size, ret_size)):
-            global_state.mstate.memory[
-                i + memory_out_offset
-            ] = global_state.last_return_data[i]
+            global_state.mstate.memory[i + memory_out_offset] = (
+                global_state.last_return_data[i]
+            )
 
         # Put return value on stack
         return_value = global_state.new_bitvec(

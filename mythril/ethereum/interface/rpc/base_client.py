@@ -29,8 +29,6 @@ class BaseClient(object):
         :return:
         """
 
-        pass
-
     def eth_coinbase(self):
         """TODO: documentation
 

@@ -1,8 +1,9 @@
-import pkg_resources
-from mythril.support.support_utils import Singleton
-from mythril.plugin.interface import MythrilPlugin
+from typing import Any, Dict, List, Optional
 
-from typing import List, Dict, Any, Optional
+import pkg_resources
+
+from mythril.plugin.interface import MythrilPlugin
+from mythril.support.support_utils import Singleton
 
 
 class PluginDiscovery(object, metaclass=Singleton):

@@ -1,8 +1,9 @@
 import logging
+
 from mythril.laser.ethereum.cfg import Node
-from mythril.laser.ethereum.state.world_state import WorldState
 from mythril.laser.ethereum.state.account import Account
 from mythril.laser.ethereum.state.constraints import Constraints
+from mythril.laser.ethereum.state.world_state import WorldState
 from mythril.laser.smt import Not
 
 CONSTRAINT_DIFFERENCE_LIMIT = 15
@@ -92,8 +93,8 @@ def _check_constraint_merge(
     We are merging the states which have a no more than CONSTRAINT_DIFFERENCE_LIMIT
     different constraints. This helps in merging states which are not too different
     """
-    dict1 = {c: True for c in constraints1}
-    dict2 = {c: True for c in constraints2}
+    dict1 = dict.fromkeys(constraints1, True)
+    dict2 = dict.fromkeys(constraints2, True)
     c1, c2 = 0, 0
     for key in dict1:
         if key not in dict2 and Not(key) not in dict2:

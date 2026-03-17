@@ -11,7 +11,7 @@ except ImportError:
 from functools import lru_cache
 
 from mythril.ethereum import util
-from mythril.support.opcodes import OPCODES, ADDRESS, ADDRESS_OPCODE_MAPPING
+from mythril.support.opcodes import ADDRESS, ADDRESS_OPCODE_MAPPING, OPCODES
 
 regex_PUSH = re.compile(r"^PUSH(\d*)$")
 
@@ -71,7 +71,7 @@ def find_op_code_sequence(pattern: list, instruction_list: list) -> Generator:
     :param instruction_list: List of instructions to look in
     :return: Indices to the instruction sequences
     """
-    for i in range(0, len(instruction_list) - len(pattern) + 1):
+    for i in range(len(instruction_list) - len(pattern) + 1):
         if is_sequence_match(pattern, instruction_list, i):
             yield i
 
@@ -86,7 +86,7 @@ def is_sequence_match(pattern: list, instruction_list: list, index: int) -> bool
     """
     for index, pattern_slot in enumerate(pattern, start=index):
         try:
-            if not instruction_list[index]["opcode"] in pattern_slot:
+            if instruction_list[index]["opcode"] not in pattern_slot:
                 return False
         except IndexError:
             return False

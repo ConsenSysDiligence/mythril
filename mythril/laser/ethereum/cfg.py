@@ -1,9 +1,11 @@
 """This module."""
+
 from enum import Enum
-from typing import Dict, List, TYPE_CHECKING
+from typing import TYPE_CHECKING, Dict, List
+
+from flags import Flags
 
 from mythril.laser.ethereum.state.constraints import Constraints
-from flags import Flags
 
 if TYPE_CHECKING:
     from mythril.laser.ethereum.state.global_state import GlobalState
@@ -45,7 +47,7 @@ class Node:
         :param start_addr:
         :param constraints:
         """
-        constraints = constraints if constraints else Constraints()
+        constraints = constraints or Constraints()
         self.contract_name = contract_name
         self.start_addr = start_addr
         self.states: List[GlobalState] = []
@@ -70,12 +72,12 @@ class Node:
 
             code += "\\n"
 
-        return dict(
-            contract_name=self.contract_name,
-            start_addr=self.start_addr,
-            function_name=self.function_name,
-            code=code,
-        )
+        return {
+            "contract_name": self.contract_name,
+            "start_addr": self.start_addr,
+            "function_name": self.function_name,
+            "code": code,
+        }
 
 
 class Edge:

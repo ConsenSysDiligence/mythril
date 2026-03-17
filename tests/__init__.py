@@ -30,7 +30,7 @@ class BaseTestCase(TestCase):
         """
         message = "Following output files are changed, compare them manually to see differences: \n"
 
-        for (input_file, expected, current) in self.changed_files:
+        for input_file, expected, current in self.changed_files:
             message += "{}:\n".format(input_file.name)
             message += "- {}\n".format(str(expected))
             message += "- {}\n".format(str(current))

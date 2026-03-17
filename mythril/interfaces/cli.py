@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """mythril.py: Bug hunting on the Ethereum blockchain
 
-   http://www.github.com/ConsenSys/mythril
+http://www.github.com/ConsenSys/mythril
 """
 
 import argparse
@@ -10,28 +10,24 @@ import json
 import logging
 import os
 import sys
-
-import coloredlogs
 import traceback
+from argparse import ArgumentParser, Namespace, RawTextHelpFormatter
 from ast import literal_eval
 
+import coloredlogs
+
 import mythril.support.signatures as sigs
-from argparse import ArgumentParser, Namespace, RawTextHelpFormatter
-from mythril.concolic import concolic_execution
-from mythril.exceptions import (
-    DetectorNotFoundError,
-    CriticalError,
-)
-from mythril.laser.ethereum.transaction.symbolic import ACTORS
-from mythril.plugin.discovery import PluginDiscovery
-from mythril.plugin.loader import MythrilPluginLoader
-
-from mythril.mythril import MythrilAnalyzer, MythrilDisassembler, MythrilConfig
-
+from mythril.__version__ import __version__ as VERSION
 from mythril.analysis.module import ModuleLoader
 from mythril.analysis.report import Report
-
-from mythril.__version__ import __version__ as VERSION
+from mythril.concolic import concolic_execution
+from mythril.exceptions import (
+    CriticalError,
+    DetectorNotFoundError,
+)
+from mythril.laser.ethereum.transaction.symbolic import ACTORS
+from mythril.mythril import MythrilAnalyzer, MythrilConfig, MythrilDisassembler
+from mythril.plugin.loader import MythrilPluginLoader
 
 # Initialise core Mythril Component
 _ = MythrilPluginLoader()
@@ -707,11 +703,11 @@ def load_code(disassembler: MythrilDisassembler, args: Namespace):
     address = None
     if getattr(args, "code", None):
         # Load from bytecode
-        code = args.code[2:] if args.code.startswith("0x") else args.code
+        code = args.code.removeprefix("0x")
         address, _ = disassembler.load_from_bytecode(code, args.bin_runtime)
     elif getattr(args, "codefile", None):
         bytecode = "".join([l.strip() for l in args.codefile if len(l.strip()) > 0])
-        bytecode = bytecode[2:] if bytecode.startswith("0x") else bytecode
+        bytecode = bytecode.removeprefix("0x")
         address, _ = disassembler.load_from_bytecode(bytecode, args.bin_runtime)
     elif getattr(args, "address", None):
         # Get bytecode from a contract address
@@ -793,9 +789,9 @@ def execute_command(
             print("Disassembly: \n" + disassembler.contracts[0].get_creation_easm())
 
     elif args.command == SAFE_FUNCTIONS_COMMAND:
-        args.no_onchain_data = (
-            args.disable_dependency_pruning
-        ) = args.unconstrained_storage = True
+        args.no_onchain_data = args.disable_dependency_pruning = (
+            args.unconstrained_storage
+        ) = True
         args.pruning_factor = 1
         function_analyzer = MythrilAnalyzer(
             strategy=strategy, disassembler=disassembler, address=address, cmd_args=args
@@ -850,7 +846,6 @@ def execute_command(
                 exit_with_error(args.outform, "Error saving graph: " + str(e))
 
         elif args.statespace_json:
-
             if not analyzer.contracts:
                 exit_with_error(
                     args.outform, "input files do not contain any valid contracts"

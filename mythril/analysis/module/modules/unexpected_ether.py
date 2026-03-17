@@ -1,15 +1,16 @@
 """This module contains the detection code for unexpected ether balance."""
-from mythril.analysis.report import Issue
-from mythril.analysis.issue_annotation import IssueAnnotation
-from mythril.analysis.swc_data import UNEXPECTED_ETHER_BALANCE
-from mythril.analysis.module.base import DetectionModule
-from mythril.analysis.module.module_helpers import is_prehook
-from mythril.laser.smt import BitVec, And
-from mythril.analysis.solver import UnsatError, get_transaction_sequence
-from mythril.laser.ethereum.state.annotation import StateAnnotation
-from mythril.laser.ethereum.state.global_state import GlobalState
 
 import logging
+
+from mythril.analysis.issue_annotation import IssueAnnotation
+from mythril.analysis.module.base import DetectionModule
+from mythril.analysis.module.module_helpers import is_prehook
+from mythril.analysis.report import Issue
+from mythril.analysis.solver import UnsatError, get_transaction_sequence
+from mythril.analysis.swc_data import UNEXPECTED_ETHER_BALANCE
+from mythril.laser.ethereum.state.annotation import StateAnnotation
+from mythril.laser.ethereum.state.global_state import GlobalState
+from mythril.laser.smt import And, BitVec
 
 log = logging.getLogger(__name__)
 

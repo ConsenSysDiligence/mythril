@@ -1,17 +1,8 @@
+import logging
+
 from mythril.laser.ethereum.state.global_state import GlobalState
 from mythril.laser.ethereum.strategy.basic import BasicSearchStrategy
-from mythril.laser.ethereum.state.annotation import StateAnnotation
-from mythril.laser.ethereum.transaction import ContractCreationTransaction
-from mythril.laser.smt import And, simplify
 from mythril.support.support_utils import ModelCache
-
-from typing import Dict, cast, List
-from collections import OrderedDict
-from copy import copy, deepcopy
-from functools import lru_cache
-import logging
-import z3
-from time import time
 
 log = logging.getLogger(__name__)
 

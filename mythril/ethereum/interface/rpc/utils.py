@@ -1,5 +1,6 @@
 """This module contains various utility functions regarding the RPC data format
 and validation."""
+
 from .constants import BLOCK_TAGS
 
 

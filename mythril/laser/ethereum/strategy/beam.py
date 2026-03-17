@@ -1,6 +1,5 @@
-from typing import List
-
 from mythril.laser.ethereum.state.global_state import GlobalState
+
 from . import BasicSearchStrategy
 
 

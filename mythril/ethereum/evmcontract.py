@@ -1,12 +1,13 @@
 """This module contains the class representing EVM contracts, aka Smart
 Contracts."""
-import re
+
 import logging
+import re
+
 import persistent
 
-from mythril.support.support_utils import sha3
 from mythril.disassembler.disassembly import Disassembly
-from mythril.support.support_utils import get_code_hash
+from mythril.support.support_utils import get_code_hash, sha3
 
 log = logging.getLogger(__name__)
 
@@ -91,10 +92,9 @@ class EVMContract(persistent.Persistent):
         str_eval = ""
         easm_code = None
 
-        tokens = re.split("\s+(and|or|not)\s+", expression, re.IGNORECASE)
+        tokens = re.split(r"\s+(and|or|not)\s+", expression, re.IGNORECASE)
 
         for token in tokens:
-
             if token in ("and", "or", "not"):
                 str_eval += " " + token + " "
                 continue
@@ -112,7 +112,6 @@ class EVMContract(persistent.Persistent):
             m = re.match(r"^func#([a-zA-Z0-9\s_,(\\)\[\]]+)#$", token)
 
             if m:
-
                 sign_hash = "0x" + sha3(m.group(1))[:4].hex()
                 str_eval += '"' + sign_hash + '" in self.disassembly.func_hashes'
 

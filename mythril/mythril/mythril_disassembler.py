@@ -1,33 +1,30 @@
 import json
 import logging
 import os
-from pathlib import Path
 import re
 import shutil
-import solc
 import subprocess
-import sys
 import warnings
+from pathlib import Path
+from typing import List, Optional, Tuple
 
+import solc
 from eth_utils import int_to_big_endian
-from semantic_version import Version, NpmSpec
-from typing import List, Tuple, Optional, TYPE_CHECKING
+from semantic_version import NpmSpec, Version
 
-from mythril.support.support_utils import sha3, zpad
 from mythril.ethereum import util
-from mythril.ethereum.interface.rpc.client import EthJsonRpc
-from mythril.exceptions import CriticalError, CompilerError, NoContractFoundError
-from mythril.support import signatures
-from mythril.support.support_utils import rzpad
-from mythril.support.support_args import args
 from mythril.ethereum.evmcontract import EVMContract
+from mythril.ethereum.interface.rpc.client import EthJsonRpc
 from mythril.ethereum.interface.rpc.exceptions import ConnectionError
+from mythril.exceptions import CompilerError, CriticalError, NoContractFoundError
 from mythril.solidity.soliditycontract import (
     SolidityContract,
     get_contracts_from_file,
     get_contracts_from_foundry,
 )
+from mythril.support import signatures
 from mythril.support.support_args import args
+from mythril.support.support_utils import rzpad, sha3, zpad
 
 
 def format_warning(message, category, filename, lineno, line=""):
@@ -84,8 +81,7 @@ class MythrilDisassembler:
             main_version = ""  # allow missing solc will download instead
         main_version_number = re.search(r"\d+.\d+.\d+", main_version)
 
-        if version.startswith("v"):
-            version = version[1:]
+        version = version.removeprefix("v")
         if version == main_version_number:
             log.info("Given version matches installed version")
             solc_binary = os.environ.get("SOLC") or "solc"
@@ -180,7 +176,6 @@ class MythrilDisassembler:
             cwd=project_root,
             executable=shutil.which(cmd[0]),
         ) as p:
-
             stdout, stderr = p.communicate()
             stdout, stderr = (stdout.decode(), stderr.decode())
             if stderr:
@@ -204,17 +199,17 @@ class MythrilDisassembler:
         for file in files:
             build_info = Path(build_dir, file)
 
-            uniq_id = file if ".json" not in file else file[0:-5]
+            file if ".json" not in file else file[0:-5]
 
             with open(build_info, encoding="utf8") as file_desc:
                 loaded_json = json.load(file_desc)
 
                 targets_json = loaded_json["output"]
 
-                version_from_config = loaded_json["solcVersion"]
+                loaded_json["solcVersion"]
                 input_json = loaded_json["input"]
                 compiler = "solc" if input_json["language"] == "Solidity" else "vyper"
-                optimizer = input_json["settings"]["optimizer"]["enabled"]
+                input_json["settings"]["optimizer"]["enabled"]
 
                 if compiler == "vyper":
                     raise NotImplementedError("Support for Vyper is not implemented.")
@@ -312,7 +307,9 @@ class MythrilDisassembler:
                     in error_msg
                 ):
                     # Grab relevant line "pragma solidity <solv>...", excluding any comments
-                    solv_pragma_line = error_msg.split("\n")[-3].split("//")[0]
+                    solv_pragma_line = error_msg.split("\n")[-3].split(
+                        "//", maxsplit=1
+                    )[0]
                     # Grab solidity version from relevant line
                     solv_match = re.findall(r"[0-9]+\.[0-9]+\.[0-9]+", solv_pragma_line)
                     error_suggestion = (
@@ -401,7 +398,7 @@ class MythrilDisassembler:
                 )
             else:
                 if len(mappings) > 0:
-                    for i in range(0, len(mappings)):
+                    for i in range(len(mappings)):
                         position = mappings[i]
                         outtxt.append(
                             "{}: {}".format(

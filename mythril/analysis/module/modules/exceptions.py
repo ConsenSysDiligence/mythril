@@ -1,19 +1,18 @@
 """This module contains the detection code for reachable exceptions."""
-import logging
 
-from typing import cast, List, Optional
+import logging
+from typing import List, Optional, cast
+
 from mythril.analysis import solver
 from mythril.analysis.issue_annotation import IssueAnnotation
 from mythril.analysis.module.base import DetectionModule, EntryPoint
 from mythril.analysis.report import Issue
 from mythril.analysis.swc_data import ASSERT_VIOLATION
 from mythril.exceptions import UnsatError
-
-from mythril.laser.ethereum.state.global_state import GlobalState
-from mythril.laser.ethereum.state.annotation import StateAnnotation
 from mythril.laser.ethereum import util
+from mythril.laser.ethereum.state.annotation import StateAnnotation
+from mythril.laser.ethereum.state.global_state import GlobalState
 from mythril.laser.smt import And
-
 from mythril.support.support_utils import get_code_hash
 
 log = logging.getLogger(__name__)
@@ -67,14 +66,14 @@ class Exceptions(DetectionModule):
         address = state.get_current_instruction()["address"]
 
         annotations = cast(
-            List[LastJumpAnnotation],
-            [a for a in state.get_annotations(LastJumpAnnotation)],
+            "List[LastJumpAnnotation]",
+            list(state.get_annotations(LastJumpAnnotation)),
         )
         if len(annotations) == 0:
             state.annotate(LastJumpAnnotation())
             annotations = cast(
-                List[LastJumpAnnotation],
-                [a for a in state.get_annotations(LastJumpAnnotation)],
+                "List[LastJumpAnnotation]",
+                list(state.get_annotations(LastJumpAnnotation)),
             )
 
         if opcode == "JUMP":

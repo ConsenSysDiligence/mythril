@@ -1,5 +1,6 @@
 """This module contains the representation for an execution state's
 environment."""
+
 from typing import Dict
 
 from z3 import ExprRef
@@ -71,11 +72,11 @@ class Environment:
 
         :return:
         """
-        return dict(
-            active_account=self.active_account,
-            sender=self.sender,
-            calldata=self.calldata,
-            gasprice=self.gasprice,
-            callvalue=self.callvalue,
-            origin=self.origin,
-        )
+        return {
+            "active_account": self.active_account,
+            "sender": self.sender,
+            "calldata": self.calldata,
+            "gasprice": self.gasprice,
+            "callvalue": self.callvalue,
+            "origin": self.origin,
+        }

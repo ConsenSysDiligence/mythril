@@ -1,8 +1,7 @@
 import json
-from typing import Dict, List
 
-from mythril.support.support_utils import get_code_hash
 from mythril.laser.execution_info import ExecutionInfo
+from mythril.support.support_utils import get_code_hash
 
 
 class InstructionCoverageInfo(ExecutionInfo):
@@ -10,7 +9,7 @@ class InstructionCoverageInfo(ExecutionInfo):
         self._instruction_coverage = {}  # type: Dict[str, int]
 
     def as_dict(self):
-        return dict(instruction_discovery_time=self._instruction_coverage)
+        return {"instruction_discovery_time": self._instruction_coverage}
 
     def get_code_instr_hex(self, code: str, instruction: int):
         code_hash = get_code_hash(code)[2:]
@@ -66,7 +65,7 @@ class CoverageTimeSeries(ExecutionInfo):
             json.dump(self.coverage, default=lambda o: o.__dict__, fp=outfile)
 
     def as_dict(self):
-        return dict(coverage=self.coverage)
+        return {"coverage": self.coverage}
 
     def add_data(self, *args, **kwargs):
         cov_data = CoverageData(*args, **kwargs)

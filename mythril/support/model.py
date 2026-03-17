@@ -1,23 +1,18 @@
-from mythril.support.support_utils import ModelCache
-from mythril.support.support_args import args
-from mythril.laser.smt import Optimize, simplify, And
-from mythril.laser.ethereum.time_handler import time_handler
-from mythril.exceptions import UnsatError, SolverTimeOutException
-
 import logging
 import os
-import signal
 import sys
-import threading
-
-from collections import OrderedDict
-from copy import deepcopy
 from functools import lru_cache
-from multiprocessing.pool import ThreadPool
 from multiprocessing import TimeoutError
+from multiprocessing.pool import ThreadPool
 from pathlib import Path
-from time import time
-from z3 import sat, unknown, is_true
+
+from z3 import sat, unknown
+
+from mythril.exceptions import SolverTimeOutException, UnsatError
+from mythril.laser.ethereum.time_handler import time_handler
+from mythril.laser.smt import And, Optimize, simplify
+from mythril.support.support_args import args
+from mythril.support.support_utils import ModelCache
 
 log = logging.getLogger(__name__)
 

@@ -78,7 +78,6 @@ def validate_multiple_example(output, branches):
 def validate_two_contract(output, branches):
     for branch_output, branch in zip(output, branches):
         if branch == "311":
-
             # Validation for initialState
             # Validation for tx steps
             assert (

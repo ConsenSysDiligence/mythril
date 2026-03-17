@@ -135,6 +135,7 @@ ignore = [
     "INP001",  # implicit namespace package — docs/conf.py
     "PLE0302", # special method params — legacy override patterns
     "F403",    # wildcard imports — used in transaction __init__
+    "TC",      # flake8-type-checking — moving imports to TYPE_CHECKING can break runtime
 ]
 
 [tool.ruff.lint.per-file-ignores]

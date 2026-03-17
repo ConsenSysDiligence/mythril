@@ -1,9 +1,10 @@
-from typing import Union, overload, List, Set, cast, Any, Callable
+from typing import Any, Callable, List, Set, Union, cast, overload
+
 import z3
 
-from mythril.laser.smt.bool import Bool, Or
+from mythril.laser.smt.array import Array, BaseArray
 from mythril.laser.smt.bitvec import BitVec
-from mythril.laser.smt.array import BaseArray, Array
+from mythril.laser.smt.bool import Bool, Or
 
 Annotations = Set[Any]
 
@@ -32,13 +33,13 @@ def LShR(a: BitVec, b: BitVec):
 
 
 @overload
-def If(a: Union[Bool, bool], b: Union[BitVec, int], c: Union[BitVec, int]) -> BitVec:
-    ...
+def If(
+    a: Union[Bool, bool], b: Union[BitVec, int], c: Union[BitVec, int]
+) -> BitVec: ...
 
 
 @overload
-def If(a: Union[Bool, bool], b: BaseArray, c: BaseArray) -> BaseArray:
-    ...
+def If(a: Union[Bool, bool], b: BaseArray, c: BaseArray) -> BaseArray: ...
 
 
 def If(
@@ -113,13 +114,11 @@ def ULE(a: BitVec, b: BitVec) -> Bool:
 
 
 @overload
-def Concat(*args: List[BitVec]) -> BitVec:
-    ...
+def Concat(*args: List[BitVec]) -> BitVec: ...
 
 
 @overload
-def Concat(*args: BitVec) -> BitVec:
-    ...
+def Concat(*args: BitVec) -> BitVec: ...
 
 
 def Concat(*args: Union[BitVec, List[BitVec]]) -> BitVec:
@@ -132,7 +131,7 @@ def Concat(*args: Union[BitVec, List[BitVec]]) -> BitVec:
     if len(args) == 1 and isinstance(args[0], list):
         bvs: List[BitVec] = args[0]
     else:
-        bvs = cast(List[BitVec], args)
+        bvs = cast("List[BitVec]", args)
 
     nraw = z3.Concat([a.raw for a in bvs])
     annotations: Annotations = set()

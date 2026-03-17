@@ -1,7 +1,7 @@
 """This module provides classes for an SMT abstraction of bit vectors."""
 
-from operator import lshift, rshift, ne, eq
-from typing import Union, Set, cast, Any, Optional, Callable
+from operator import eq, lshift, ne, rshift
+from typing import Any, Callable, Optional, Set, Union, cast
 
 import z3
 
@@ -188,14 +188,14 @@ class BitVec(Expression[z3.BitVecRef]):
         """
         if not isinstance(other, BitVec):
             return Bool(
-                cast(z3.BoolRef, self.raw == other), annotations=self.annotations
+                cast("z3.BoolRef", self.raw == other), annotations=self.annotations
             )
 
         union = self.annotations.union(other.annotations)
         # Some of the BitVecs can be 512 bit due to sha3()
         eq_check = _padded_operation(self.raw, other.raw, eq)
         # MYPY: fix complaints due to z3 overriding __eq__
-        return Bool(cast(z3.BoolRef, eq_check), annotations=union)
+        return Bool(cast("z3.BoolRef", eq_check), annotations=union)
 
     # MYPY: fix complains about overriding __ne__
     def __ne__(self, other: Union[int, "BitVec"]) -> Bool:  # type: ignore
@@ -206,14 +206,14 @@ class BitVec(Expression[z3.BitVecRef]):
         """
         if not isinstance(other, BitVec):
             return Bool(
-                cast(z3.BoolRef, self.raw != other), annotations=self.annotations
+                cast("z3.BoolRef", self.raw != other), annotations=self.annotations
             )
 
         union = self.annotations.union(other.annotations)
         # Some of the BitVecs can be 512 bit due to sha3()
         neq_check = _padded_operation(self.raw, other.raw, ne)
         # MYPY: fix complaints due to z3 overriding __eq__
-        return Bool(cast(z3.BoolRef, neq_check), annotations=union)
+        return Bool(cast("z3.BoolRef", neq_check), annotations=union)
 
     def _handle_shift(self, other: Union[int, "BitVec"], operator: Callable) -> "BitVec":
         """

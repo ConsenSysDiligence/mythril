@@ -1,11 +1,11 @@
 import logging
+from typing import Tuple, cast
 
 from mythril.laser.ethereum.cfg import Node
-from typing import Tuple, cast
-from mythril.laser.ethereum.state.world_state import WorldState
 from mythril.laser.ethereum.state.account import Account, Storage
 from mythril.laser.ethereum.state.constraints import Constraints
-from mythril.laser.smt import symbol_factory, Array, If, Or, And, Not, Bool
+from mythril.laser.ethereum.state.world_state import WorldState
+from mythril.laser.smt import And, Array, Bool, If, Not, Or, symbol_factory
 
 log = logging.getLogger(__name__)
 
@@ -24,9 +24,9 @@ def merge_states(state1: WorldState, state2: WorldState):
     )
 
     # Merge balances
-    state1.balances = cast(Array, If(condition1, state1.balances, state2.balances))
+    state1.balances = cast("Array", If(condition1, state1.balances, state2.balances))
     state1.starting_balances = cast(
-        Array, If(condition1, state1.starting_balances, state2.starting_balances)
+        "Array", If(condition1, state1.starting_balances, state2.starting_balances)
     )
 
     # Merge accounts
@@ -136,8 +136,8 @@ def _merge_constraints(
     conjunction of constraints in state 1 not in state 2, conjunction of constraints
     in state2 not in state1
     """
-    dict1 = {c: True for c in constraints1}
-    dict2 = {c: True for c in constraints2}
+    dict1 = dict.fromkeys(constraints1, True)
+    dict2 = dict.fromkeys(constraints2, True)
     c1, c2 = symbol_factory.Bool(True), symbol_factory.Bool(True)
     new_constraint1, new_constraint2 = (
         symbol_factory.Bool(True),

@@ -1,18 +1,19 @@
 """This module contains a representation of the EVM's machine state and its
 stack."""
+
 from copy import copy
-from typing import cast, Sized, Union, Any, List, Dict, Optional
+from typing import Any, Dict, List, Optional, Sized, Union, cast
 
-from mythril.laser.smt import BitVec, Bool, If, Expression, symbol_factory
 from eth._utils.numeric import ceil32
-
 from eth.constants import GAS_MEMORY, GAS_MEMORY_QUADRATIC_DENOMINATOR
+
 from mythril.laser.ethereum.evm_exceptions import (
+    OutOfGasException,
     StackOverflowException,
     StackUnderflowException,
-    OutOfGasException,
 )
 from mythril.laser.ethereum.state.memory import Memory
+from mythril.laser.smt import BitVec, Bool, Expression, If, symbol_factory
 
 
 class MachineStack(list):
@@ -93,7 +94,7 @@ class MachineStack(list):
 
 
 class MachineState:
-    """
+    r"""
     MachineState represents current machine state also referenced to as \mu.
     """
 
@@ -166,7 +167,7 @@ class MachineState:
     def check_gas(self):
         """Check whether the machine is out of gas."""
         if self.min_gas_used > self.gas_limit:
-            raise OutOfGasException()
+            raise OutOfGasException
 
     def mem_extend(self, start: Union[int, BitVec], size: Union[int, BitVec]) -> None:
         """Extends the memory of this machine state.
@@ -243,7 +244,7 @@ class MachineState:
 
         :return:
         """
-        return len(cast(Sized, self.memory))
+        return len(cast("Sized", self.memory))
 
     @property
     def as_dict(self) -> Dict:
@@ -251,13 +252,13 @@ class MachineState:
 
         :return:
         """
-        return dict(
-            pc=self.pc,
-            stack=self.stack,
-            subroutine_stack=self.subroutine_stack,
-            memory=self.memory,
-            memsize=self.memory_size,
-            gas=self.gas_limit,
-            max_gas_used=self.max_gas_used,
-            min_gas_used=self.min_gas_used,
-        )
+        return {
+            "pc": self.pc,
+            "stack": self.stack,
+            "subroutine_stack": self.subroutine_stack,
+            "memory": self.memory,
+            "memsize": self.memory_size,
+            "gas": self.gas_limit,
+            "max_gas_used": self.max_gas_used,
+            "min_gas_used": self.min_gas_used,
+        }

@@ -1,8 +1,9 @@
-from mythril.laser.plugin.interface import LaserPlugin
-from mythril.laser.plugin.builder import PluginBuilder
+from typing import List, Tuple
+
 from mythril.laser.ethereum.state.global_state import GlobalState
 from mythril.laser.ethereum.svm import LaserEVM
-from typing import List, Tuple
+from mythril.laser.plugin.builder import PluginBuilder
+from mythril.laser.plugin.interface import LaserPlugin
 
 
 class TraceFinderBuilder(PluginBuilder):
@@ -11,7 +12,6 @@ class TraceFinderBuilder(PluginBuilder):
     enabled = True
 
     author = "MythX Development Team"
-    name = "MythX Trace Finder"
     plugin_license = "All rights reserved."
     plugin_type = "Laser Plugin"
     plugin_version = "0.0.1 "

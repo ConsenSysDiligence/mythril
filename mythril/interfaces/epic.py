@@ -9,6 +9,7 @@
 
 # https://github.com/tehmaze/lolcat
 
+import argparse
 import atexit
 import math
 import os
@@ -16,9 +17,9 @@ import random
 import re
 import sys
 import time
-import argparse
 
 PY3 = sys.version_info >= (3,)
+
 
 # Reset terminal colors at exit
 def reset():
@@ -59,7 +60,7 @@ class LolCat(object):
         self.output = output
 
     def _distance(self, rgb1, rgb2):
-        return sum(map(lambda c: (c[0] - c[1]) ** 2, zip(rgb1, rgb2)))
+        return sum(((c[0] - c[1]) ** 2 for c in zip(rgb1, rgb2)))
 
     def ansi(self, rgb):
         """
@@ -201,7 +202,7 @@ def detect_mode(term_hint="xterm-256color"):
         term = os.environ.get("TERM", term_hint)
         if term.endswith("-256color") or term in ("xterm", "screen"):
             return 256
-        elif term.endswith("-color") or term in ("rxvt",):
+        elif term.endswith("-color") or term == "rxvt":
             return 16
         else:
             return 256  # optimistic default

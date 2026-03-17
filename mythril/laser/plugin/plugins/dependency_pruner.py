@@ -1,20 +1,20 @@
+import logging
+from typing import Dict, List, Set, cast
+
+from mythril.analysis import solver
+from mythril.exceptions import UnsatError
+from mythril.laser.ethereum.state.global_state import GlobalState
 from mythril.laser.ethereum.svm import LaserEVM
-from mythril.laser.plugin.interface import LaserPlugin
+from mythril.laser.ethereum.transaction.transaction_models import (
+    ContractCreationTransaction,
+)
 from mythril.laser.plugin.builder import PluginBuilder
-from mythril.laser.plugin.signals import PluginSkipState
+from mythril.laser.plugin.interface import LaserPlugin
 from mythril.laser.plugin.plugins.plugin_annotations import (
     DependencyAnnotation,
     WSDependencyAnnotation,
 )
-from mythril.laser.ethereum.state.global_state import GlobalState
-from mythril.laser.ethereum.transaction.transaction_models import (
-    ContractCreationTransaction,
-)
-from mythril.exceptions import UnsatError
-from mythril.analysis import solver
-from typing import cast, List, Dict, Set
-import logging
-
+from mythril.laser.plugin.signals import PluginSkipState
 
 log = logging.getLogger(__name__)
 
@@ -26,11 +26,10 @@ def get_dependency_annotation(state: GlobalState) -> DependencyAnnotation:
     """
 
     annotations = cast(
-        List[DependencyAnnotation], list(state.get_annotations(DependencyAnnotation))
+        "List[DependencyAnnotation]", list(state.get_annotations(DependencyAnnotation))
     )
 
     if len(annotations) == 0:
-
         """FIXME: Hack for carrying over state annotations from the STOP and RETURN states of
         the previous states. The states are pushed on a stack in the world state annotation
         and popped off the stack in the subsequent iteration. This might break if any
@@ -57,7 +56,7 @@ def get_ws_dependency_annotation(state: GlobalState) -> WSDependencyAnnotation:
     """
 
     annotations = cast(
-        List[WSDependencyAnnotation],
+        "List[WSDependencyAnnotation]",
         list(state.world_state.get_annotations(WSDependencyAnnotation)),
     )
 
@@ -173,7 +172,6 @@ class DependencyPruner(LaserPlugin):
 
         for location in storage_write_cache:
             for dependency in dependencies:
-
                 # Is there a known read operation along this path that matches a write in the previous transaction?
 
                 try:

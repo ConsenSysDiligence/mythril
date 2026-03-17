@@ -1,16 +1,16 @@
-from mythril.laser.ethereum.svm import LaserEVM
-from mythril.laser.plugin.interface import LaserPlugin
-from mythril.laser.plugin.builder import PluginBuilder
+import logging
+import time
+
 from mythril.laser.ethereum.state.global_state import GlobalState
+from mythril.laser.ethereum.svm import LaserEVM
+from mythril.laser.plugin.builder import PluginBuilder
+from mythril.laser.plugin.interface import LaserPlugin
+
+from .constants import BATCH_OF_STATES
 from .coverage_data import (
     CoverageTimeSeries,
     InstructionCoverageInfo,
 )
-from .constants import BATCH_OF_STATES
-from typing import Dict, Tuple, List
-
-import time
-import logging
 
 log = logging.getLogger(__name__)
 

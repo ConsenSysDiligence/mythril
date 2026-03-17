@@ -1,29 +1,23 @@
 """This module contains various utility functions regarding unit conversion and
 solc integration."""
+
 import binascii
 import json
-import sys
+import logging
 import os
 import platform
-import logging
-import solc
-import re
 import typing
-
-from pathlib import Path
-from requests.exceptions import ConnectionError
+from json.decoder import JSONDecodeError
 from subprocess import PIPE, Popen
 from typing import Tuple
 
-from json.decoder import JSONDecodeError
 import semantic_version as semver
-from semantic_version import Version, NpmSpec
-from pyparsing import Word, Group, Optional, ZeroOrMore, oneOf, Regex, Combine
+import solcx
+from pyparsing import Combine, Optional, Regex, Word
+from requests.exceptions import ConnectionError
 
 from mythril.exceptions import CompilerError
 from mythril.support.support_args import args
-
-import solcx
 
 log = logging.getLogger(__name__)
 
@@ -134,7 +128,6 @@ def solc_exists(version):
     :return:
     """
 
-    default_binary = "/usr/bin/solc"
     if platform.system() == "Darwin":
         solcx.import_installed_solc()
     solcx.install_solc("v" + version)

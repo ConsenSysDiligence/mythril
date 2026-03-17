@@ -1,9 +1,7 @@
-import pickle
-from sklearn.ensemble import RandomForestClassifier
-import numpy as np
-from itertools import chain
-
 import logging
+import pickle
+
+import numpy as np
 
 log = logging.getLogger(__name__)
 

@@ -1,10 +1,10 @@
+from typing import Dict, List, Set, Tuple, cast
+
 import z3
 
-from mythril.laser.smt.model import Model
 from mythril.laser.smt.bool import Bool
+from mythril.laser.smt.model import Model
 from mythril.laser.smt.solver.solver_statistics import stat_smt_query
-
-from typing import Set, Tuple, Dict, List, cast
 
 
 def _get_expr_variables(expression: z3.ExprRef) -> List[z3.ExprRef]:
@@ -106,7 +106,7 @@ class IndependenceSolver:
         :param constraints: constraints to add
         """
         raw_constraints: List[z3.BoolRef] = [
-            c.raw for c in cast(Tuple[Bool], constraints)
+            c.raw for c in cast("Tuple[Bool]", constraints)
         ]
         self.constraints.extend(raw_constraints)
 
@@ -116,7 +116,7 @@ class IndependenceSolver:
         :param constraints: constraints to add
         """
         raw_constraints: List[z3.BoolRef] = [
-            c.raw for c in cast(Tuple[Bool], constraints)
+            c.raw for c in cast("Tuple[Bool]", constraints)
         ]
         self.constraints.extend(raw_constraints)
 

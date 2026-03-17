@@ -8,4 +8,3 @@ class ExecutionInfo(ABC):
 
         The returned dictionary only uses primitive types.
         """
-        pass

@@ -1,17 +1,18 @@
-""" Mythril Detection Modules
+"""Mythril Detection Modules
 
 This module includes an definition of the DetectionModule interface.
 DetectionModules implement different analysis rules to find weaknesses and vulnerabilities.
 """
+
 import logging
-from typing import List, Set, Optional, Tuple
+from abc import ABC, abstractmethod
+from enum import Enum
+from typing import List, Optional, Set, Tuple
 
 from mythril.analysis.report import Issue
 from mythril.laser.ethereum.state.global_state import GlobalState
 from mythril.support.support_args import args
 from mythril.support.support_utils import get_code_hash
-from abc import ABC, abstractmethod
-from enum import Enum
 
 # Get logger instance
 log = logging.getLogger(__name__)
@@ -104,7 +105,6 @@ class DetectionModule(ABC):
         :param target: The target of the analysis, either a global state (callback) or the entire statespace (post)
         :return: List of encountered issues
         """
-        pass
 
     def __repr__(self) -> str:
         return (

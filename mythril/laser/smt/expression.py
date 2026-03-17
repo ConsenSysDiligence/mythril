@@ -1,7 +1,8 @@
 """This module contains the SMT abstraction for a basic symbol expression."""
-from typing import Optional, Set, Any, TypeVar, Generic, cast
-import z3
 
+from typing import Any, Generic, Optional, Set, TypeVar, cast
+
+import z3
 
 Annotations = Set[Any]
 T = TypeVar("T", bound=z3.ExprRef)
@@ -43,7 +44,7 @@ class Expression(Generic[T]):
 
     def simplify(self) -> None:
         """Simplify this expression."""
-        self.raw = cast(T, z3.simplify(self.raw))
+        self.raw = cast("T", z3.simplify(self.raw))
 
     def __repr__(self) -> str:
         return repr(self.raw)

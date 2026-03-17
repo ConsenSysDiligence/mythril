@@ -1,14 +1,11 @@
 """This module declares classes to represent call data."""
-from typing import cast, Union, Tuple, List
 
+from typing import Any, List, Tuple, Union, cast
 
-from typing import Any, Union
-
-from z3 import Model, unsat, unknown
+from z3 import Model, unknown, unsat
 from z3.z3types import Z3Exception
 
 from mythril.laser.ethereum.util import get_concrete_int
-
 from mythril.laser.smt import (
     Array,
     BitVec,
@@ -17,9 +14,9 @@ from mythril.laser.smt import (
     Expression,
     If,
     K,
+    Solver,
     simplify,
     symbol_factory,
-    Solver,
 )
 
 
@@ -100,7 +97,7 @@ class BaseCalldata:
 
         :param item:
         """
-        raise NotImplementedError()
+        raise NotImplementedError
 
     @property
     def size(self) -> Union[BitVec, int]:
@@ -108,7 +105,7 @@ class BaseCalldata:
 
         :return: unnormalized call data size
         """
-        raise NotImplementedError()
+        raise NotImplementedError
 
     def concrete(self, model: Model) -> list:
         """Returns a concrete version of the calldata using the provided model.
@@ -191,7 +188,7 @@ class BasicConcreteCalldata(BaseCalldata):
 
         value = symbol_factory.BitVecVal(0x0, 8)
         for i in range(self.size):
-            value = If(cast(Union[BitVec, Bool], item) == i, self._calldata[i], value)
+            value = If(cast("Union[BitVec, Bool]", item) == i, self._calldata[i], value)
         return value
 
     def concrete(self, model: Model) -> list:
@@ -241,7 +238,7 @@ class SymbolicCalldata(BaseCalldata):
         return simplify(
             If(
                 item < self._size,
-                simplify(self._calldata[cast(BitVec, item)]),
+                simplify(self._calldata[cast("BitVec", item)]),
                 symbol_factory.BitVecVal(0, 8),
             )
         )

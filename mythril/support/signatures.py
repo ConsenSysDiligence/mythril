@@ -1,4 +1,5 @@
 """The Mythril function signature database."""
+
 import functools
 import logging
 import multiprocessing
@@ -6,7 +7,7 @@ import os
 import sqlite3
 import time
 from collections import defaultdict
-from typing import List, Set, DefaultDict, Dict
+from typing import DefaultDict, Dict, List, Set
 
 from mythril.ethereum.util import get_solc_json
 
@@ -44,7 +45,7 @@ def synchronized(sync_lock):
 class Singleton(type):
     """A metaclass type implementing the singleton pattern."""
 
-    _instances: Dict["Singleton", "Singleton"] = dict()
+    _instances: Dict["Singleton", "Singleton"] = {}
 
     @synchronized(lock)
     def __call__(cls, *args, **kwargs):
@@ -95,7 +96,7 @@ class SQLiteDB(object):
         """
         try:
             self.conn = sqlite3.connect(self.path)
-        except sqlite3.OperationalError as e:
+        except sqlite3.OperationalError:
             raise sqlite3.OperationalError(f"Unable to Connect to path {self.path}")
         self.cursor = self.conn.cursor()
         return self.cursor

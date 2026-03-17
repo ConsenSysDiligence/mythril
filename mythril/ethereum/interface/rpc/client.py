@@ -2,6 +2,7 @@
 
 This code is adapted from: https://github.com/ConsenSys/ethjsonrpc
 """
+
 import json
 import logging
 

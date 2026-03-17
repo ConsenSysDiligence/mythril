@@ -1,12 +1,16 @@
 """This module contains the class used to represent state-change constraints in
 the call graph."""
-from mythril.exceptions import UnsatError, SolverTimeOutException
-from mythril.laser.smt import symbol_factory, simplify, Bool
-from mythril.support.model import get_model
-from mythril.laser.ethereum.function_managers import keccak_function_manager
-from mythril.laser.smt.model import Model
+
 from copy import copy
 from typing import Iterable, List, Optional, Union
+
+from typing_extensions import Self
+
+from mythril.exceptions import SolverTimeOutException, UnsatError
+from mythril.laser.ethereum.function_managers import keccak_function_manager
+from mythril.laser.smt import Bool, simplify, symbol_factory
+from mythril.laser.smt.model import Model
+from mythril.support.model import get_model
 
 
 class Constraints(list):
@@ -105,7 +109,7 @@ class Constraints(list):
         constraints_list = super(Constraints, self).__add__(constraints_list)
         return Constraints(constraint_list=constraints_list)
 
-    def __iadd__(self, constraints: Iterable[Union[bool, Bool]]) -> "Constraints":
+    def __iadd__(self, constraints: Iterable[Union[bool, Bool]]) -> Self:
         """
 
         :param constraints:

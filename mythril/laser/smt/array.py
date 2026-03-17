@@ -6,6 +6,7 @@ default values over a certain range.
 """
 
 from typing import cast
+
 import z3
 
 from mythril.laser.smt.bitvec import BitVec
@@ -23,7 +24,7 @@ class BaseArray:
             raise ValueError(
                 "Instance of BaseArray, does not support getitem with slices"
             )
-        return BitVec(cast(z3.BitVecRef, z3.Select(self.raw, item.raw)))
+        return BitVec(cast("z3.BitVecRef", z3.Select(self.raw, item.raw)))
 
     def __setitem__(self, key: BitVec, value: BitVec) -> None:
         """Sets an item in the array, key can be symbolic."""
