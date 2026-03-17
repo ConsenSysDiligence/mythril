@@ -21,9 +21,13 @@ ENV PATH=/root/.cargo/bin:$PATH
 # building it in a separate stage helps parallelise the build and helps it stay
 # in the build cache.
 FROM python-wheel AS python-wheel-z3-solver
-RUN pip install auditwheel
-RUN --mount=source=requirements.txt,target=/run/requirements.txt \
-  pip wheel "$(grep z3-solver /run/requirements.txt)"
+COPY pyproject.toml /run/pyproject.toml
+RUN pip install auditwheel tomli
+RUN pip wheel "$(python3 -c "\
+import tomli
+with open('/run/pyproject.toml', 'rb') as f:
+    deps = tomli.load(f)['project']['dependencies']
+print(next(d for d in deps if 'z3-solver' in d.lower()))")"
 # The wheel z3-solver builds does not install in arm64 because it generates
 # incorrect platform compatibility metadata for arm64 builds. (It uses the
 # platform manylinux1_aarch64 but manylinux1 is only defined for x86 systems,
@@ -53,9 +57,16 @@ RUN pip wheel 'blake2b-py>=0.2.0,<1' \
 FROM python-wheel AS mythril-wheels
 # cython is needed to build some wheels, such as cytoolz
 RUN pip install cython
-RUN --mount=source=requirements.txt,target=/run/requirements.txt \
-  # ignore blake2b and z3-solver as we've already built them
-  grep -v -e blake2b -e z3-solver /run/requirements.txt > /tmp/requirements-remaining.txt
+COPY pyproject.toml /run/pyproject.toml
+RUN pip install tomli \
+    && python3 -c "\
+import tomli
+with open('/run/pyproject.toml', 'rb') as f:
+    deps = tomli.load(f)['project']['dependencies']
+for d in deps:
+    if 'blake2b' not in d.lower() and 'z3-solver' not in d.lower():
+        print(d)
+" > /tmp/requirements-remaining.txt
 RUN pip wheel -r /tmp/requirements-remaining.txt
 
 COPY . /mythril

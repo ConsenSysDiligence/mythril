@@ -10,11 +10,12 @@ then
   exit 1
 fi
 
-if [ ! -z $CIRCLE_TAG ];
-then
-  GIT_VERSION=${CIRCLE_TAG#?}
+TAG="${CIRCLE_TAG:-${GITHUB_REF_NAME:-}}"
+
+if [[ "$TAG" =~ ^v[0-9] ]]; then
+  GIT_VERSION="${TAG#v}"
 else
-  GIT_VERSION=${CIRCLE_SHA1}
+  GIT_VERSION="${CIRCLE_SHA1:-${GITHUB_SHA:-}}"
 fi
 
 export DOCKER_BUILDKIT=1
