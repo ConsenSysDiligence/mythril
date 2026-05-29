@@ -84,13 +84,10 @@ class BenchmarkPlugin(LaserPlugin):
 
     def _write_to_graph(self):
         """Write the coverage results to a graph"""
-        traces = []
-        for _, trace_data in self.coverage.items():
-            traces += [list(trace_data.keys()), list(trace_data.values()), "r--"]
-
-        plt.plot(*traces)
+        for key, trace_data in self.coverage.items():
+            plt.plot(list(trace_data.keys()), list(trace_data.values()), label=key)
         plt.axis([0, self.end - self.begin, 0, 100])
         plt.xlabel("Duration (seconds)")
         plt.ylabel("Coverage (percentage)")
-
+        plt.legend()
         plt.savefig("{}.png".format(self.name))
